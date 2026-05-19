@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  background: #171227;
+  min-height: 100vh;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+  --color-primary: #7761a9;
+  --color-primary-light: #9b82cc;
+  --color-primary-dark: #4f3e74;
+  --color-primary-10: rgba(119, 97, 169, 0.1);
+  --color-primary-15: rgba(119, 97, 169, 0.15);
+  --color-primary-20: rgba(119, 97, 169, 0.2);
+  --color-primary-25: rgba(119, 97, 169, 0.25);
+  --color-primary-30: rgba(119, 97, 169, 0.3);
+  --color-primary-50: rgba(119, 97, 169, 0.5);
+  --color-bg: #171227;
+  --color-bg-2: #120e1c;
+  --color-bg-3: #110e1a;
+  --color-text: #f0ecf8;
+  --color-text-50: rgba(240, 236, 248, 0.5);
+  --color-text-45: rgba(240, 236, 248, 0.45);
+  --color-text-25: rgba(240, 236, 248, 0.25);
+}
