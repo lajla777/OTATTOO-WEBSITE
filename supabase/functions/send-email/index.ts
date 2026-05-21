@@ -48,7 +48,7 @@ serve(async (req) => {
                 <p style="font-size: 14px; color: #2d1f4e; margin: 0 0 8px;"><strong>3. TRR:</strong> [TRR podatki]</p>
               </div>
               <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 16px;">
-                Če bi želel/a termin <strong>preklicati</strong>, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina. V primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa. Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
+                Če bi želel/a termin <strong>preklicati</strong>, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina (v primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa). Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
               </p>
               <p style="font-size: 14px; color: #777; margin: 0 0 4px;">Če imaš kakšno vprašanje, me najdeš na:</p>
               <p style="font-size: 14px; color: #777; margin: 0 0 28px;">
@@ -101,7 +101,7 @@ serve(async (req) => {
                 </table>
               </div>
               <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 16px;">
-                Če bi želel/a termin <strong>preklicati</strong>, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina. V primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa. Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
+                Če bi želel/a termin <strong>preklicati</strong>, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina (v primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa). Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
               </p>
               <p style="font-size: 14px; color: #777; margin: 0 0 4px;">Če imaš kakšno vprašanje, me najdeš na:</p>
               <p style="font-size: 14px; color: #777; margin: 0 0 28px;">
