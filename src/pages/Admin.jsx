@@ -73,6 +73,14 @@ const posodobiStatus = async (id, novStatus) => {
     await posodobiStatus(id, novStatus)
   }
 
+  const izbrisiRezervacijo = async (e, id) => {
+  e.stopPropagation()
+  if (!window.confirm('Ali si prepričana da želiš izbrisati to rezervacijo?')) return
+  await supabase.from('rezervacije').delete().eq('id', id)
+  await naloziPodatke()
+  if (izbranRezervacija?.id === id) setIzbranRezervacija(null)
+}
+
   const toggleNedosegljiv = async (dateStr) => {
     if (nedosegljivi.includes(dateStr)) {
       await supabase.from('nedosegljivi').delete().eq('datum', dateStr)
@@ -166,9 +174,13 @@ const posodobiStatus = async (id, novStatus) => {
             style={{ ...btnStyle('red'), padding: p }}>✕ Prekliči</button>
         )}
         {r.status === 'zavrnjeno' && (
-          <button onClick={e => potrdiAkcijo(e, r.id, 'rezervirano', 'Ali si prepričana da želiš obnoviti ta termin?')}
-            style={{ ...btnStyle('yellow'), padding: p }}>↩ Obnovi</button>
-        )}
+  <div style={{ display: 'flex', gap: 8, flex: 1 }}>
+    <button onClick={e => potrdiAkcijo(e, r.id, 'rezervirano', 'Ali si prepričana da želiš obnoviti ta termin?')}
+      style={{ ...btnStyle('yellow'), padding: p }}>↩ Obnovi</button>
+    <button onClick={e => izbrisiRezervacijo(e, r.id)}
+      style={{ ...btnStyle('red'), padding: p }}>🗑 Izbriši</button>
+  </div>
+)}
       </div>
     )
   }

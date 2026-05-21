@@ -1,6 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
-const RESEND_API_KEY = 're_SmifJEox_JD5XQbPLH3FHp4tfjPcxAFWu'
+const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')!
 
 serve(async (req) => {
   const corsHeaders = {
@@ -35,7 +35,7 @@ serve(async (req) => {
               <p style="font-size: 16px; color: #2d1f4e; margin: 0 0 24px;">Hej, <strong>${ime}</strong>!</p>
               <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 28px;">Hvala za tvojo rezervacijo pri OTattoo Studiu!</p>
               <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 16px;">
-                Zaradi zavarovanja termina te prosim, da poravnaš <strong style="color: #2d1f4e;">avans v višini 50€</strong> v roku <strong>48 ur</strong>po oddaji rezervacije. <strong>Termin bo potrjen šele po prejetem plačilu.</strong>
+                Zaradi zavarovanja termina te prosim, da poravnaš <strong style="color: #2d1f4e;">avans v višini 50€</strong> vsaj <strong>48 ur</strong> po oddaji rezervacije. <strong>Termin bo potrjen šele po prejetem plačilu.</strong>
               </p>
               <p style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">✿ V <strong>zadevo/sporočilo</strong> nakazila <strong>obvezno</strong> napiši (lahko copy-paste):</p>
               <p style="font-size: 15px; color: #2d1f4e; margin: 0 0 20px; font-weight: 500; border: 2px solid #b89fe0; border-radius: 8px; padding: 12px 16px;">
@@ -48,7 +48,7 @@ serve(async (req) => {
                 <p style="font-size: 14px; color: #2d1f4e; margin: 0 0 8px;"><strong>3. TRR:</strong> [TRR podatki]</p>
               </div>
               <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 16px;">
-                Če bi želel/a termin preklicati, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina. V primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa. Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
+                Če bi želel/a termin <strong>preklicati</strong>, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina. V primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa. Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
               </p>
               <p style="font-size: 14px; color: #777; margin: 0 0 4px;">Če imaš kakšno vprašanje, me najdeš na:</p>
               <p style="font-size: 14px; color: #777; margin: 0 0 28px;">
@@ -101,7 +101,7 @@ serve(async (req) => {
                 </table>
               </div>
               <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 16px;">
-                Če bi želel/a termin preklicati, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina. V primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa. Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
+                Če bi želel/a termin <strong>preklicati</strong>, te lepo prosim, da me obvestiš vsaj <strong>48 ur</strong> pred začetkom svojega termina. V primeru poznejše odpovedi si pridržujem pravico do obdržanja avansa. Za preklic me kontaktiraj preko spodaj navedenega Instagrama ali Gmaila. V sporočilu navedi svoje <strong>ime in datum</strong> rezervacije ter način na katerega želiš, da ti je denar povrnjen.
               </p>
               <p style="font-size: 14px; color: #777; margin: 0 0 4px;">Če imaš kakšno vprašanje, me najdeš na:</p>
               <p style="font-size: 14px; color: #777; margin: 0 0 28px;">
