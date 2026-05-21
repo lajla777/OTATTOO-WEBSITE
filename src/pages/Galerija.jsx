@@ -41,7 +41,7 @@ export default function Galerija() {
   }, [])
 
   return (
-    <div style={{ fontFamily: "'Montserrat', sans-serif", background: '#171227', color: '#ffffff', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Montserrat', sans-serif", background: '#120f1e', color: '#ffffff', minHeight: '100vh' }}>
 
       {/* HERO */}
       <section style={{
@@ -98,7 +98,7 @@ export default function Galerija() {
   .masonry-col > div .placeholder {
     width: 100%;
     aspect-ratio: 1/1;
-    background: var(--color-bg-3);
+    background: rgba(169, 97, 169, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
