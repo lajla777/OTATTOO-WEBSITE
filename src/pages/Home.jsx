@@ -78,7 +78,7 @@ export default function Home() {
 
       {/* Slideshow */}
       <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
-        {['/tatu1.jpg', '/kaja1.jpg', '/hero.jpg'].map((src, i) => (
+        {['/kaja1.jpg', '/tatu8.jpg', '/hero.jpg'].map((src, i) => (
           <div key={i} style={{ position: 'absolute', inset: 0, opacity: i === current ? 1 : 0, transition: 'opacity 1.5s ease' }}>
             <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
@@ -131,7 +131,7 @@ export default function Home() {
                 Moja pot se je začela iz ljubezni do umetnosti in želje, da ljudem pomagam izraziti sebe na unikaten in trajen način.
               </p>
             </div>
-            <SlikaNaura src="/kaja1.jpg" alt="Kaja Otavnik" isMobile={isMobile} />
+            <SlikaNaura src="/kaja3.jpg" alt="Kaja Otavnik" isMobile={isMobile} />
           </div>
         </div>
 
@@ -148,7 +148,7 @@ export default function Home() {
                 Sčasoma sem svoje znanje razširila tudi na področje permanentnega make-upa ter odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
               </p>
             </div>
-            <SlikaNaura src="/kaja2.jpg" alt="Studio" flip isMobile={isMobile} />
+            <SlikaNaura src="/tatu9.jpg" alt="Studio" flip isMobile={isMobile} />
           </div>
         </div>
 
@@ -165,7 +165,7 @@ export default function Home() {
                 Pri svojem delu dajem velik poudarek na varnost, higieno in individualen pristop. Vsaki stranki se posvetim osebno – od prve ideje do končnega rezultata. Pomembno mi je, da se pri meni počutiš sproščeno, slišano in v varnih rokah.
               </p>
             </div>
-            <SlikaNaura src="/kaja3.jpg" alt="Pri delu" isMobile={isMobile} />
+            <SlikaNaura src="/kaja4.jpg" alt="Pri delu" isMobile={isMobile} />
           </div>
         </div>
 
