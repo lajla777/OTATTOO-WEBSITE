@@ -41,13 +41,31 @@ export default function Admin() {
     if (prijavljen) naloziPodatke()
   }, [prijavljen])
 
-  const posodobiStatus = async (id, novStatus) => {
-    await supabase.from('rezervacije').update({ status: novStatus }).eq('id', id)
-    await naloziPodatke()
-    if (izbranRezervacija?.id === id) {
-      setIzbranRezervacija(prev => ({ ...prev, status: novStatus }))
+const posodobiStatus = async (id, novStatus) => {
+  await supabase.from('rezervacije').update({ status: novStatus }).eq('id', id)
+  
+  // Pošlji email ob potrditvi
+  if (novStatus === 'potrjeno') {
+    const r = rezervacije.find(rez => rez.id === id)
+    if (r) {
+      await supabase.functions.invoke('send-email', {
+        body: {
+          tip: 'potrditev',
+          ime: r.ime,
+          email: r.email,
+          datum: r.datum.split('-').reverse().join('.'),
+          storitev: r.storitev,
+          tip_laser: r.tip_laser || '',
+        }
+      })
     }
   }
+  
+  await naloziPodatke()
+  if (izbranRezervacija?.id === id) {
+    setIzbranRezervacija(prev => ({ ...prev, status: novStatus }))
+  }
+}
 
   const potrdiAkcijo = async (e, id, novStatus, sporocilo) => {
     e.stopPropagation()
@@ -299,8 +317,7 @@ export default function Admin() {
                             }}>{r.status}</span>
                           </div>
                           <p style={{ fontSize: 12, color: 'var(--color-primary-light)', margin: '4px 0 0', textTransform: 'capitalize' }}>
-                            {r.storitev}{r.tip_pmu ? ` · ${r.tip_pmu}` : ''}
-                          </p>
+                            {r.storitev}{r.tip_laser ? ` · ${r.tip_laser}` : ''}</p>
 
                           {izbranRezervacija?.id === r.id && (
                             <div style={{ marginTop: 16, paddingTop: 16, borderTop: '0.5px solid rgba(255,255,255,0.1)' }}>
@@ -371,7 +388,7 @@ export default function Admin() {
                       }}>{r.status}</span>
                     </div>
                     <div style={{ padding: '10px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, marginBottom: 12 }}>
-                      <p style={{ fontSize: 13, color: 'var(--color-primary-light)', margin: '0 0 4px', textTransform: 'capitalize' }}>{r.storitev}{r.tip_pmu ? ` · ${r.tip_pmu}` : ''}</p>
+                      <p style={{ fontSize: 13, color: 'var(--color-primary-light)', margin: '0 0 4px', textTransform: 'capitalize' }}>{r.storitev}{r.tip_laser ? ` · ${r.tip_laser}` : ''}</p>
                       <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', margin: '0 0 2px' }}>📅 {r.datum}</p>
                       {r.velikost && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '0 0 2px' }}>📐 {r.velikost}</p>}
                       {r.pozicija && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '0 0 2px' }}>📍 {r.pozicija}</p>}

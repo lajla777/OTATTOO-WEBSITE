@@ -23,12 +23,12 @@ useEffect(() => {
       zIndex: 10,
     }}>
       <div style={{
-  maxWidth: 1000, margin: '0 auto',
-  display: 'grid',
-  gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-  gap: 40, marginBottom: 48,
-  padding: '0 20px',
-}}>
+        maxWidth: 1000, margin: '0 auto',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+        gap: 40, marginBottom: 48,
+        padding: '0 20px',
+      }}>
 
         {/* Stolpec 1 — logo + opis */}
         <div>
@@ -92,7 +92,6 @@ useEffect(() => {
               { label: 'O meni', path: '/' },
               { label: 'Tetoviranje', path: '/tetoviranje' },
               { label: 'Laser tretma', path: '/odstranjevanje' },
-              { label: 'PMU', path: '/obrvi' },
               { label: 'Galerija', path: '/galerija' },
               { label: 'Cenik', path: '/cenik' },
               { label: 'Booking', path: '/booking' },
@@ -140,19 +139,19 @@ useEffect(() => {
 
       {/* Spodnja vrstica */}
       <div style={{
-  maxWidth: 1000, margin: '0 auto',
-  padding: '24px 20px 0',
-  borderTop: '0.5px solid rgba(168,85,247,0.1)',
-  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-  flexWrap: 'wrap', gap: 8,
-}}>
+      maxWidth: 1000, margin: '0 auto',
+      padding: '24px 20px 0',
+      borderTop: '0.5px solid rgba(168,85,247,0.1)',
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      flexWrap: 'wrap', gap: 8,
+      }}>
         <p style={{ fontSize: 11, color: 'rgba(240,236,248,0.25)', margin: 0 }}>
-          © 2025 OTattoo · Kaja Otavnik s.p.
+        © 2025 OTattoo · Kaja Otavnik s.p.
         </p>
-        <p style={{ fontSize: 11, color: 'rgba(240,236,248,0.25)', margin: 0 }}>
-          Žalec, Slovenija
-        </p>
-      </div>
+            <p style={{ fontSize: 11, color: 'rgba(240,236,248,0.25)', margin: 0 }}>
+              Žalec, Slovenija
+            </p>
+          </div>
     </footer>
   )
 }

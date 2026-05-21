@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
-import emailjs from '@emailjs/browser'
 
 const STORITVE = [
-  { id: 'tetoviranje', naziv: 'Tetoviranje', opis: 'Fineline, blackwork, barvno, po meri', icon: '🖋' },
+  { id: 'tetoviranje', naziv: 'Tetoviranje', opis: 'Fineline, blackwork, barvno, po meri', icon: '✿' },
   { id: 'odstranjevanje', naziv: 'Laser tretma', opis: 'Varno lasersko odstranjevanje s Philaser', icon: '✦' },
-  { id: 'pmu', naziv: 'Permanentni make-up', opis: 'Obrvi in ustnice', icon: '✿' },
 ]
 
 const LASER_TIPI = [
@@ -216,7 +214,7 @@ function SlikeUpload({ slike, setSlike, id }) {
   )
 }
 
-// ── TETOVIRANJE ──────────────────────────────────────────
+// TETOVIRANJE
 function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe }) {
   return (
     <div>
@@ -246,7 +244,7 @@ function Step3Tet({ datum, setDatum }) {
   )
 }
 
-// ── ODSTRANJEVANJE ───────────────────────────────────────
+// ODSTRANJEVANJE
 function Step2Odstr({ tipLaser, setTipLaser }) {
   return (
     <div>
@@ -319,52 +317,7 @@ function Step4Odstr({ datum, setDatum }) {
   )
 }
 
-// ── PMU ─────────────────────────────────────────────────
-function Step2PMU({ tipPMU, setTipPMU, opombe, setOpombe }) {
-  return (
-    <div>
-      <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        Izberi <em style={{ color: 'var(--color-primary-light)' }}>storitev</em>
-      </h2>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-        {[
-          { id: 'obrvi', naziv: 'Permanentne obrvi', opis: 'Microblading, powder brows, kombinacija' },
-          { id: 'ustnice', naziv: 'Permanentne ustnice', opis: 'Lip liner, aquarelle lips, full lips' },
-        ].map(tip => (
-          <div key={tip.id} onClick={() => setTipPMU(tip.id)} style={{
-            padding: '20px 24px', borderRadius: 12, cursor: 'pointer',
-            border: tipPMU === tip.id ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
-            background: tipPMU === tip.id ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
-          }}>
-            <div>
-              <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: '0 0 4px' }}>{tip.naziv}</p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: 0 }}>{tip.opis}</p>
-            </div>
-            {tipPMU === tip.id && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, flexShrink: 0 }}>✓</div>}
-          </div>
-        ))}
-      </div>
-      <div style={{ marginTop: 20 }}>
-        <label style={labelStyle}>Opombe (neobvezno)</label>
-        <textarea value={opombe} onChange={e => setOpombe(e.target.value)} placeholder="Oblika, barva, posebne želje..." rows={3} style={{ ...inputStyle, resize: 'vertical' }} />
-      </div>
-    </div>
-  )
-}
-
-function Step3PMU({ datum, setDatum }) {
-  return (
-    <div>
-      <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
-      </h2>
-      <Koledar datum={datum} setDatum={setDatum} />
-    </div>
-  )
-}
+// pmu ne bo..
 
 // ── PODATKI (zadnji korak pri vseh) ─────────────────────
 function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, telefon, setTelefon, stepNum }) {
@@ -395,7 +348,6 @@ export default function Booking() {
   const [pozicija, setPozicija] = useState('')
   const [slike, setSlike] = useState([])
   const [opombe, setOpombe] = useState('')
-  const [tipPMU, setTipPMU] = useState(null)
   const [tipLaser, setTipLaser] = useState(null)
   const [ime, setIme] = useState('')
   const [priimek, setPriimek] = useState('')
@@ -417,18 +369,13 @@ export default function Booking() {
       if (step === 4) return !!ime && !!priimek && !!email && !!telefon
     }
     if (storitev === 'odstranjevanje') {
-  if (step === 2) return !!tipLaser
-  if (step === 3) {
-    if (tipLaser === 'hollywood') return true
-    return !!pozicija && !!velikost
-  }
-  if (step === 4) return !!datum
-  if (step === 5) return !!ime && !!priimek && !!email && !!telefon
-}
-    if (storitev === 'pmu') {
-      if (step === 2) return !!tipPMU
-      if (step === 3) return !!datum
-      if (step === 4) return !!ime && !!priimek && !!email && !!telefon
+      if (step === 2) return !!tipLaser
+      if (step === 3) {
+        if (tipLaser === 'hollywood') return true
+        return !!pozicija && !!velikost
+      }
+      if (step === 4) return !!datum
+      if (step === 5) return !!ime && !!priimek && !!email && !!telefon
     }
     return false
   }
@@ -449,7 +396,6 @@ export default function Booking() {
       const { error } = await supabase.from('rezervacije').insert([{
         storitev, datum, ime, priimek, email, telefon,
         status: 'rezervirano',
-        tip_pmu: tipPMU || null,
         tip_laser: tipLaser || null,
         velikost: velikost || null,
         pozicija: pozicija || null,
@@ -459,23 +405,19 @@ export default function Booking() {
       if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
       setPoslano(true)
 
-      await emailjs.send(
-  'service_v5yu80e',
-  'template_rezervacija',
-  {
-    ime: ime,
-    gmail: email,
-    storitev: storitevNaziv,
-    datum: datum ? datum.split('-').reverse().join('.') : '',
-    tip_laser: tipLaser || '',
-    tip_pmu: tipPMU || '',
-    velikost: velikost || '',
-    pozicija: pozicija || '',
-    opombe: opombe || '',
-    email: email,
-  },
-  'BiGm5nPGyD9GLiU2U'
-)
+      await supabase.functions.invoke('send-email', {
+      body: {
+        tip: 'rezervacija',
+        ime,
+        email,
+        datum: datum.split('-').reverse().join('.'),
+        storitev: storitevNaziv,
+        tip_laser: tipLaser || '',
+        velikost: velikost || '',
+        pozicija: pozicija || '',
+        opombe: opombe || '',
+      }
+    })
 
     } catch (err) {
       console.error(err)
@@ -500,11 +442,6 @@ export default function Booking() {
       if (step === 3) return <Step3Odstr tipLaser={tipLaser} velikost={velikost} setVelikost={setVelikost} pozicija={pozicija} setPozicija={setPozicija} slike={slike} setSlike={setSlike} opombe={opombe} setOpombe={setOpombe} />
       if (step === 4) return <Step4Odstr datum={datum} setDatum={setDatum} />
       if (step === 5) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} telefon={telefon} setTelefon={setTelefon} stepNum={5} />
-    }
-    if (storitev === 'pmu') {
-      if (step === 2) return <Step2PMU tipPMU={tipPMU} setTipPMU={setTipPMU} opombe={opombe} setOpombe={setOpombe} />
-      if (step === 3) return <Step3PMU datum={datum} setDatum={setDatum} />
-      if (step === 4) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} telefon={telefon} setTelefon={setTelefon} stepNum={4} />
     }
     return null
   }
@@ -576,11 +513,11 @@ export default function Booking() {
           <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: '60px 40px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 24 }}>✓</div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', marginBottom: 16 }}>
-              Rezervacija <em style={{ color: 'var(--color-primary-light)' }}>prejeta!</em>
+              Rezervacija <em style={{ color: 'var(--color-primary-light)' }}>prejeta!<br /></em>
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', marginBottom: 32 }}>
-              Za potrditev termina te prosim, da nakažeš avans v višini <strong style={{ color: '#fff' }}>50€</strong>.<br /><br />
-              Podrobnejša navodila za nakazilo si prejel/a po emailu.
+            <p style={{ fontSize: 17, lineHeight: 1.8, color: 'rgba(255, 255, 255, 0.9)', marginBottom: 32 }}>
+              <br />Za potrditev termina te prosim, da nakažeš avans v višini <strong style={{ color: '#fff' }}>50€</strong>.<br /><br />
+              <span style={{ fontSize: 17 }}>Podrobnejša navodila za nakazilo si prejel/a po emailu.</span>
             </p>
             <Link to="/" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 50, background: 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))', color: '#fff', textDecoration: 'none', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Nazaj na začetek</Link>
           </div>

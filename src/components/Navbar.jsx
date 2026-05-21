@@ -5,7 +5,6 @@ const NAV_LINKS = [
   { label: 'O meni', path: '/' },
   { label: 'Tetoviranje', path: '/tetoviranje' },
   { label: 'Laser tretma', path: '/odstranjevanje' },
-  { label: 'PMU', path: '/obrvi' },
   { label: 'Galerija', path: '/galerija' },
   { label: 'Cenik', path: '/cenik' },
 ]
@@ -21,7 +20,6 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Zapri meni ob menjavi strani
   useEffect(() => {
     setMenuOpen(false)
   }, [location])
@@ -53,31 +51,32 @@ export default function Navbar() {
           borderRight: '0.5px solid rgba(180,120,220,0.25)',
           whiteSpace: 'nowrap',
         }}>
-          OTATTOO
-        </Link>
 
+          OTATTOO
+
+        </Link>
         {/* Desktop links */}
-<div style={{
-  display: 'flex', alignItems: 'center', gap: 8,
-  maxWidth: isMobile ? 0 : 790,
-  overflow: 'hidden',
-  opacity: isMobile ? 0 : 1,
-  transition: 'max-width 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease',
-}}>
-  {NAV_LINKS.map(link => {
-    const isActive = location.pathname === link.path
-    return (
-      <Link key={link.path} to={link.path} style={{
-        fontSize: 10, letterSpacing: 1.8, textTransform: 'uppercase',
-        color: isActive ? '#f0ecf8' : 'rgba(240,236,248,0.45)',
-        textDecoration: 'none',
-        padding: '6px 14px',
-        borderRadius: 50,
-        background: isActive ? 'rgba(119, 97, 169, 0.3)' : 'transparent',
-        whiteSpace: 'nowrap',
-      }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8,
+          maxWidth: isMobile ? 0 : 790,
+          overflow: 'hidden',
+          opacity: isMobile ? 0 : 1,
+          transition: 'max-width 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease',
+        }}>
+            {NAV_LINKS.map(link => {
+              const isActive = location.pathname === link.path
+              return (
+                <Link key={link.path} to={link.path} style={{
+                  fontSize: 10, letterSpacing: 1.8, textTransform: 'uppercase',
+                  color: isActive ? '#f0ecf8' : 'rgba(240,236,248,0.45)',
+                  textDecoration: 'none',
+                  padding: '6px 14px',
+                  borderRadius: 50,
+                  background: isActive ? 'rgba(119, 97, 169, 0.3)' : 'transparent',
+                  whiteSpace: 'nowrap',
+                }}>
         {link.label}
-      </Link>
+        </Link>
     )
   })}
   <Link to="/booking" style={{
@@ -134,22 +133,22 @@ export default function Navbar() {
       {/* Mobile dropdown meni */}
       {isMobile && (
         <div style={{
-  position: 'fixed', top: 72, left: '50%',
-  transform: `translateX(-50%) scaleY(${menuOpen ? 1 : 0})`,
-  transformOrigin: 'top center',
-  zIndex: 999,
-  background: 'rgba(15, 10, 20, 0.95)',
-  backdropFilter: 'blur(12px)',
-  borderRadius: 16,
-  padding: '12px 8px',
-  border: '0.5px solid rgba(119, 97, 169, 0.25)',
-  boxShadow: '0 8px 32px rgba(120, 60, 180, 0.2)',
-  display: 'flex', flexDirection: 'column', gap: 4,
-  minWidth: 200,
-  opacity: menuOpen ? 1 : 0,
-  pointerEvents: menuOpen ? 'auto' : 'none',
-  transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease',
-}}>
+          position: 'fixed', top: 72, left: '50%',
+          transform: `translateX(-50%) scaleY(${menuOpen ? 1 : 0})`,
+          transformOrigin: 'top center',
+          zIndex: 999,
+          background: 'rgba(15, 10, 20, 0.95)',
+          backdropFilter: 'blur(12px)',
+          borderRadius: 16,
+          padding: '12px 8px',
+          border: '0.5px solid rgba(119, 97, 169, 0.25)',
+          boxShadow: '0 8px 32px rgba(120, 60, 180, 0.2)',
+          display: 'flex', flexDirection: 'column', gap: 4,
+          minWidth: 200,
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? 'auto' : 'none',
+          transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease',
+        }}>
           {NAV_LINKS.map(link => {
             const isActive = location.pathname === link.path
             return (

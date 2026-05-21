@@ -8,7 +8,6 @@ import SplashScreen from './components/SplashScreen'
 import Home from './pages/Home'
 import Tetoviranje from './pages/Tetoviranje'
 import Odstranjevanje from './pages/Odstranjevanje'
-import Obrvi from './pages/Obrvi'
 import Cenik from './pages/Cenik'
 import Booking from './pages/Booking'
 import Galerija from './pages/Galerija'
@@ -25,7 +24,6 @@ function AppInner() {
             <Route path="/" element={<Home />} />
             <Route path="/tetoviranje" element={<Tetoviranje />} />
             <Route path="/odstranjevanje" element={<Odstranjevanje />} />
-            <Route path="/obrvi" element={<Obrvi />} />
             <Route path="/cenik" element={<Cenik />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/galerija" element={<Galerija />} />

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const SLIDES = [
   { src: '/kaja2.jpg' },
@@ -17,6 +17,37 @@ function Squiggle({ style }) {
       <path d="M26 18 C40 30, 16 50, 30 70 C44 90, 16 110, 32 130"
         stroke="var(--color-primary)" strokeWidth="0.6" fill="none" opacity="0.45" />
     </svg>
+  )
+}
+
+// Dodaj na vrh komponente
+function ParallaxSlika({ src }) {
+  const ref = useRef(null)
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return
+      const rect = ref.current.getBoundingClientRect()
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2
+      setOffset(center * 0.3)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <div ref={ref} style={{ height: '60vh', overflow: 'hidden', position: 'relative' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(23,18,39,0.55)', zIndex: 1 }} />
+      <img src={src} style={{
+        position: 'absolute', top: 0, left: 0,
+        width: '100%', height: '130%',
+        objectFit: 'cover',
+        transform: `translateY(${offset}px)`,
+        willChange: 'transform',
+      }} alt="" />
+    </div>
   )
 }
 
@@ -51,6 +82,7 @@ export default function Tetoviranje() {
           padding: 80px 40px;
           position: relative;
           z-index: 2;
+          overflow: hidden;
         }
       `}</style>
 
@@ -104,8 +136,8 @@ export default function Tetoviranje() {
       </div>
 
       {/* PARALLAX SLIKA 1 */}
-      <div className="parallax-img" style={{ backgroundImage: 'url(/tatu2.jpg)' }} />
-
+      <ParallaxSlika src="/tatu2.jpg" />
+      
       {/* 2. ODSTAVEK */}
       <div className="odstavek">
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
@@ -121,7 +153,7 @@ export default function Tetoviranje() {
       </div>
 
       {/* PARALLAX SLIKA 2 */}
-      <div className="parallax-img" style={{ backgroundImage: 'url(/tatu6.jpg)' }} />
+      <ParallaxSlika src="/tatu6.jpg" />
 
       {/* 3. ODSTAVEK */}
       <div className="odstavek">
@@ -138,7 +170,7 @@ export default function Tetoviranje() {
       </div>
 
       {/* PARALLAX SLIKA 3 */}
-      <div className="parallax-img" style={{ backgroundImage: 'url(/tatu4.jpg)' }} />
+      <ParallaxSlika src="/tatu4.jpg" />
 
       {/* BOOKING CTA */}
       <div className="odstavek" style={{ textAlign: 'center', padding: '60px 40px' }}>

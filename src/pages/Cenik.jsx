@@ -29,16 +29,6 @@ const CENIK = [
       { naziv: 'Odstranjevanje nad 20 cm', cena: 'po dogovoru' },
     ],
   },
-  {
-    kategorija: 'Permanentni make-up',
-    icon: '✿',
-    postavke: [
-      { naziv: 'Obrvi (prva izvedba)', cena: '150,00 €' },
-      { naziv: 'Korekcija obrvi', cena: '50,00 €' },
-      { naziv: 'Ustnice (prva izvedba)', cena: '150,00 €' },
-      { naziv: 'Korekcija ustnic', cena: '50,00 €' },
-    ],
-  },
 ]
 
 export default function Cenik() {
@@ -103,7 +93,7 @@ export default function Cenik() {
         <div style={{
           maxWidth: 1020, margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
           gap: 30,
         }}>
           {CENIK.map(kat => (
