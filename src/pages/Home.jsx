@@ -148,7 +148,7 @@ export default function Home() {
                 Sčasoma sem svoje znanje razširila tudi na področje permanentnega make-upa ter odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
               </p>
             </div>
-            <SlikaNaura src="/tatu9.jpg" alt="Studio" flip isMobile={isMobile} />
+            <SlikaNaura src="/tatu10.jpg" alt="Studio" flip isMobile={isMobile} />
           </div>
         </div>
 
@@ -182,7 +182,7 @@ export default function Home() {
                 Redno se izobražujem in sledim najnovejšim tehnikam, da lahko zagotavljam kakovostne in estetsko dovršene rezultate – bodisi gre za tetovažo, PMU ali lasersko odstranjevanje.
               </p>
             </div>
-            <SlikaNaura src="/kaja4.jpg" alt="Certifikati" flip isMobile={isMobile} />
+            <SlikaNaura src="/tatu9.jpg" alt="Certifikati" flip isMobile={isMobile} />
           </div>
         </div>
 
