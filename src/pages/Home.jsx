@@ -1,53 +1,159 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
+const HERO_IMAGES = ['/kaja1.jpg', '/tatu8.jpg', '/hero.jpg']
+
 const GALLERY = [
-  { label: 'foto 1', bg: 'var(--color-bg-3)' },
-  { label: 'foto 2', bg: 'var(--color-bg-2)' },
-  { label: 'foto 3', bg: 'var(--color-bg-3)' },
-  { label: 'foto 4', bg: 'var(--color-bg-2)' },
-  { label: 'foto 5', bg: 'var(--color-bg-3)' },
-  { label: 'foto 6', bg: 'var(--color-bg-2)' },
+  { src: '/galerija1.jpg', alt: 'tetovaža 1' },
+  { src: '/galerija5.jpg', alt: 'tetovaža 2' },
+  { src: '/galerija3.jpg', alt: 'tetovaža 3' },
+  { src: '/galerija4.jpg', alt: 'tetovaža 4' },
+  { src: '/galerija2.jpg', alt: 'tetovaža 5' },
+  { src: '/galerija8.jpg', alt: 'tetovaža 6' },
 ]
 
 function Squiggle({ style }) {
   return (
     <svg style={style} viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M40 8 C58 24, 22 42, 40 62 C58 82, 22 102, 40 122 C58 142, 24 155, 40 155"
-        stroke="var(--color-primary)" strokeWidth="1.2" fill="none" />
-      <path d="M26 18 C40 30, 16 50, 30 70 C44 90, 16 110, 32 130"
-        stroke="var(--color-primary)" strokeWidth="0.6" fill="none" opacity="0.45" />
+      <path
+        d="M40 8 C58 24, 22 42, 40 62 C58 82, 22 102, 40 122 C58 142, 24 155, 40 155"
+        stroke="var(--color-primary)"
+        strokeWidth="1.2"
+        fill="none"
+      />
+      <path
+        d="M26 18 C40 30, 16 50, 30 70 C44 90, 16 110, 32 130"
+        stroke="var(--color-primary)"
+        strokeWidth="0.6"
+        fill="none"
+        opacity="0.45"
+      />
     </svg>
   )
 }
 
-function SlikaNaura({ src, alt, height = 460, flip = false, isMobile = false }) {
+function FloatingOrb({ style }) {
   return (
-    <div style={{
-      flex: isMobile ? 'none' : '0 0 360px',
-      width: isMobile ? '100%' : 'auto',
-      position: 'relative',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      height: isMobile ? 280 : height,
-    }}>
-      <img src={src} style={{
+    <div
+      style={{
         position: 'absolute',
-        width: '115%', height: '115%',
-        objectFit: 'cover',
-        filter: 'blur(32px)',
-        opacity: 0.3,
-        borderRadius: 12,
-        zIndex: 0,
-      }} alt="" />
-      <div style={{
-        position: 'relative', zIndex: 1,
-        width: '100%', height: '100%',
-        borderRadius: 4, overflow: 'hidden',
-        border: '0.5px solid var(--color-primary-20)',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
-        transform: isMobile ? 'none' : flip ? 'translateY(16px)' : 'translateY(-16px)',
-      }}>
-        <img src={src} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={alt} />
+        borderRadius: '999px',
+        background: 'radial-gradient(circle, var(--color-primary-20), transparent 70%)',
+        filter: 'blur(2px)',
+        animation: 'floatOrb 8s ease-in-out infinite',
+        pointerEvents: 'none',
+        ...style,
+      }}
+    />
+  )
+}
+
+function Reveal({ children, delay = 0 }) {
+  return (
+    <div
+      className="revealBlock"
+      style={{
+        animationDelay: `${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+function SlikaNaura({ src, alt, height = 460, flip = false, isMobile = false }) {
+  const [hover, setHover] = useState(false)
+
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        flex: isMobile ? 'none' : '0 0 360px',
+        width: isMobile ? '100%' : 'auto',
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: isMobile ? 280 : height,
+        perspective: 1000,
+      }}
+    >
+      <img
+        src={src}
+        style={{
+          position: 'absolute',
+          width: '118%',
+          height: '118%',
+          objectFit: 'cover',
+          filter: 'blur(34px)',
+          opacity: hover ? 0.46 : 0.3,
+          borderRadius: 20,
+          zIndex: 0,
+          transition: 'opacity 0.45s ease, transform 0.45s ease',
+          transform: hover ? 'scale(1.05)' : 'scale(1)',
+        }}
+        alt=""
+      />
+
+      <div
+        style={{
+          position: 'absolute',
+          inset: isMobile ? 10 : -10,
+          border: '1px solid var(--color-primary-20)',
+          borderRadius: 18,
+          transform: hover ? 'rotate(2deg) scale(1.02)' : 'rotate(-2deg) scale(1)',
+          transition: 'transform 0.45s ease',
+          opacity: 0.7,
+          zIndex: 0,
+        }}
+      />
+
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          width: '100%',
+          height: '100%',
+          borderRadius: 18,
+          overflow: 'hidden',
+          border: '0.5px solid var(--color-primary-20)',
+          boxShadow: hover
+            ? '0 34px 90px rgba(0,0,0,0.75), 0 0 38px var(--color-primary-20)'
+            : '0 20px 60px rgba(0,0,0,0.6)',
+          transform: isMobile
+            ? hover ? 'scale(1.015)' : 'none'
+            : hover
+              ? `${flip ? 'translateY(16px)' : 'translateY(-16px)'} rotateX(3deg) rotateY(-4deg) scale(1.025)`
+              : flip
+                ? 'translateY(16px)'
+                : 'translateY(-16px)',
+          transition: 'transform 0.45s ease, box-shadow 0.45s ease',
+        }}
+      >
+        <img
+          src={src}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: hover ? 'scale(1.08)' : 'scale(1)',
+            transition: 'transform 0.7s ease',
+          }}
+          alt={alt}
+        />
+
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: hover
+              ? 'linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.13) 50%, transparent 70%)'
+              : 'transparent',
+            transform: hover ? 'translateX(100%)' : 'translateX(-100%)',
+            transition: 'transform 0.9s ease',
+          }}
+        />
       </div>
     </div>
   )
@@ -56,9 +162,11 @@ function SlikaNaura({ src, alt, height = 460, flip = false, isMobile = false }) 
 export default function Home() {
   const [current, setCurrent] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+  const [selectedImage, setSelectedImage] = useState(null)
 
   useEffect(() => {
-    const interval = setInterval(() => setCurrent(c => (c + 1) % 3), 4000)
+    const interval = setInterval(() => setCurrent(c => (c + 1) % HERO_IMAGES.length), 4200)
     return () => clearInterval(interval)
   }, [])
 
@@ -68,174 +176,586 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    const handleMouseMove = e => {
+      setMouse({
+        x: (e.clientX / window.innerWidth - 0.5) * 18,
+        y: (e.clientY / window.innerHeight - 0.5) * 18,
+      })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   const odstavekStyle = {
-    padding: isMobile ? '60px 20px' : '80px 40px',
-    overflow: 'hidden', position: 'relative', background: '#120e1c',
+    padding: isMobile ? '70px 20px' : '100px 40px',
+    overflow: 'hidden',
+    position: 'relative',
+    background: '#120e1c',
   }
 
   return (
-    <div style={{ fontFamily: "'Montserrat', sans-serif", background: 'var(--color-bg)', color: '#ffffff', minHeight: '100vh' }}>
+    <div
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        background: 'var(--color-bg)',
+        color: '#ffffff',
+        minHeight: '100vh',
+        overflowX: 'hidden',
+      }}
+    >
+      <style>
+        {`
+          @keyframes floatOrb {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.45; }
+            50% { transform: translateY(-24px) scale(1.08); opacity: 0.8; }
+          }
+
+          @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(34px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+
+          @keyframes pulseLine {
+            0%, 100% { transform: scaleX(0.4); opacity: 0.4; }
+            50% { transform: scaleX(1); opacity: 1; }
+          }
+
+          @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+
+          .revealBlock {
+            animation: fadeUp 0.9s ease both;
+          }
+
+          .heroButton:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.45), 0 0 30px var(--color-primary-20);
+          }
+
+          .galleryCard:hover .galleryOverlay {
+            opacity: 1;
+          }
+
+          .galleryCard:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+            border-color: var(--color-primary-50);
+          }
+
+          .stickyBooking:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.5), 0 0 28px var(--color-primary-20);
+          }
+
+          @media (max-width: 767px) {
+            .stickyBooking {
+              bottom: 16px !important;
+              right: 16px !important;
+              left: 16px !important;
+              text-align: center;
+            }
+          }
+        `}
+      </style>
 
       {/* Slideshow */}
       <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
-        {['/kaja1.jpg', '/tatu8.jpg', '/hero.jpg'].map((src, i) => (
-          <div key={i} style={{ position: 'absolute', inset: 0, opacity: i === current ? 1 : 0, transition: 'opacity 1.5s ease' }}>
-            <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {HERO_IMAGES.map((src, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: i === current ? 1 : 0,
+              transition: 'opacity 1.6s ease',
+              transform: `translate(${mouse.x * 0.25}px, ${mouse.y * 0.25}px) scale(1.04)`,
+            }}
+          >
+            <img
+              src={src}
+              alt=""
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                transform: i === current ? 'scale(1.06)' : 'scale(1)',
+                transition: 'transform 5s ease',
+              }}
+            />
           </div>
         ))}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,6,18,0.98) 0%, rgba(10,6,18,0.55) 50%, rgba(10,6,18,0.35) 100%)' }} />
-        <div style={{ position: 'absolute', bottom: '30%', left: '50%', transform: 'translateX(-50%)', width: 600, height: 300, background: 'radial-gradient(ellipse, var(--color-primary-15) 0%, transparent 70%)' }} />
+
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(to top, rgba(10,6,18,0.99) 0%, rgba(10,6,18,0.72) 45%, rgba(10,6,18,0.28) 100%)',
+          }}
+        />
+
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(circle at 50% 65%, var(--color-primary-20), transparent 35%)',
+            opacity: 0.8,
+          }}
+        />
+
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '52%',
+            width: isMobile ? 260 : 460,
+            height: isMobile ? 260 : 460,
+            border: '1px solid var(--color-primary-20)',
+            borderRadius: '999px',
+            transform: `translate(-50%, -50%) translate(${mouse.x * 0.5}px, ${mouse.y * 0.5}px)`,
+            animation: 'spinSlow 30s linear infinite',
+            opacity: 0.45,
+          }}
+        />
+
+        <FloatingOrb style={{ width: 140, height: 140, top: '20%', left: '8%' }} />
+        <FloatingOrb style={{ width: 180, height: 180, bottom: '18%', right: '10%', animationDelay: '1.6s' }} />
       </div>
 
       {/* HERO */}
       <section style={{ position: 'relative', height: '100vh', zIndex: 1 }}>
-        {!isMobile && <Squiggle style={{ position: 'absolute', top: 100, right: 80, width: 60, height: 130, opacity: 0.2, zIndex: 2 }} />}
-        <div style={{ position: 'absolute', bottom: 60, left: 0, right: 0, zIndex: 3, textAlign: 'center', padding: '0 20px' }}>
-          <img src="/logo.png" alt="OTattoo logo" style={{
-            width: isMobile ? 120 : 160, height: isMobile ? 120 : 160, objectFit: 'contain',
-            marginBottom: 20, filter: 'brightness(0) invert(1)', opacity: 0.9,
-          }} />
-          <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12 }}>Tattoo Studio</p>
-          <h1 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: isMobile ? 52 : 82, fontWeight: 400, lineHeight: 1.1,
-            margin: '0 0 28px', color: '#ffffff',
-          }}>
-            BLABLABLA
-          </h1>
+        {!isMobile && (
+          <>
+            <Squiggle
+              style={{
+                position: 'absolute',
+                top: 100,
+                right: 80,
+                width: 60,
+                height: 130,
+                opacity: 0.25,
+                zIndex: 2,
+                transform: `translate(${mouse.x}px, ${mouse.y}px)`,
+                transition: 'transform 0.2s ease-out',
+              }}
+            />
+
+            <Squiggle
+              style={{
+                position: 'absolute',
+                bottom: 120,
+                left: 90,
+                width: 50,
+                height: 120,
+                opacity: 0.14,
+                zIndex: 2,
+                transform: `translate(${-mouse.x}px, ${-mouse.y}px) rotate(180deg)`,
+                transition: 'transform 0.2s ease-out',
+              }}
+            />
+          </>
+        )}
+
+        <div
+          style={{
+            position: 'absolute',
+            bottom: isMobile ? 86 : 70,
+            left: 0,
+            right: 0,
+            zIndex: 3,
+            textAlign: 'center',
+            padding: '0 20px',
+          }}
+        >
+          <Reveal>
+            <img
+              src="/logo.png"
+              alt="OTattoo logo"
+              style={{
+                width: isMobile ? 120 : 164,
+                height: isMobile ? 120 : 164,
+                objectFit: 'contain',
+                marginBottom: 22,
+                filter: 'brightness(0) invert(1) drop-shadow(0 18px 30px rgba(0,0,0,0.45))',
+                opacity: 0.92,
+              }}
+            />
+
+            <p
+              style={{
+                fontSize: 10,
+                letterSpacing: 4,
+                textTransform: 'uppercase',
+                color: 'var(--color-primary-50)',
+                marginBottom: 12,
+              }}
+            >
+              Tattoo Studio
+            </p>
+
+            <h1
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: isMobile ? 56 : 94,
+                fontWeight: 400,
+                lineHeight: 1.04,
+                margin: '0 0 28px',
+                color: '#ffffff',
+                textShadow: '0 20px 60px rgba(0,0,0,0.7)',
+              }}
+            >
+              BLABLABLA
+            </h1>
+
+            <div
+              style={{
+                width: isMobile ? 120 : 180,
+                height: 1,
+                background: 'var(--color-primary)',
+                margin: '0 auto',
+                transformOrigin: 'center',
+                animation: 'pulseLine 2.4s ease-in-out infinite',
+                opacity: 0.8,
+              }}
+            />
+          </Reveal>
         </div>
-        <div style={{ position: 'absolute', bottom: 20, left: 0, right: 0, zIndex: 4, display: 'flex', justifyContent: 'center', gap: 8 }}>
-          {[0,1,2].map(i => (
-            <button key={i} onClick={() => setCurrent(i)} style={{
-              width: 6, height: 6, borderRadius: '50%', border: 'none', cursor: 'pointer', padding: 0,
-              background: i === current ? 'rgba(255,255,255,0.6)' : 'rgba(240,236,248,0.14)',
-              transition: 'background 0.2s',
-            }} />
+
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 28,
+            left: 0,
+            right: 0,
+            zIndex: 4,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 10,
+          }}
+        >
+          {HERO_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              style={{
+                width: i === current ? 26 : 7,
+                height: 7,
+                borderRadius: 50,
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                background:
+                  i === current ? 'rgba(255,255,255,0.72)' : 'rgba(240,236,248,0.18)',
+                transition: 'all 0.25s ease',
+              }}
+            />
           ))}
         </div>
       </section>
 
       {/* O NAS */}
       <section style={{ background: 'var(--color-bg-2)', padding: 0, position: 'relative', zIndex: 200 }}>
-
         {/* 1. odstavek */}
         <div style={odstavekStyle}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', zIndex: 1, maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 32 : 60, alignItems: 'center' }}>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>O meni</p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 36 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 24px', color: '#ffffff' }}>
-                Sem Kaja <em style={{ color: 'var(--color-primary-light)' }}>Otavnik</em>
-              </h2>
-              <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                Moja pot se je začela iz ljubezni do umetnosti in želje, da ljudem pomagam izraziti sebe na unikaten in trajen način.
-              </p>
-            </div>
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(ellipse at 25% 50%, rgba(119,97,169,0.18) 0%, transparent 58%)',
+              zIndex: 0,
+              pointerEvents: 'none',
+            }}
+          />
+
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              maxWidth: 1080,
+              margin: '0 auto',
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              gap: isMobile ? 34 : 70,
+              alignItems: 'center',
+            }}
+          >
+            <Reveal>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
+                  O meni
+                </p>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 40 : 56, fontWeight: 300, lineHeight: 1.05, margin: '0 0 24px', color: '#ffffff' }}>
+                  Sem Kaja <em style={{ color: 'var(--color-primary-light)' }}>Otavnik</em>
+                </h2>
+                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                  Moja pot se je začela iz ljubezni do umetnosti in želje, da ljudem pomagam izraziti sebe na unikaten in trajen način.
+                </p>
+              </div>
+            </Reveal>
+
             <SlikaNaura src="/kaja3.jpg" alt="Kaja Otavnik" isMobile={isMobile} />
           </div>
         </div>
 
         {/* 2. odstavek */}
         <div style={odstavekStyle}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', zIndex: 1, maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row-reverse', gap: isMobile ? 32 : 60, alignItems: 'center' }}>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>Moje področje</p>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 30 : 36, fontWeight: 300, lineHeight: 1.1, margin: '0 0 20px', color: '#ffffff' }}>
-                Tattoo, PMU &<br /><em style={{ color: 'var(--color-primary-light)' }}>odstranjevanje</em>
-              </h3>
-              <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                Sčasoma sem svoje znanje razširila tudi na področje permanentnega make-upa ter odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
-              </p>
-            </div>
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 75% 50%, rgba(119,97,169,0.16) 0%, transparent 58%)', zIndex: 0, pointerEvents: 'none' }} />
+
+          <div style={{ position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row-reverse', gap: isMobile ? 34 : 70, alignItems: 'center' }}>
+            <Reveal>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
+                  Moje področje
+                </p>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
+                  Tattoo, PMU &<br /><em style={{ color: 'var(--color-primary-light)' }}>odstranjevanje</em>
+                </h3>
+                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                  Sčasoma sem svoje znanje razširila tudi na področje permanentnega make-upa ter odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
+                </p>
+              </div>
+            </Reveal>
+
             <SlikaNaura src="/tatu10.jpg" alt="Studio" flip isMobile={isMobile} />
           </div>
         </div>
 
         {/* 3. odstavek */}
         <div style={odstavekStyle}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', zIndex: 1, maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 32 : 60, alignItems: 'center' }}>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>Moj pristop</p>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 30 : 36, fontWeight: 300, lineHeight: 1.1, margin: '0 0 20px', color: '#ffffff' }}>
-                Varnost &<br /><em style={{ color: 'var(--color-primary-light)' }}>osebni pristop</em>
-              </h3>
-              <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                Pri svojem delu dajem velik poudarek na varnost, higieno in individualen pristop. Vsaki stranki se posvetim osebno – od prve ideje do končnega rezultata. Pomembno mi je, da se pri meni počutiš sproščeno, slišano in v varnih rokah.
-              </p>
-            </div>
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 25% 50%, rgba(119,97,169,0.16) 0%, transparent 58%)', zIndex: 0, pointerEvents: 'none' }} />
+
+          <div style={{ position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 34 : 70, alignItems: 'center' }}>
+            <Reveal>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
+                  Moj pristop
+                </p>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
+                  Varnost &<br /><em style={{ color: 'var(--color-primary-light)' }}>osebni pristop</em>
+                </h3>
+                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                  Pri svojem delu dajem velik poudarek na varnost, higieno in individualen pristop. Vsaki stranki se posvetim osebno – od prve ideje do končnega rezultata. Pomembno mi je, da se pri meni počutiš sproščeno, slišano in v varnih rokah.
+                </p>
+              </div>
+            </Reveal>
+
             <SlikaNaura src="/kaja4.jpg" alt="Pri delu" isMobile={isMobile} />
           </div>
         </div>
 
         {/* 4. odstavek */}
         <div style={odstavekStyle}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', zIndex: 1, maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row-reverse', gap: isMobile ? 32 : 60, alignItems: 'center' }}>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>Izobraževanje</p>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 30 : 36, fontWeight: 300, lineHeight: 1.1, margin: '0 0 20px', color: '#ffffff' }}>
-                Stalno<br /><em style={{ color: 'var(--color-primary-light)' }}>napredovanje</em>
-              </h3>
-              <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                Redno se izobražujem in sledim najnovejšim tehnikam, da lahko zagotavljam kakovostne in estetsko dovršene rezultate – bodisi gre za tetovažo, PMU ali lasersko odstranjevanje.
-              </p>
-            </div>
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 75% 50%, rgba(119,97,169,0.16) 0%, transparent 58%)', zIndex: 0, pointerEvents: 'none' }} />
+
+          <div style={{ position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row-reverse', gap: isMobile ? 34 : 70, alignItems: 'center' }}>
+            <Reveal>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
+                  Izobraževanje
+                </p>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
+                  Stalno<br /><em style={{ color: 'var(--color-primary-light)' }}>napredovanje</em>
+                </h3>
+                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                  Redno se izobražujem in sledim najnovejšim tehnikam, da lahko zagotavljam kakovostne in estetsko dovršene rezultate – bodisi gre za tetovažo, PMU ali lasersko odstranjevanje.
+                </p>
+              </div>
+            </Reveal>
+
             <SlikaNaura src="/tatu9.jpg" alt="Certifikati" flip isMobile={isMobile} />
           </div>
         </div>
 
         {/* 5. CTA */}
         <div style={{ ...odstavekStyle, textAlign: 'center' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.12) 0%, transparent 70%)', zIndex: 0 }} />
-          <div style={{ position: 'relative', zIndex: 1, maxWidth: 700, margin: '0 auto' }}>
-            <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 20 }}>Stopi v stik</p>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 28 : 44, fontWeight: 300, lineHeight: 1.4, margin: '0 0 20px', color: '#ffffff' }}>
-              Če razmišljaš o novi tetovaži, popravku, permanentnem make-upu ali odstranitvi stare tetovaže,{' '}
-              <em style={{ color: 'var(--color-primary-light)' }}>te vabim, da stopiš v stik z mano.</em>
-            </h3>
-            <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.8, color: 'rgba(255,255,255,0.55)', marginBottom: 36 }}>
-              Skupaj bomo našli rešitev, ki bo najbolj ustrezala tebi.
-            </p>
-            <div style={{ display: 'inline-block', background: 'rgba(13,10,20,0.88)', backdropFilter: 'blur(12px)', borderRadius: 50, padding: '4px', border: '0.5px solid rgba(119,97,169,0.2)' }}>
-              <Link to="/booking" style={{
-                display: 'inline-block', padding: '14px 36px',
-                background: 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))',
-                color: '#ffffff', fontSize: 10, letterSpacing: 2.5,
-                textTransform: 'uppercase', textDecoration: 'none', borderRadius: 50,
-              }}>Rezerviraj termin</Link>
-            </div>
-          </div>
-        </div>
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.2) 0%, transparent 65%)', zIndex: 0 }} />
 
+          <Reveal>
+            <div style={{ position: 'relative', zIndex: 1, maxWidth: 760, margin: '0 auto' }}>
+              <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 20 }}>
+                Stopi v stik
+              </p>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 30 : 48, fontWeight: 300, lineHeight: 1.35, margin: '0 0 20px', color: '#ffffff' }}>
+                Če razmišljaš o novi tetovaži, popravku, permanentnem make-upu ali odstranitvi stare tetovaže,{' '}
+                <em style={{ color: 'var(--color-primary-light)' }}>te vabim, da stopiš v stik z mano.</em>
+              </h3>
+              <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.8, color: 'rgba(255,255,255,0.55)', marginBottom: 36 }}>
+                Skupaj bomo našli rešitev, ki bo najbolj ustrezala tebi.
+              </p>
+
+              <div style={{ display: 'inline-block', background: 'rgba(13,10,20,0.88)', backdropFilter: 'blur(12px)', borderRadius: 50, padding: '5px', border: '0.5px solid rgba(119,97,169,0.25)' }}>
+                <Link
+                  to="/booking"
+                  className="heroButton"
+                  style={{
+                    display: 'inline-block',
+                    padding: '15px 40px',
+                    background: 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))',
+                    color: '#ffffff',
+                    fontSize: 10,
+                    letterSpacing: 2.5,
+                    textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    borderRadius: 50,
+                    transition: 'all 0.25s ease',
+                  }}
+                >
+                  Rezerviraj termin
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       {/* GALERIJA */}
-      <section style={{ padding: isMobile ? '40px 0 60px' : '60px 0 100px', position: 'relative', zIndex: 2, background: '#120e1c' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', padding: isMobile ? '0 16px' : '0 40px' }}>
-          <Link to="/galerija" style={{
-            fontSize: 9, letterSpacing: 3, textTransform: 'uppercase',
-            color: 'var(--color-primary-50)', marginBottom: 20, display: 'inline-block', textDecoration: 'none',
-          }}
-          onMouseEnter={e => e.target.style.color = 'var(--color-primary-light)'}
-          onMouseLeave={e => e.target.style.color = 'var(--color-primary-50)'}
-          >Galerija →</Link>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: isMobile ? 4 : 6 }}>
-            {GALLERY.map((item, n) => (
-              <div key={n} style={{
-                aspectRatio: '1 / 1', background: item.bg,
-                border: '0.5px solid var(--color-primary-20)',
-                borderRadius: isMobile ? 6 : 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 9, letterSpacing: 1, color: 'var(--color-primary-25)',
-                textTransform: 'uppercase', cursor: 'pointer',
-              }}>{item.label}</div>
-            ))}
+      <section style={{ padding: isMobile ? '56px 0 86px' : '90px 0 130px', position: 'relative', zIndex: 2, background: '#120e1c' }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at top, rgba(119,97,169,0.14), transparent 60%)' }} />
+
+        <div style={{ position: 'relative', maxWidth: 1080, margin: '0 auto', padding: isMobile ? '0 16px' : '0 40px' }}>
+          <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 20, marginBottom: 26 }}>
+            <div>
+              <Link
+                to="/galerija"
+                style={{
+                  fontSize: 9,
+                  letterSpacing: 3,
+                  textTransform: 'uppercase',
+                  color: 'var(--color-primary-50)',
+                  marginBottom: 14,
+                  display: 'inline-block',
+                  textDecoration: 'none',
+                }}
+                onMouseEnter={e => (e.target.style.color = 'var(--color-primary-light)')}
+                onMouseLeave={e => (e.target.style.color = 'var(--color-primary-50)')}
+              >
+                Galerija →
+              </Link>
+            </div>
           </div>
+        <div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+    gap: isMobile ? 10 : 14,
+  }}
+>
+  {GALLERY.map((item, n) => (
+    <button
+      key={n}
+      className="galleryCard"
+      onClick={() => setSelectedImage(item)}
+      style={{
+        position: 'relative',
+        aspectRatio: '1 / 1',
+        background: 'rgba(255,255,255,0.03)',
+        border: '0.5px solid var(--color-primary-20)',
+        borderRadius: 18,
+        overflow: 'hidden',
+        padding: 0,
+        cursor: 'pointer',
+        transition: 'transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease',
+      }}
+    >
+      <img
+        src={item.src}
+        alt={item.alt}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+          transition: 'none',
+        }}
+      />
+
+      <div
+        className="galleryOverlay"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          opacity: 0,
+          transition: 'opacity 0.35s ease',
+          background: 'linear-gradient(to top, rgba(10,6,18,0.82), rgba(10,6,18,0.08))',
+          display: 'flex',
+          alignItems: 'flex-end',
+          padding: 18,
+        }}
+      >
+        <span
+          style={{
+            color: '#fff',
+            fontSize: 10,
+            letterSpacing: 2.4,
+            textTransform: 'uppercase',
+          }}
+        >
+          {item.alt}
+        </span>
+      </div>
+    </button>
+  ))}
+</div>
         </div>
       </section>
 
+      {/* LIGHTBOX */}
+      {selectedImage && (
+        <div
+          onClick={() => setSelectedImage(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(5,3,10,0.86)',
+            backdropFilter: 'blur(14px)',
+            zIndex: 2000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 20,
+            animation: 'fadeUp 0.25s ease both',
+          }}
+        >
+          <button
+            onClick={() => setSelectedImage(null)}
+            style={{
+              position: 'absolute',
+              top: 24,
+              right: 24,
+              width: 42,
+              height: 42,
+              borderRadius: 999,
+              border: '1px solid var(--color-primary-20)',
+              background: 'rgba(255,255,255,0.06)',
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: 20,
+            }}
+          >
+            ×
+          </button>
+
+          <img
+            src={selectedImage.src}
+            alt={selectedImage.alt}
+            onClick={e => e.stopPropagation()}
+            style={{
+              maxWidth: 'min(920px, 92vw)',
+              maxHeight: '86vh',
+              objectFit: 'contain',
+              borderRadius: 22,
+              boxShadow: '0 30px 100px rgba(0,0,0,0.75)',
+              border: '1px solid var(--color-primary-20)',
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }
