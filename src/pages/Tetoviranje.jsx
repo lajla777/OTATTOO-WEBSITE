@@ -7,7 +7,14 @@ const SLIDES = [
   { src: '/hero.jpg' },
 ]
 
-const GALLERY = [1, 2, 3, 4, 5, 6]
+const GALLERY = [
+  { src: '/galerija1.jpg', alt: 'tetovaža 1' },
+  { src: '/galerija5.jpg', alt: 'tetovaža 2' },
+  { src: '/galerija3.jpg', alt: 'tetovaža 3' },
+  { src: '/galerija4.jpg', alt: 'tetovaža 4' },
+  { src: '/galerija2.jpg', alt: 'tetovaža 5' },
+  { src: '/galerija8.jpg', alt: 'tetovaža 6' },
+]
 
 function Squiggle({ style }) {
   return (
@@ -53,11 +60,14 @@ function ParallaxSlika({ src }) {
 
 export default function Tetoviranje() {
   const [current, setCurrent] = useState(0)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [selectedImage, setSelectedImage] = useState(null)
 
-  useEffect(() => {
-    const interval = setInterval(() => setCurrent(c => (c + 1) % SLIDES.length), 4000)
-    return () => clearInterval(interval)
-  }, [])
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth < 768)
+  window.addEventListener('resize', handleResize)
+  return () => window.removeEventListener('resize', handleResize)
+}, [])
 
   return (
     <div style={{ fontFamily: "'Montserrat', sans-serif", color: '#ffffff', minHeight: '100vh' }}>
@@ -197,36 +207,95 @@ export default function Tetoviranje() {
 </div>
 
       {/* GALERIJA */}
-      <div className="odstavek" style={{ paddingTop: 0 }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
-  <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <Link to="/galerija" style={{
-            fontSize: 9, letterSpacing: 3, textTransform: 'uppercase',
-            color: 'var(--color-primary-50)', marginBottom: 20, display: 'inline-block',
-            textDecoration: 'none',
-          }}
-          onMouseEnter={e => e.target.style.color = 'var(--color-primary-light)'}
-          onMouseLeave={e => e.target.style.color = 'var(--color-primary-50)'}
-          >
-            Galerija →
-          </Link>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
-            {GALLERY.map(n => (
-              <div key={n} style={{
-                aspectRatio: '1 / 1',
-                background: n % 2 === 0 ? 'var(--color-bg-2)' : 'var(--color-bg-3)',
-                border: '0.5px solid var(--color-primary-20)',
-                borderRadius: 8,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 9, letterSpacing: 1, color: 'var(--color-primary-25)',
-                textTransform: 'uppercase',
-              }}>
-                foto {n}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <section style={{ padding: isMobile ? '56px 0 86px' : '90px 0 130px', position: 'relative', zIndex: 2, background: '#120e1c' }}>
+                    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at top, rgba(119,97,169,0.14), transparent 60%)' }} />
+            
+                    <div style={{ position: 'relative', maxWidth: 1080, margin: '0 auto', padding: isMobile ? '0 16px' : '0 40px' }}>
+                      <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 20, marginBottom: 26 }}>
+                        <div>
+                          <Link
+                            to="/galerija"
+                            style={{
+                              fontSize: 9,
+                              letterSpacing: 3,
+                              textTransform: 'uppercase',
+                              color: 'var(--color-primary-50)',
+                              marginBottom: 14,
+                              display: 'inline-block',
+                              textDecoration: 'none',
+                            }}
+                            onMouseEnter={e => (e.target.style.color = 'var(--color-primary-light)')}
+                            onMouseLeave={e => (e.target.style.color = 'var(--color-primary-50)')}
+                          >
+                            Galerija →
+                          </Link>
+                        </div>
+                      </div>
+                    <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+                gap: isMobile ? 10 : 14,
+              }}
+            >
+              {GALLERY.map((item, n) => (
+                <button
+                  key={n}
+                  className="galleryCard"
+                  onClick={() => setSelectedImage(item)}
+                  style={{
+                    position: 'relative',
+                    aspectRatio: '1 / 1',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '0.5px solid var(--color-primary-20)',
+                    borderRadius: 18,
+                    overflow: 'hidden',
+                    padding: 0,
+                    cursor: 'pointer',
+                    transition: 'transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease',
+                  }}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block',
+                      transition: 'none',
+                    }}
+                  />
+            
+                  <div
+                    className="galleryOverlay"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      opacity: 0,
+                      transition: 'opacity 0.35s ease',
+                      background: 'linear-gradient(to top, rgba(10,6,18,0.82), rgba(10,6,18,0.08))',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      padding: 18,
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: '#fff',
+                        fontSize: 10,
+                        letterSpacing: 2.4,
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {item.alt}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+                    </div>
+                  </section>
 
     </div>
   )

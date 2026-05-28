@@ -409,7 +409,7 @@ export default function Home() {
                 textShadow: '0 20px 60px rgba(0,0,0,0.7)',
               }}
             >
-              BLABLABLA
+              OTATTOO
             </h1>
 
             <div
