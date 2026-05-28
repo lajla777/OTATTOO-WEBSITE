@@ -2,26 +2,27 @@ import Masonry from 'react-masonry-css'
 import { useState, useEffect } from 'react'
 
 const SLIKE = [
-  { src: '/galerija1.jpg', alt: 'tetovaža 1' },
-  { src: '/galerija3.jpg', alt: 'tetovaža 2' },
-  { src: '/galerija5.jpg', alt: 'tetovaža 3' },
-  { src: '/galerija4.jpg', alt: 'tetovaža 4' },
-  { src: '/galerija2.jpg', alt: 'tetovaža 5' },
-  { src: '/galerija8.jpg', alt: 'tetovaža 6' },
-  { src: '/galerija7.jpg', alt: 'tetovaža 7' },
-  { src: '/galerija12.jpg', alt: 'tetovaža 8' },
-  { src: '/galerija9.jpg', alt: 'tetovaža 9' },
-  { src: '/galerija10.jpg', alt: 'tetovaža 10' },
-  { src: '/galerija11.jpg', alt: 'tetovaža 11' },
-  { src: '/galerija6.jpg', alt: 'tetovaža 12' },
-  { src: '/galerija13.jpg', alt: 'tetovaža 13' },
-  { src: '/galerija14.jpg', alt: 'tetovaža 14' },
-  { src: '/galerija15.jpg', alt: 'tetovaža 15' },
-  { src: '/galerija16.jpg', alt: 'tetovaža 16' },
-  { src: '/galerija17.jpg', alt: 'tetovaža 17' },
-  { src: '/galerija18.jpg', alt: 'tetovaža 18' },
-  { src: '/galerija19.jpg', alt: 'tetovaža 19' },
-  { src: '/galerija20.jpg', alt: 'tetovaža 20' },
+  { src: '/galerija19.jpg', alt: 'tetovaža 1' },
+  { src: '/galerija4.jpg', alt: 'tetovaža 2' },
+  { src: '/galerija14.jpg', alt: 'tetovaža 4' },
+  { src: '/galerija5.jpg', alt: 'tetovaža 5' },
+  { src: '/galerija24.jpg', alt: 'tetovaža 6' },
+  { src: '/galerija21.jpg', alt: 'tetovaža 7' },
+  { src: '/galerija10.jpg', alt: 'tetovaža 8' },
+  { src: '/galerija20.jpg', alt: 'tetovaža 9' },
+  { src: '/galerija7.jpg', alt: 'tetovaža 10' },
+  { src: '/galerija8.jpg', alt: 'tetovaža 11' },
+  { src: '/galerija23.jpg', alt: 'tetovaža 12' },
+  { src: '/galerija22.jpg', alt: 'tetovaža 13' },
+  { src: '/galerija11.jpg', alt: 'tetovaža 14' },
+  { src: '/galerija6.jpg', alt: 'tetovaža 15' },
+  { src: '/galerija12.jpg', alt: 'tetovaža 16' },
+  { src: '/galerija15.jpg', alt: 'tetovaža 17' },
+  { src: '/galerija17.jpg', alt: 'tetovaža 18' },
+  { src: '/galerija25.jpg', alt: 'tetovaža 19' },
+  { src: '/galerija18.jpg', alt: 'tetovaža 20' },
+  { src: '/galerija2.jpg', alt: 'tetovaža 3' },
+  { src: '/galerija16.jpg', alt: 'tetovaža 3' },
 ]
 
 const breakpoints = {
@@ -135,12 +136,35 @@ export default function Galerija() {
             cursor:pointer;
             transition:all .28s ease;
             background:#171222;
+            position: relative;
+          }
+
+          .masonry-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+              to bottom,
+              rgba(18, 9, 30, 0.5) 0%,
+              rgba(18, 9, 30, 0.4) 40%,
+              rgba(60, 20, 80, 0.2) 100%
+            );
+            border-radius: 14px;
+            pointer-events: none;
           }
 
           .masonry-card:hover{
-            transform:translateY(-8px);
+            transform:translateY(-2px);
             border-color:rgba(119,97,169,0.42);
             box-shadow:0 24px 60px rgba(0,0,0,0.45);
+          }
+
+          .masonry-card:hover::after {
+            background: linear-gradient(
+              to bottom,
+              rgba(18, 9, 30, 0.05) 0%,
+              rgba(60, 20, 80, 0.1) 100%
+            );
           }
 
           .masonry-card img{

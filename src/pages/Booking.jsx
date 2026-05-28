@@ -13,7 +13,7 @@ const LASER_TIPI = [
   { id: 'hollywood', naziv: 'Hollywood peel', opis: 'Globinsko čiščenje in pomladitev kože' },
 ]
 
-const SLIDES = ['/tatu1.jpg', '/kaja1.jpg', '/hero.jpg']
+const SLIDES = ['/tatu5.jpg']
 const PAYPAL = 'kaja@otattoo.si'
 
 const inputStyle = {

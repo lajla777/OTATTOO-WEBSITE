@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react'
 const HERO_IMAGES = ['/kaja1.jpg', '/tatu8.jpg', '/hero.jpg']
 
 const GALLERY = [
-  { src: '/galerija1.jpg', alt: 'tetovaža 1' },
-  { src: '/galerija5.jpg', alt: 'tetovaža 2' },
-  { src: '/galerija3.jpg', alt: 'tetovaža 3' },
-  { src: '/galerija4.jpg', alt: 'tetovaža 4' },
-  { src: '/galerija2.jpg', alt: 'tetovaža 5' },
-  { src: '/galerija8.jpg', alt: 'tetovaža 6' },
+  { src: '/galerija19.jpg', alt: 'tetovaža 1' },
+  { src: '/galerija4.jpg', alt: 'tetovaža 2' },
+  { src: '/galerija14.jpg', alt: 'tetovaža 4' },
+  { src: '/galerija5.jpg', alt: 'tetovaža 5' },
+  { src: '/galerija24.jpg', alt: 'tetovaža 6' },
+  { src: '/galerija21.jpg', alt: 'tetovaža 7' },
 ]
 
 function Squiggle({ style }) {
@@ -189,7 +189,7 @@ export default function Home() {
   }, [])
 
   const odstavekStyle = {
-    padding: isMobile ? '70px 20px' : '100px 40px',
+    padding: isMobile ? '25px 20px' : '100px 40px',
     overflow: 'hidden',
     position: 'relative',
     background: '#120e1c',
@@ -362,69 +362,41 @@ export default function Home() {
         )}
 
         <div
-          style={{
-            position: 'absolute',
-            bottom: isMobile ? 86 : 70,
-            left: 0,
-            right: 0,
-            zIndex: 3,
-            textAlign: 'center',
-            padding: '0 20px',
-          }}
-        >
-          <Reveal>
-            <img
-              src="/logo.png"
-              alt="OTattoo logo"
-              style={{
-                width: isMobile ? 120 : 164,
-                height: isMobile ? 120 : 164,
-                objectFit: 'contain',
-                marginBottom: 22,
-                filter: 'brightness(0) invert(1) drop-shadow(0 18px 30px rgba(0,0,0,0.45))',
-                opacity: 0.92,
-              }}
-            />
-
-            <p
-              style={{
-                fontSize: 10,
-                letterSpacing: 4,
-                textTransform: 'uppercase',
-                color: 'var(--color-primary-50)',
-                marginBottom: 12,
-              }}
-            >
-              Tattoo Studio
-            </p>
-
-            <h1
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: isMobile ? 56 : 94,
-                fontWeight: 400,
-                lineHeight: 1.04,
-                margin: '0 0 28px',
-                color: '#ffffff',
-                textShadow: '0 20px 60px rgba(0,0,0,0.7)',
-              }}
-            >
-              OTATTOO
-            </h1>
-
-            <div
-              style={{
-                width: isMobile ? 120 : 180,
-                height: 1,
-                background: 'var(--color-primary)',
-                margin: '0 auto',
-                transformOrigin: 'center',
-                animation: 'pulseLine 2.4s ease-in-out infinite',
-                opacity: 0.8,
-              }}
-            />
-          </Reveal>
-        </div>
+  style={{
+    position: 'absolute',
+    inset: 0,
+    zIndex: 3,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    padding: '0 20px',
+  }}
+>
+  <Reveal>
+    <img
+      src="/logoBlack.png"
+      alt="OTattoo logo"
+      style={{
+        width: isMobile ? 350 : 450,
+        height: isMobile ? 350 : 450,
+        objectFit: 'contain',
+        marginBottom: 5,
+        marginTop: isMobile? 0 : 50,
+        filter: 'brightness(0) invert(1) drop-shadow(0 18px 30px rgba(0,0,0,0.45))',
+        opacity: 0.92,
+      }}
+    />
+    <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12 }}>
+      Tattoo Studio
+    </p>
+    <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 56 : 94, fontWeight: 400, lineHeight: 1.04, margin: '0 0 28px', color: '#ffffff', textShadow: '0 20px 60px rgba(0,0,0,0.7)' }}>
+      OTATTOO
+    </h1>
+    <div style={{ width: isMobile ? 120 : 180, height: 1, background: 'var(--color-primary)', margin: '0 auto', transformOrigin: 'center', animation: 'pulseLine 2.4s ease-in-out infinite', opacity: 0.8 }} />
+  </Reveal>
+</div>
 
         <div
           style={{
@@ -514,10 +486,10 @@ export default function Home() {
                   Moje področje
                 </p>
                 <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
-                  Tattoo, PMU &<br /><em style={{ color: 'var(--color-primary-light)' }}>odstranjevanje</em>
+                  Tattoo &<br /><em style={{ color: 'var(--color-primary-light)' }}>odstranjevanje</em>
                 </h3>
                 <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                  Sčasoma sem svoje znanje razširila tudi na področje permanentnega make-upa ter odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
+                  Sčasoma sem svoje znanje razširila tudi na področje odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
                 </p>
               </div>
             </Reveal>
@@ -615,95 +587,95 @@ export default function Home() {
       </section>
 
       {/* GALERIJA */}
-      <section style={{ padding: isMobile ? '56px 0 86px' : '90px 0 130px', position: 'relative', zIndex: 2, background: '#120e1c' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at top, rgba(119,97,169,0.14), transparent 60%)' }} />
-
-        <div style={{ position: 'relative', maxWidth: 1080, margin: '0 auto', padding: isMobile ? '0 16px' : '0 40px' }}>
-          <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 20, marginBottom: 26 }}>
-            <div>
-              <Link
-                to="/galerija"
-                style={{
-                  fontSize: 9,
-                  letterSpacing: 3,
-                  textTransform: 'uppercase',
-                  color: 'var(--color-primary-50)',
-                  marginBottom: 14,
-                  display: 'inline-block',
-                  textDecoration: 'none',
-                }}
-                onMouseEnter={e => (e.target.style.color = 'var(--color-primary-light)')}
-                onMouseLeave={e => (e.target.style.color = 'var(--color-primary-50)')}
-              >
-                Galerija →
-              </Link>
-            </div>
-          </div>
-        <div
-  style={{
-    display: 'grid',
-    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-    gap: isMobile ? 10 : 14,
-  }}
->
-  {GALLERY.map((item, n) => (
-    <button
-      key={n}
-      className="galleryCard"
-      onClick={() => setSelectedImage(item)}
-      style={{
-        position: 'relative',
-        aspectRatio: '1 / 1',
-        background: 'rgba(255,255,255,0.03)',
-        border: '0.5px solid var(--color-primary-20)',
-        borderRadius: 18,
-        overflow: 'hidden',
-        padding: 0,
-        cursor: 'pointer',
-        transition: 'transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease',
-      }}
-    >
-      <img
-        src={item.src}
-        alt={item.alt}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-          transition: 'none',
-        }}
-      />
-
-      <div
-        className="galleryOverlay"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0,
-          transition: 'opacity 0.35s ease',
-          background: 'linear-gradient(to top, rgba(10,6,18,0.82), rgba(10,6,18,0.08))',
-          display: 'flex',
-          alignItems: 'flex-end',
-          padding: 18,
-        }}
-      >
-        <span
-          style={{
-            color: '#fff',
-            fontSize: 10,
-            letterSpacing: 2.4,
-            textTransform: 'uppercase',
-          }}
-        >
-          {item.alt}
-        </span>
-      </div>
-    </button>
-  ))}
-</div>
-        </div>
-      </section>
+            <section style={{ padding: isMobile ? '56px 0 86px' : '90px 0 130px', position: 'relative', zIndex: 2, background: 'rgba(18,14,28,1)' }}>
+                          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.4), transparent 60%)' }} />
+                  
+                          <div style={{ position: 'relative', maxWidth: 1080, margin: '0 auto', padding: isMobile ? '0 16px' : '0 40px' }}>
+                            <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 20, marginBottom: 26 }}>
+                              <div>
+                                <Link
+                                  to="/galerija"
+                                  style={{
+                                    fontSize: 9,
+                                    letterSpacing: 3,
+                                    textTransform: 'uppercase',
+                                    color: 'var(--color-primary-50)',
+                                    marginBottom: 14,
+                                    display: 'inline-block',
+                                    textDecoration: 'none',
+                                  }}
+                                  onMouseEnter={e => (e.target.style.color = 'var(--color-primary-light)')}
+                                  onMouseLeave={e => (e.target.style.color = 'var(--color-primary-50)')}
+                                >
+                                  Galerija →
+                                </Link>
+                              </div>
+                            </div>
+                          <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(3, 1fr)',
+                      gap: isMobile ? 10 : 14,
+                    }}
+                  >
+                    {GALLERY.map((item, n) => (
+                      <button
+                        key={n}
+                        className="galleryCard"
+                        onClick={() => setSelectedImage(item)}
+                        style={{
+                          position: 'relative',
+                          aspectRatio: '1 / 1',
+                          background: 'rgba(255,255,255,0.03)',
+                          border: '0.5px solid var(--color-primary-20)',
+                          borderRadius: 18,
+                          overflow: 'hidden',
+                          padding: 0,
+                          cursor: 'pointer',
+                          transition: 'transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease',
+                        }}
+                      >
+                        <img
+                          src={item.src}
+                          alt={item.alt}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            display: 'block',
+                            transition: 'none',
+                          }}
+                        />
+                  
+                        <div
+                          className="galleryOverlay"
+                          style={{
+                            position: 'absolute',
+                            inset: 0,
+                            opacity: 0,
+                            transition: 'opacity 0.35s ease',
+                            background: 'linear-gradient(to top, rgba(10,6,18,0.82), rgba(10,6,18,0.08))',
+                            display: 'flex',
+                            alignItems: 'flex-end',
+                            padding: 18,
+                          }}
+                        >
+                          <span
+                            style={{
+                              color: '#fff',
+                              fontSize: 10,
+                              letterSpacing: 2.4,
+                              textTransform: 'uppercase',
+                            }}
+                          >
+                            {item.alt}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                          </div>
+                        </section>
 
       {/* LIGHTBOX */}
       {selectedImage && (
@@ -750,7 +722,6 @@ export default function Home() {
               maxHeight: '86vh',
               objectFit: 'contain',
               borderRadius: 22,
-              boxShadow: '0 30px 100px rgba(0,0,0,0.75)',
               border: '1px solid var(--color-primary-20)',
             }}
           />

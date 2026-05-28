@@ -8,12 +8,12 @@ const SLIDES = [
 ]
 
 const GALLERY = [
-  { src: '/galerija1.jpg', alt: 'tetovaža 1' },
-  { src: '/galerija5.jpg', alt: 'tetovaža 2' },
-  { src: '/galerija3.jpg', alt: 'tetovaža 3' },
-  { src: '/galerija4.jpg', alt: 'tetovaža 4' },
-  { src: '/galerija2.jpg', alt: 'tetovaža 5' },
-  { src: '/galerija8.jpg', alt: 'tetovaža 6' },
+  { src: '/galerija19.jpg', alt: 'tetovaža 1' },
+  { src: '/galerija4.jpg', alt: 'tetovaža 2' },
+  { src: '/galerija14.jpg', alt: 'tetovaža 4' },
+  { src: '/galerija5.jpg', alt: 'tetovaža 5' },
+  { src: '/galerija24.jpg', alt: 'tetovaža 6' },
+  { src: '/galerija21.jpg', alt: 'tetovaža 7' },
 ]
 
 function Squiggle({ style }) {
@@ -46,7 +46,7 @@ function ParallaxSlika({ src }) {
 
   return (
     <div ref={ref} style={{ height: '60vh', overflow: 'hidden', position: 'relative' }}>
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(23,18,39,0.55)', zIndex: 1 }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(18,14,28,0.4)', zIndex: 1 }} />
       <img src={src} style={{
         position: 'absolute', top: 0, left: 0,
         width: '100%', height: '130%',
@@ -88,12 +88,45 @@ useEffect(() => {
           background: rgba(23,18,39,0.55);
         }
         .odstavek {
-          background: #120f1e;
+          background: rgba(18,14,28,0.4);
           padding: 80px 40px;
           position: relative;
           z-index: 2;
           overflow: hidden;
         }
+        @media (max-width: 768px) {
+          .odstavek { padding: 60px 20px; }
+        }
+          .galleryCard:hover .galleryOverlay {
+            opacity: 1;
+          }
+          .galleryCard:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+            border-color: var(--color-primary-50);
+          }
+
+          .galleryCard::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+              to bottom,
+              rgba(18, 9, 30, 0.5) 0%,
+              rgba(18, 9, 30, 0.4) 40%,
+              rgba(60, 20, 80, 0.2) 100%
+            );
+            border-radius: 14px;
+            pointer-events: none;
+            z-index: 1;
+          }
+          .galleryCard:hover::after {
+            background: linear-gradient(
+              to bottom,
+              rgba(18, 9, 30, 0.05) 0%,
+              rgba(60, 20, 80, 0.1) 100%
+            );
+          }
       `}</style>
 
 {/* HERO */}
@@ -116,7 +149,7 @@ useEffect(() => {
     alignItems: 'center', justifyContent: 'center', textAlign: 'center',
   }}>
     <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-light)', marginBottom: 16 }}>Storitev</p>
-    <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 88, fontWeight: 300, lineHeight: 1, margin: 0, color: '#ffffff' }}>
+    <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 80 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
       Tetovi<em style={{ color: 'var(--color-primary-light)' }}>ranje</em>
     </h1>
   </div>
@@ -124,13 +157,13 @@ useEffect(() => {
 
       {/* 1. ODSTAVEK */}
       <div className="odstavek">
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>01</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
             Zakaj izbrati <em style={{ color: 'var(--color-primary-light)' }}>nas?</em>
           </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div style={{ fontSize: isMobile ? 14 : 15, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
               'Certificirana tattoo & PMU artistka z izkušnjami',
               'Vedno dobro vzdušje — sproščeno, osebno, brez pritiska',
@@ -138,7 +171,7 @@ useEffect(() => {
             ].map((t, i) => (
               <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <span style={{ color: 'var(--color-primary)', fontSize: 16, flexShrink: 0, marginTop: 3 }}>✦</span>
-                <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
+                <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
               </div>
             ))}
           </div>
@@ -150,13 +183,13 @@ useEffect(() => {
       
       {/* 2. ODSTAVEK */}
       <div className="odstavek">
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>02</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
             Moj <em style={{ color: 'var(--color-primary-light)' }}>stil</em>
           </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+          <p style={{ fontSize: isMobile? 14 : 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
             Najraje ustvarjam v čistem, natančnem slogu, kot sta fine line in stipple shading, kjer lahko res pride do izraza subtilnost linij in senčenja. Kljub temu sem odprta tudi za druge stile in se rada prilagodim željam vsake posamezne stranke.
           </p>
         </div>
@@ -167,13 +200,13 @@ useEffect(() => {
 
       {/* 3. ODSTAVEK */}
       <div className="odstavek">
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>03</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
             Tvoja ideja, <em style={{ color: 'var(--color-primary-light)' }}>moja izvedba</em>
           </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+          <p style={{ fontSize: isMobile? 14:15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
             Vsako idejo poslušam z občutkom in jo vzamem resno. Skupaj jo razvijemo v dizajn, ki ni samo vizualno lep, ampak tudi oseben in premišljen. Pomembno mi je, da se v procesu počutiš sproščeno in da na koncu dobiš nekaj, kar res odraža tebe.
           </p>
         </div>
@@ -188,7 +221,7 @@ useEffect(() => {
   <div style={{ position: 'relative', zIndex: 1 }}>
     <div style={{
       display: 'inline-block',
-      background: 'rgba(13, 10, 20, 0.88)',
+      background: 'rgba(122, 99, 176, 0.08)',
       backdropFilter: 'blur(12px)',
       borderRadius: 50,
       padding: '4px',
@@ -207,8 +240,8 @@ useEffect(() => {
 </div>
 
       {/* GALERIJA */}
-      <section style={{ padding: isMobile ? '56px 0 86px' : '90px 0 130px', position: 'relative', zIndex: 2, background: '#120e1c' }}>
-                    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at top, rgba(119,97,169,0.14), transparent 60%)' }} />
+      <section style={{ padding: isMobile ? '56px 0 86px' : '90px 0 130px', position: 'relative', zIndex: 2, background: 'rgba(18,14,28,1)' }}>
+                    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.4), transparent 60%)' }} />
             
                     <div style={{ position: 'relative', maxWidth: 1080, margin: '0 auto', padding: isMobile ? '0 16px' : '0 40px' }}>
                       <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 20, marginBottom: 26 }}>
@@ -234,7 +267,7 @@ useEffect(() => {
                     <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+                gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(3, 1fr)',
                 gap: isMobile ? 10 : 14,
               }}
             >
@@ -272,6 +305,7 @@ useEffect(() => {
                     style={{
                       position: 'absolute',
                       inset: 0,
+                      zIndex: 2,
                       opacity: 0,
                       transition: 'opacity 0.35s ease',
                       background: 'linear-gradient(to top, rgba(10,6,18,0.82), rgba(10,6,18,0.08))',
@@ -296,7 +330,40 @@ useEffect(() => {
             </div>
                     </div>
                   </section>
-
+{selectedImage && (
+  <div
+    onClick={() => setSelectedImage(null)}
+    style={{
+      position: 'fixed', inset: 0,
+      background: 'rgba(5,3,10,0.86)',
+      backdropFilter: 'blur(14px)',
+      zIndex: 2000,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: 20,
+    }}
+  >
+    <button
+      onClick={() => setSelectedImage(null)}
+      style={{
+        position: 'absolute', top: 24, right: 24,
+        width: 42, height: 42, borderRadius: 999,
+        border: '1px solid var(--color-primary-20)',
+        background: 'rgba(255,255,255,0.06)',
+        color: '#fff', cursor: 'pointer', fontSize: 20,
+      }}
+    >x</button>
+    <img
+      src={selectedImage.src}
+      alt={selectedImage.alt}
+      onClick={e => e.stopPropagation()}
+      style={{
+        maxWidth: 'min(920px, 92vw)', maxHeight: '86vh',
+        objectFit: 'contain', borderRadius: 22,
+        border: '1px solid var(--color-primary-20)',
+      }}
+    />
+  </div>
+)}
     </div>
   )
 }

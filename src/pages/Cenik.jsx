@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 
 const SLIDES = [
   '/tatu1.jpg',
-  '/kaja1.jpg',
-  '/hero.jpg',
+  '/galerija1.jpg',
+  '/odstr1.jpg',
 ]
 
 const CENIK = [
