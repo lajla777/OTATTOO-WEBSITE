@@ -151,7 +151,8 @@ const posodobiStatus = async (id, novStatus) => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
           {urls.map((url, i) => (
             <a key={i} href={url} target="_blank" rel="noreferrer">
-              <img src={url} alt={`slika ${i+1}`} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', borderRadius: 8, border: '0.5px solid rgba(119,97,169,0.3)' }} />
+              <img src={url} alt={`slika ${i+1}`} loading="lazy"
+  decoding="async" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', borderRadius: 8, border: '0.5px solid rgba(119,97,169,0.3)' }} />
             </a>
           ))}
         </div>

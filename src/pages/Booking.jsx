@@ -482,7 +482,8 @@ if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
       <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
         {SLIDES.map((src, i) => (
           <div key={i} style={{ position: 'absolute', inset: 0 }}>
-            <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(12px)', transform: 'scale(1.05)' }} />
+            <img src={src} alt="" loading="lazy"
+  decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(12px)', transform: 'scale(1.05)' }} />
           </div>
         ))}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,8,16,0.82)' }} />

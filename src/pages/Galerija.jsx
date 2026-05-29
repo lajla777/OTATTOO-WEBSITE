@@ -193,6 +193,8 @@ export default function Galerija() {
               <img
                 src={slika.src}
                 alt={slika.alt}
+                loading="lazy"
+  decoding="async"
               />
 
             </div>

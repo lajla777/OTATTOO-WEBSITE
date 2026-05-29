@@ -62,7 +62,8 @@ export default function Cenik() {
             opacity: i === current ? 1 : 0,
             transition: 'opacity 1.5s ease',
           }}>
-            <img src={src} alt="" style={{
+            <img src={src} alt="" loading="lazy"
+  decoding="async" style={{
               width: '100%', height: '100%',
               objectFit: 'cover',
               filter: 'blur(12px)',
