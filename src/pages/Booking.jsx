@@ -107,7 +107,7 @@ function IzbiraCasa({ cas, setCas, velikost }) {
           background: cas === '9:00' ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
         }}>
-          <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>10:00</p>
+          <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>9:00</p>
           {cas === '9:00' && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
         </div>
 
