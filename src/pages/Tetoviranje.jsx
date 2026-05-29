@@ -2,18 +2,18 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 
 const SLIDES = [
-  { src: '/kaja2.jpg' },
-  { src: '/kaja1.jpg' },
-  { src: '/hero.jpg' },
+  { src: '/kaja2.webp' },
+  { src: '/kaja1.webp' },
+  { src: '/hero.webp' },
 ]
 
 const GALLERY = [
-  { src: '/galerija19.jpg', alt: 'tetovaža 1' },
-  { src: '/galerija4.jpg', alt: 'tetovaža 2' },
-  { src: '/galerija14.jpg', alt: 'tetovaža 4' },
-  { src: '/galerija5.jpg', alt: 'tetovaža 5' },
-  { src: '/galerija24.jpg', alt: 'tetovaža 6' },
-  { src: '/galerija21.jpg', alt: 'tetovaža 7' },
+  { src: '/galerija19.webp', alt: 'tetovaža 1' },
+  { src: '/galerija4.webp', alt: 'tetovaža 2' },
+  { src: '/galerija14.webp', alt: 'tetovaža 4' },
+  { src: '/galerija5.webp', alt: 'tetovaža 5' },
+  { src: '/galerija24.webp', alt: 'tetovaža 6' },
+  { src: '/galerija21.webp', alt: 'tetovaža 7' },
 ]
 
 function Squiggle({ style }) {
@@ -131,7 +131,7 @@ useEffect(() => {
 
 {/* HERO */}
 <section style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
-  <img src="/kaja2.jpg" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
+  <img src="/kaja2.webp" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
   <div style={{
     position: 'absolute', inset: 0,
     background: 'linear-gradient(to top, rgba(23,18,39,1) 0%, rgba(23,18,39,0.4) 50%, transparent 100%)',
@@ -179,7 +179,7 @@ useEffect(() => {
       </div>
 
       {/* PARALLAX SLIKA 1 */}
-      <ParallaxSlika src="/tatu2.jpg" />
+      <ParallaxSlika src="/tatu2.webp" />
       
       {/* 2. ODSTAVEK */}
       <div className="odstavek">
@@ -196,7 +196,7 @@ useEffect(() => {
       </div>
 
       {/* PARALLAX SLIKA 2 */}
-      <ParallaxSlika src="/tatu6.jpg" />
+      <ParallaxSlika src="/tatu6.webp" />
 
       {/* 3. ODSTAVEK */}
       <div className="odstavek">
@@ -213,7 +213,7 @@ useEffect(() => {
       </div>
 
       {/* PARALLAX SLIKA 3 */}
-      <ParallaxSlika src="/tatu4.jpg" />
+      <ParallaxSlika src="/tatu4.webp" />
 
       {/* BOOKING CTA */}
       <div className="odstavek" style={{ textAlign: 'center', padding: '60px 40px' }}>

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 
 const SLIDES = [
-  '/tatu1.jpg',
-  '/galerija1.jpg',
-  '/odstr1.jpg',
+  '/tatu1.webp',
+  '/galerija1.webp',
+  '/odstr1.webp',
 ]
 
 const CENIK = [

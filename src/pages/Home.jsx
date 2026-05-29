@@ -477,7 +477,7 @@ decoding="async"
               </div>
             </Reveal>
 
-            <SlikaNaura src="/kaja3.jpg" alt="Kaja Otavnik" isMobile={isMobile} />
+            <SlikaNaura src="/kaja3.webp" alt="Kaja Otavnik" isMobile={isMobile} />
           </div>
         </div>
 
@@ -500,7 +500,7 @@ decoding="async"
               </div>
             </Reveal>
 
-            <SlikaNaura src="/tatu10.jpg" alt="Studio" flip isMobile={isMobile} />
+            <SlikaNaura src="/tatu10.webp" alt="Studio" flip isMobile={isMobile} />
           </div>
         </div>
 
@@ -523,7 +523,7 @@ decoding="async"
               </div>
             </Reveal>
 
-            <SlikaNaura src="/kaja4.jpg" alt="Pri delu" isMobile={isMobile} />
+            <SlikaNaura src="/kaja4.webp" alt="Pri delu" isMobile={isMobile} />
           </div>
         </div>
 
@@ -546,7 +546,7 @@ decoding="async"
               </div>
             </Reveal>
 
-            <SlikaNaura src="/tatu9.jpg" alt="Certifikati" flip isMobile={isMobile} />
+            <SlikaNaura src="/tatu9.webp" alt="Certifikati" flip isMobile={isMobile} />
           </div>
         </div>
 

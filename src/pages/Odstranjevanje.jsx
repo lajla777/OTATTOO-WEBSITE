@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 
 const GALLERY = [
-  { src: '/galerija19.jpg', alt: 'tetovaža 1' },
-  { src: '/galerija4.jpg', alt: 'tetovaža 2' },
-  { src: '/galerija14.jpg', alt: 'tetovaža 4' },
-  { src: '/galerija5.jpg', alt: 'tetovaža 5' },
-  { src: '/galerija24.jpg', alt: 'tetovaža 6' },
-  { src: '/galerija21.jpg', alt: 'tetovaža 7' },
+  { src: '/galerija19.webp', alt: 'tetovaža 1' },
+  { src: '/galerija4.webp', alt: 'tetovaža 2' },
+  { src: '/galerija14.webp', alt: 'tetovaža 4' },
+  { src: '/galerija5.webp', alt: 'tetovaža 5' },
+  { src: '/galerija24.webp', alt: 'tetovaža 6' },
+  { src: '/galerija21.webp', alt: 'tetovaža 7' },
 ]
 
 function Squiggle({ style }) {
@@ -107,7 +107,7 @@ export default function Odstranjevanje() {
 
       {/* HERO */}
       <section style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
-        <img src="/odstr6.jpg" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
+        <img src="/odstr6.webp" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to top, rgba(18,14,28,1) 0%, rgba(18,14,28,0.6) 60%, transparent 100%)',
@@ -160,7 +160,7 @@ export default function Odstranjevanje() {
         </div>
       </div>
 
-      <ParallaxSlika src="/odstr2.jpg" />
+      <ParallaxSlika src="/odstr2.webp" />
 
       {/* 2. ODSTAVEK — Pege */}
       <div className="odstavek">
@@ -191,7 +191,7 @@ export default function Odstranjevanje() {
       </div>
      
 
-      <ParallaxSlika src="/odstr5.jpg" />
+      <ParallaxSlika src="/odstr5.webp" />
 
       {/* 3. ODSTAVEK — Hollywood peel */}
       <div className="odstavek">
@@ -221,7 +221,7 @@ export default function Odstranjevanje() {
         </div>
       </div>
 
-      <ParallaxSlika src="/odstr3.jpg" />
+      <ParallaxSlika src="/odstr3.webp" />
 
       {/* 4. ODSTAVEK — Zakaj mi */}
       <div className="odstavek">
