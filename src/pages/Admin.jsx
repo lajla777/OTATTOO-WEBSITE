@@ -44,18 +44,20 @@ export default function Admin() {
 const posodobiStatus = async (id, novStatus) => {
   await supabase.from('rezervacije').update({ status: novStatus }).eq('id', id)
   
-  // Pošlji email ob potrditvi
   if (novStatus === 'potrjeno') {
     const r = rezervacije.find(rez => rez.id === id)
     if (r) {
       await supabase.functions.invoke('send-email', {
         body: {
-          tip: 'potrditev',
           ime: r.ime,
           email: r.email,
           datum: r.datum.split('-').reverse().join('.'),
           storitev: r.storitev,
           tip_laser: r.tip_laser || '',
+          velikost: r.velikost || '',
+          pozicija: r.pozicija || '',
+          opombe: r.opombe || '',
+          cas: r.cas || '',
         }
       })
     }
@@ -334,8 +336,9 @@ const posodobiStatus = async (id, novStatus) => {
                           {izbranRezervacija?.id === r.id && (
                             <div style={{ marginTop: 16, paddingTop: 16, borderTop: '0.5px solid rgba(255,255,255,0.1)' }}>
                               <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 12 }}>
+                                {r.cas && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>🕐 {r.cas}</p>}
                                 <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📧 {r.email}</p>
-                                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📞 {r.telefon}</p>
+                                {r.instagram && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📸 {r.instagram}</p>}
                                 {r.velikost && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📐 {r.velikost}</p>}
                                 {r.pozicija && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📍 {r.pozicija}</p>}
                                 {r.opombe && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: 0, fontStyle: 'italic' }}>"{r.opombe}"</p>}

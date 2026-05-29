@@ -14,7 +14,6 @@ const LASER_TIPI = [
 ]
 
 const SLIDES = ['/tatu5.jpg']
-const PAYPAL = 'kaja@otattoo.si'
 
 const inputStyle = {
   width: '100%', padding: '14px 16px', borderRadius: 10, fontSize: 14,
@@ -30,6 +29,8 @@ const VELIKOSTI = [
   { value: '15-20cm', label: '15 – 20 cm' },
   { value: 'nad 20cm', label: 'Nad 20 cm' },
 ]
+
+const jeMajhna = (velikost) => velikost === 'do 5cm'
 
 function StepIndicator({ step, total }) {
   return (
@@ -94,6 +95,47 @@ function Dropdown({ value, onChange, opcije, placeholder }) {
   )
 }
 
+function IzbiraCasa({ cas, setCas, velikost }) {
+  const majhna = jeMajhna(velikost)
+  return (
+    <div>
+      <label style={labelStyle}>Ura termina *</label>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div onClick={() => setCas('10:00')} style={{
+          padding: '16px 20px', borderRadius: 12, cursor: 'pointer',
+          border: cas === '10:00' ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
+          background: cas === '10:00' ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
+        }}>
+          <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>10:00</p>
+          {cas === '10:00' && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
+        </div>
+
+        {majhna && (
+          <div onClick={() => setCas('12:00')} style={{
+            padding: '16px 20px', borderRadius: 12, cursor: 'pointer',
+            border: cas === '12:00' ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
+            background: cas === '12:00' ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
+          }}>
+            <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>12:00</p>
+            {cas === '12:00' && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
+          </div>
+        )}
+
+        {!majhna && (
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', margin: '4px 0 0', fontStyle: 'italic' }}>
+            Če ti dopoldanska ura ne ustreza, se lahko zmeniva za drugo uro prek{' '}
+            <a href="https://instagram.com/otattoo_ink" target="_blank" rel="noreferrer" style={{ color: 'var(--color-primary-light)', textDecoration: 'none' }}>Instagrama</a>
+            {' '}ali{' '}
+            <a href="mailto:otaattoo.ink@gmail.com" style={{ color: 'var(--color-primary-light)', textDecoration: 'none' }}>emaila</a>.
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function Koledar({ datum, setDatum }) {
   const danes = new Date()
   const [mesec, setMesec] = useState(danes.getMonth())
@@ -127,18 +169,15 @@ function Koledar({ datum, setDatum }) {
     if (nedosegljiviTermini.includes(dateStr)) return 'ni_mozno'
 
     const blokiraniDatumi = []
-    let stevilec = 0
     let pregledovanDan = new Date(danes)
-
     while (blokiraniDatumi.length < 2) {
       const dv = pregledovanDan.getDay()
       if (dv !== 0 && dv !== 6) blokiraniDatumi.push(pregledovanDan.toISOString().split('T')[0])
-        pregledovanDan = new Date(pregledovanDan)
-        pregledovanDan.setDate(pregledovanDan.getDate() + 1)
+      pregledovanDan = new Date(pregledovanDan)
+      pregledovanDan.setDate(pregledovanDan.getDate() + 1)
     }
 
     if (blokiraniDatumi.includes(dateStr) && !zasedenTermini.includes(dateStr) && !rezerviraniTermini.includes(dateStr)) return 'ni_mozno'
-  
     if (d < new Date(danes.toDateString())) return 'preteklo'
     if (zasedenTermini.includes(dateStr)) return 'zasedeno'
     if (rezerviraniTermini.includes(dateStr)) return 'rezervirano'
@@ -146,7 +185,7 @@ function Koledar({ datum, setDatum }) {
   }
 
   const getDanStyle = (status, jeIzbran) => {
-    if (jeIzbran) return { background: 'rgba(35, 6, 102, 0.15)', color: '#fff', cursor: 'pointer', border: 'none' }
+    if (jeIzbran) return { background: 'var(--color-primary)', color: '#fff', cursor: 'pointer', border: 'none' }
     if (status === 'prosto') return { background: 'rgba(119,97,169,0.15)', color: '#fff', cursor: 'pointer', border: '0.5px solid rgba(119,97,169,0.3)' }
     if (status === 'rezervirano') return { background: 'rgba(230,160,30,0.2)', color: 'rgba(255,200,80,0.8)', cursor: 'not-allowed' }
     if (status === 'zasedeno') return { background: 'rgba(180,60,60,0.2)', color: 'rgba(255,100,100,0.6)', cursor: 'not-allowed', textDecoration: 'line-through' }
@@ -232,14 +271,17 @@ function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlik
   )
 }
 
-function Step3Tet({ datum, setDatum }) {
+function Step3Tet({ datum, setDatum, cas, setCas, velikost }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
       </h2>
-      <Koledar datum={datum} setDatum={setDatum} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <Koledar datum={datum} setDatum={setDatum} />
+        {datum && <IzbiraCasa cas={cas} setCas={setCas} velikost={velikost} />}
+      </div>
     </div>
   )
 }
@@ -284,15 +326,12 @@ function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, sl
         Podrobnosti <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
       </h2>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-        {/* Pozicija — samo za tetovaze in pege */}
         {!jeHollywood && (
           <div><label style={labelStyle}>Pozicija *</label><input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, obraz, roka..." style={inputStyle} /></div>
         )}
-        {/* Velikost — samo za tetovaze in pege */}
         {(jeTetovaze || jePege) && (
           <div><label style={labelStyle}>Velikost *</label><Dropdown value={velikost} onChange={setVelikost} placeholder="Izberi velikost" opcije={VELIKOSTI} /></div>
         )}
-        {/* Fotografija — opcijska za tetovaze in pege */}
         {(jeTetovaze || jePege) && (
           <div>
             <label style={labelStyle}>Fotografija (neobvezno)</label>
@@ -305,22 +344,25 @@ function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, sl
   )
 }
 
-function Step4Odstr({ datum, setDatum }) {
+function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser }) {
+  const jeHollywood = tipLaser === 'hollywood'
+  const efektivnaVelikost = jeHollywood ? 'do 5cm' : velikost
+
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 4</p>
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
       </h2>
-      <Koledar datum={datum} setDatum={setDatum} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <Koledar datum={datum} setDatum={setDatum} />
+        {datum && <IzbiraCasa cas={cas} setCas={setCas} velikost={efektivnaVelikost} />}
+      </div>
     </div>
   )
 }
 
-// pmu ne bo..
-
-// ── PODATKI (zadnji korak pri vseh) ─────────────────────
-function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, telefon, setTelefon, stepNum }) {
+function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, instagram, setInstagram, stepNum }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak {stepNum}</p>
@@ -333,17 +375,20 @@ function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, telefo
           <div><label style={labelStyle}>Priimek *</label><input value={priimek} onChange={e => setPriimek(e.target.value)} placeholder="Novak" style={inputStyle} /></div>
         </div>
         <div><label style={labelStyle}>Email *</label><input value={email} onChange={e => setEmail(e.target.value)} placeholder="jana@email.com" type="email" style={inputStyle} /></div>
-        <div><label style={labelStyle}>Telefon *</label><input value={telefon} onChange={e => setTelefon(e.target.value)} placeholder="+386 40 123 456" style={inputStyle} /></div>
+        <div>
+          <label style={labelStyle}>Instagram <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10 }}>(neobvezno, le za lažjo komunikacijo)</span></label>
+          <input value={instagram} onChange={e => setInstagram(e.target.value)} placeholder="@username" style={inputStyle} />
+        </div>
       </div>
     </div>
   )
 }
 
-// ── MAIN ─────────────────────────────────────────────────
 export default function Booking() {
   const [step, setStep] = useState(1)
   const [storitev, setStoritev] = useState(null)
   const [datum, setDatum] = useState(null)
+  const [cas, setCas] = useState(null)
   const [velikost, setVelikost] = useState('')
   const [pozicija, setPozicija] = useState('')
   const [slike, setSlike] = useState([])
@@ -352,21 +397,18 @@ export default function Booking() {
   const [ime, setIme] = useState('')
   const [priimek, setPriimek] = useState('')
   const [email, setEmail] = useState('')
-  const [telefon, setTelefon] = useState('')
+  const [instagram, setInstagram] = useState('')
   const [poslano, setPoslano] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // Tetoviranje: 1→2(spec)→3(termin)→4(podatki)
-  // Odstranjevanje: 1→2(tip)→3(spec)→4(termin)→5(podatki)
-  // PMU: 1→2(tip+opombe)→3(termin)→4(podatki)
   const skupajKorakov = storitev === 'odstranjevanje' ? 5 : 4
 
   const canNext = () => {
     if (step === 1) return !!storitev
     if (storitev === 'tetoviranje') {
       if (step === 2) return !!velikost && !!pozicija && slike.length > 0
-      if (step === 3) return !!datum
-      if (step === 4) return !!ime && !!priimek && !!email && !!telefon
+      if (step === 3) return !!datum && !!cas
+      if (step === 4) return !!ime && !!priimek && !!email
     }
     if (storitev === 'odstranjevanje') {
       if (step === 2) return !!tipLaser
@@ -374,13 +416,14 @@ export default function Booking() {
         if (tipLaser === 'hollywood') return true
         return !!pozicija && !!velikost
       }
-      if (step === 4) return !!datum
-      if (step === 5) return !!ime && !!priimek && !!email && !!telefon
+      if (step === 4) return !!datum && !!cas
+      if (step === 5) return !!ime && !!priimek && !!email
     }
     return false
   }
 
   const handleSubmit = async () => {
+    
     if (!canNext() || loading) return
     setLoading(true)
     try {
@@ -394,31 +437,19 @@ export default function Booking() {
         }
       }
       const { error } = await supabase.from('rezervacije').insert([{
-        storitev, datum, ime, priimek, email, telefon,
-        status: 'rezervirano',
-        tip_laser: tipLaser || null,
-        velikost: velikost || null,
-        pozicija: pozicija || null,
-        opombe: opombe || null,
-        slike_urls: slikeUrls.length > 0 ? slikeUrls : null,
-      }])
-      if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
+  storitev, datum, ime, priimek, email,
+  instagram: instagram || null,
+  status: 'rezervirano',
+  tip_laser: tipLaser || null,
+  velikost: velikost || null,
+  pozicija: pozicija || null,
+  opombe: opombe || null,
+  cas: cas || null,
+  slike_urls: slikeUrls.length > 0 ? slikeUrls : null,
+}])
+console.log('insert error:', error)
+if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
       setPoslano(true)
-
-      await supabase.functions.invoke('send-email', {
-      body: {
-        tip: 'rezervacija',
-        ime,
-        email,
-        datum: datum.split('-').reverse().join('.'),
-        storitev: storitevNaziv,
-        tip_laser: tipLaser || '',
-        velikost: velikost || '',
-        pozicija: pozicija || '',
-        opombe: opombe || '',
-      }
-    })
-
     } catch (err) {
       console.error(err)
       alert('Prišlo je do napake. Poskusi znova.')
@@ -434,14 +465,14 @@ export default function Booking() {
     if (step === 1) return null
     if (storitev === 'tetoviranje') {
       if (step === 2) return <Step2Tet velikost={velikost} setVelikost={setVelikost} pozicija={pozicija} setPozicija={setPozicija} slike={slike} setSlike={setSlike} opombe={opombe} setOpombe={setOpombe} />
-      if (step === 3) return <Step3Tet datum={datum} setDatum={setDatum} />
-      if (step === 4) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} telefon={telefon} setTelefon={setTelefon} stepNum={4} />
+      if (step === 3) return <Step3Tet datum={datum} setDatum={setDatum} cas={cas} setCas={setCas} velikost={velikost} />
+      if (step === 4) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} instagram={instagram} setInstagram={setInstagram} stepNum={4} />
     }
     if (storitev === 'odstranjevanje') {
       if (step === 2) return <Step2Odstr tipLaser={tipLaser} setTipLaser={setTipLaser} />
       if (step === 3) return <Step3Odstr tipLaser={tipLaser} velikost={velikost} setVelikost={setVelikost} pozicija={pozicija} setPozicija={setPozicija} slike={slike} setSlike={setSlike} opombe={opombe} setOpombe={setOpombe} />
-      if (step === 4) return <Step4Odstr datum={datum} setDatum={setDatum} />
-      if (step === 5) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} telefon={telefon} setTelefon={setTelefon} stepNum={5} />
+      if (step === 4) return <Step4Odstr datum={datum} setDatum={setDatum} cas={cas} setCas={setCas} velikost={velikost} tipLaser={tipLaser} />
+      if (step === 5) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} instagram={instagram} setInstagram={setInstagram} stepNum={5} />
     }
     return null
   }
@@ -513,11 +544,11 @@ export default function Booking() {
           <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: '60px 40px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 24 }}>✓</div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', marginBottom: 16 }}>
-              Rezervacija <em style={{ color: 'var(--color-primary-light)' }}>prejeta!<br /></em>
+              Rezervacija <em style={{ color: 'var(--color-primary-light)' }}>prejeta!</em>
             </h2>
-            <p style={{ fontSize: 17, lineHeight: 1.8, color: 'rgba(255, 255, 255, 0.9)', marginBottom: 32 }}>
-              <br />Za potrditev termina te prosim, da nakažeš avans v višini <strong style={{ color: '#fff' }}>50€</strong>.<br /><br />
-              <span style={{ fontSize: 17 }}>Podrobnejša navodila za nakazilo si prejel/a po emailu.</span>
+            <p style={{ fontSize: 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.7)', marginBottom: 32, marginTop: 30 }}>
+              Tvojo rezervacijo bom pregledala v najkrajšem možnem času in te po emailu obvestila o potrditvi ali zavrnitvi termina.<br />
+              V primeru potrditve boš prejel/a tudi navodila za nakazilo avansa, v primeru zavrnitve pa si lahko poiščeš drugi termin, ki bi ti ustrezal.<br />
             </p>
             <Link to="/" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 50, background: 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))', color: '#fff', textDecoration: 'none', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Nazaj na začetek</Link>
           </div>
