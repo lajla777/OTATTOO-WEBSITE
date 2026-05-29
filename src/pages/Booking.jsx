@@ -101,14 +101,14 @@ function IzbiraCasa({ cas, setCas, velikost }) {
     <div>
       <label style={labelStyle}>Ura termina *</label>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div onClick={() => setCas('10:00')} style={{
+        <div onClick={() => setCas('9:00')} style={{
           padding: '16px 20px', borderRadius: 12, cursor: 'pointer',
-          border: cas === '10:00' ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
-          background: cas === '10:00' ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
+          border: cas === '9:00' ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
+          background: cas === '9:00' ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
         }}>
           <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>10:00</p>
-          {cas === '10:00' && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
+          {cas === '9:00' && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
         </div>
 
         {majhna && (
