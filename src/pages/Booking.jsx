@@ -548,8 +548,8 @@ if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
               Rezervacija <em style={{ color: 'var(--color-primary-light)' }}>prejeta!</em>
             </h2>
             <p style={{ fontSize: 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.7)', marginBottom: 32, marginTop: 30 }}>
-              Tvojo rezervacijo bom pregledala v najkrajšem možnem času in te po emailu obvestila o potrditvi ali zavrnitvi termina.<br />
-              V primeru potrditve boš prejel/a tudi navodila za nakazilo avansa, v primeru zavrnitve pa si lahko poiščeš drugi termin, ki bi ti ustrezal.<br />
+              Tvojo rezervacijo bom pregledala v najkrajšem možnem času in te po emailu obvestila o <strong>potrditvi ali zavrnitvi</strong> termina.<br />
+              V primeru potrditve boš prejel/a tudi navodila za <strong>NAKAZILO AVANSA</strong>, ki je obvezen za zagotovitev termina, v primeru zavrnitve pa si lahko poiščeš drugi termin, ki bi ti ustrezal.<br />
             </p>
             <Link to="/" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 50, background: 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))', color: '#fff', textDecoration: 'none', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Nazaj na začetek</Link>
           </div>
