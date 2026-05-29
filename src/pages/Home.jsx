@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-const HERO_IMAGES = ['/kaja1.jpg', '/tatu8.jpg', '/hero.jpg']
+const HERO_IMAGES = ['/kaja1.webp', '/tatu8.webp', '/hero.webp']
 
 const GALLERY = [
-  { src: '/galerija19.jpg', alt: 'tetovaža 1' },
-  { src: '/galerija4.jpg', alt: 'tetovaža 2' },
-  { src: '/galerija14.jpg', alt: 'tetovaža 4' },
-  { src: '/galerija5.jpg', alt: 'tetovaža 5' },
-  { src: '/galerija24.jpg', alt: 'tetovaža 6' },
-  { src: '/galerija21.jpg', alt: 'tetovaža 7' },
+  { src: '/galerija19.webp', alt: 'tetovaža 1' },
+  { src: '/galerija4.webp', alt: 'tetovaža 2' },
+  { src: '/galerija14.webp', alt: 'tetovaža 4' },
+  { src: '/galerija5.webp', alt: 'tetovaža 5' },
+  { src: '/galerija24.webp', alt: 'tetovaža 6' },
+  { src: '/galerija21.webp', alt: 'tetovaža 7' },
 ]
 
 function Squiggle({ style }) {
