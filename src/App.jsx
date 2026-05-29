@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
-import SplashScreen from './components/SplashScreen'
 import Home from './pages/Home'
 import Tetoviranje from './pages/Tetoviranje'
 import Odstranjevanje from './pages/Odstranjevanje'
@@ -36,13 +35,11 @@ function AppInner() {
 }
 
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true)
 
   return (
     <BrowserRouter>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
-      {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
       <AppInner />
     </BrowserRouter>
   )
