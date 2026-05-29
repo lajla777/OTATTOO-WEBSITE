@@ -86,7 +86,7 @@ function SlikaNaura({ src, alt, height = 460, flip = false, isMobile = false }) 
           width: '118%',
           height: '118%',
           objectFit: 'cover',
-          filter: 'blur(34px)',
+          filter: 'blur(12px)',
           opacity: hover ? 0.46 : 0.3,
           borderRadius: 20,
           zIndex: 0,
@@ -94,6 +94,8 @@ function SlikaNaura({ src, alt, height = 460, flip = false, isMobile = false }) 
           transform: hover ? 'scale(1.05)' : 'scale(1)',
         }}
         alt=""
+        loading="lazy"
+decoding="async"
       />
 
       <div
@@ -141,6 +143,8 @@ function SlikaNaura({ src, alt, height = 460, flip = false, isMobile = false }) 
             transition: 'transform 0.7s ease',
           }}
           alt={alt}
+          loading="lazy"
+decoding="async"
         />
 
         <div
@@ -278,6 +282,8 @@ export default function Home() {
             <img
               src={src}
               alt=""
+              loading="lazy"
+decoding="async"
               style={{
                 width: '100%',
                 height: '100%',
