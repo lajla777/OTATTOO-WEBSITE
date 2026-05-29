@@ -21,7 +21,7 @@ export default function SplashScreen({ onDone }) {
       pointerEvents: phase === 'out' ? 'none' : 'auto',
     }}>
       <img
-        src="/logo.png"
+        src="/logo.jpg"
         alt="OTattoo"
         style={{
           width: 180, height: 180, objectFit: 'contain',

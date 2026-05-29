@@ -79,24 +79,6 @@ function SlikaNaura({ src, alt, height = 460, flip = false, isMobile = false }) 
         perspective: 1000,
       }}
     >
-      <img
-        src={src}
-        style={{
-          position: 'absolute',
-          width: '118%',
-          height: '118%',
-          objectFit: 'cover',
-          filter: 'blur(12px)',
-          opacity: hover ? 0.46 : 0.3,
-          borderRadius: 20,
-          zIndex: 0,
-          transition: 'opacity 0.45s ease, transform 0.45s ease',
-          transform: hover ? 'scale(1.05)' : 'scale(1)',
-        }}
-        alt=""
-        loading="lazy"
-decoding="async"
-      />
 
       <div
         style={{
@@ -119,18 +101,6 @@ decoding="async"
           height: '100%',
           borderRadius: 18,
           overflow: 'hidden',
-          border: '0.5px solid var(--color-primary-20)',
-          boxShadow: hover
-            ? '0 34px 90px rgba(0,0,0,0.75), 0 0 38px var(--color-primary-20)'
-            : '0 20px 60px rgba(0,0,0,0.6)',
-          transform: isMobile
-            ? hover ? 'scale(1.015)' : 'none'
-            : hover
-              ? `${flip ? 'translateY(16px)' : 'translateY(-16px)'} rotateX(3deg) rotateY(-4deg) scale(1.025)`
-              : flip
-                ? 'translateY(16px)'
-                : 'translateY(-16px)',
-          transition: 'transform 0.45s ease, box-shadow 0.45s ease',
         }}
       >
         <img
@@ -196,7 +166,6 @@ export default function Home() {
     padding: isMobile ? '25px 20px' : '100px 40px',
     overflow: 'hidden',
     position: 'relative',
-    background: '#120e1c',
   }
 
   return (
@@ -249,6 +218,32 @@ export default function Home() {
             box-shadow: 0 24px 60px rgba(0,0,0,0.5);
             border-color: var(--color-primary-50);
           }
+            .galleryCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 9, 30, 0.5) 0%,
+    rgba(18, 9, 30, 0.4) 40%,
+    rgba(60, 20, 80, 0.2) 100%
+  );
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.galleryCard:hover::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 9, 30, 0.05) 0%,
+    rgba(60, 20, 80, 0.1) 100%
+  );
+}
+
+.galleryOverlay {
+  z-index: 2;
+}
 
           .stickyBooking:hover {
             transform: translateY(-3px);
@@ -437,7 +432,10 @@ decoding="async"
       </section>
 
       {/* O NAS */}
-      <section style={{ background: 'var(--color-bg-2)', padding: 0, position: 'relative', zIndex: 200 }}>
+      <section style={{ padding: 0, position: 'relative', zIndex: 200 }}>
+        <div style={{background: 'rgba(6, 3, 15, 0.57)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',}}>
         {/* 1. odstavek */}
         <div style={odstavekStyle}>
           <div
@@ -590,6 +588,7 @@ decoding="async"
             </div>
           </Reveal>
         </div>
+        </div>
       </section>
 
       {/* GALERIJA */}
@@ -658,6 +657,7 @@ decoding="async"
                           style={{
                             position: 'absolute',
                             inset: 0,
+                            zIndex: 2,
                             opacity: 0,
                             transition: 'opacity 0.35s ease',
                             background: 'linear-gradient(to top, rgba(10,6,18,0.82), rgba(10,6,18,0.08))',
