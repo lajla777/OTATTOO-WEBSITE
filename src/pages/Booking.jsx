@@ -37,6 +37,21 @@ const labelStyle = {
   marginBottom: 8,
 }
 
+const errorStyle = (showErrors, condition) =>
+  showErrors && condition
+    ? {
+        border: '1px solid rgba(255,80,80,0.95)',
+        boxShadow: '0 0 0 3px rgba(255,80,80,0.14)',
+      }
+    : {}
+
+const ErrorText = ({ show }) =>
+  show ? (
+    <p style={{ color: 'rgba(255,100,100,0.9)', fontSize: 11, margin: '7px 0 0' }}>
+      To polje je obvezno.
+    </p>
+  ) : null
+
 const VELIKOSTI = [
   { value: 'do 5cm', label: 'Do 5 cm' },
   { value: '5-10cm', label: '5 – 10 cm' },
@@ -48,9 +63,7 @@ const VELIKOSTI = [
 const MALI_VELIKOSTI = ['do 5cm', '5-10cm']
 
 const jeMalaStoritev = ({ storitev, velikost, tipLaser }) => {
-  if (storitev === 'tetoviranje') {
-    return MALI_VELIKOSTI.includes(velikost)
-  }
+  if (storitev === 'tetoviranje') return MALI_VELIKOSTI.includes(velikost)
 
   if (storitev === 'odstranjevanje') {
     if (tipLaser === 'hollywood') return true
@@ -84,6 +97,7 @@ function StepIndicator({ step, total }) {
           }}>
             {i + 1}
           </div>
+
           {i < total - 1 && (
             <div style={{
               width: 50,
@@ -124,12 +138,7 @@ function Dropdown({ value, onChange, opcije, placeholder }) {
         }}
       >
         <span>{value ? opcije.find(o => o.value === value)?.label : placeholder}</span>
-        <span style={{
-          transition: 'transform 0.2s',
-          transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-          opacity: 0.5,
-          fontSize: 11,
-        }}>
+        <span style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', opacity: 0.5, fontSize: 11 }}>
           ▼
         </span>
       </div>
@@ -175,16 +184,12 @@ function Dropdown({ value, onChange, opcije, placeholder }) {
   )
 }
 
-function IzbiraCasa({ cas, setCas, storitev, velikost, tipLaser, datum, rezervacije }) {
+function IzbiraCasa({ cas, setCas, storitev, velikost, tipLaser, datum, rezervacije, showErrors }) {
   const mala = jeMalaStoritev({ storitev, velikost, tipLaser })
   const rezervacijeZaDan = rezervacije.filter(r => r.datum === datum)
 
   const imaVelikoRezervacijo = rezervacijeZaDan.some(r =>
-    jeVelikaStoritev({
-      storitev: r.storitev,
-      velikost: r.velikost,
-      tipLaser: r.tip_laser,
-    })
+    jeVelikaStoritev({ storitev: r.storitev, velikost: r.velikost, tipLaser: r.tip_laser })
   )
 
   const zasedeneUre = rezervacijeZaDan.map(r => r.cas).filter(Boolean)
@@ -201,7 +206,13 @@ function IzbiraCasa({ cas, setCas, storitev, velikost, tipLaser, datum, rezervac
     <div>
       <label style={labelStyle}>Ura termina *</label>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10,
+        borderRadius: 12,
+        ...errorStyle(showErrors, !cas),
+      }}>
         {ure.map(ura => {
           const disabled = uraZasedena(ura)
 
@@ -243,23 +254,20 @@ function IzbiraCasa({ cas, setCas, storitev, velikost, tipLaser, datum, rezervac
             </div>
           )
         })}
-
-        {!mala && (
-          <p style={{
-            fontSize: 12,
-            color: 'rgba(255,255,255,0.35)',
-            margin: '4px 0 0',
-            fontStyle: 'italic',
-          }}>
-            Prosim označi podan termin. Za večje storitve je možen le en termin na dan. Za prilagoditev ure se lahko dogovoriva naknadno prego Instagrama ali Gmaila.
-          </p>
-        )}
       </div>
+
+      <ErrorText show={showErrors && !cas} />
+
+      {!mala && (
+        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', margin: '8px 0 0', fontStyle: 'italic' }}>
+          Za večje storitve je možen le en termin na dan. Za prilagoditev ure se lahko dogovoriva naknadno preko Instagrama ali Gmaila.
+        </p>
+      )}
     </div>
   )
 }
 
-function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezervacije }) {
+function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezervacije, showErrors }) {
   const danes = new Date()
   const [mesec, setMesec] = useState(danes.getMonth())
   const [leto, setLeto] = useState(danes.getFullYear())
@@ -294,9 +302,7 @@ function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezerv
 
     while (blokiraniDatumi.length < 2) {
       const dv = pregledovanDan.getDay()
-      if (dv !== 0 && dv !== 6) {
-        blokiraniDatumi.push(pregledovanDan.toISOString().split('T')[0])
-      }
+      if (dv !== 0 && dv !== 6) blokiraniDatumi.push(pregledovanDan.toISOString().split('T')[0])
       pregledovanDan.setDate(pregledovanDan.getDate() + 1)
     }
 
@@ -307,11 +313,7 @@ function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezerv
     if (rezervacijeZaDan.length === 0) return 'prosto'
 
     const imaVelikoRezervacijo = rezervacijeZaDan.some(r =>
-      jeVelikaStoritev({
-        storitev: r.storitev,
-        velikost: r.velikost,
-        tipLaser: r.tip_laser,
-      })
+      jeVelikaStoritev({ storitev: r.storitev, velikost: r.velikost, tipLaser: r.tip_laser })
     )
 
     if (imaVelikoRezervacijo) return 'zasedeno'
@@ -333,13 +335,6 @@ function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezerv
       color: '#fff',
       cursor: 'pointer',
       border: '0.5px solid rgba(119,97,169,0.3)',
-    }
-
-    if (status === 'delno') return {
-      background: 'rgba(230,160,30,0.22)',
-      color: 'rgba(255,220,120,0.95)',
-      cursor: 'pointer',
-      border: '0.5px solid rgba(230,160,30,0.35)',
     }
 
     if (status === 'zasedeno') return {
@@ -372,7 +367,8 @@ function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezerv
         border: '0.5px solid rgba(255,255,255,0.12)',
         borderRadius: 16,
         padding: '28px 24px',
-        marginBottom: 20,
+        marginBottom: 8,
+        ...errorStyle(showErrors, !datum),
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
           <button
@@ -384,23 +380,12 @@ function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezerv
                 setMesec(m => m - 1)
               }
             }}
-            style={{
-              background: 'none',
-              border: '0.5px solid rgba(255,255,255,0.15)',
-              borderRadius: '50%',
-              width: 32,
-              height: 32,
-              color: '#fff',
-              cursor: 'pointer',
-              fontSize: 16,
-            }}
+            style={{ background: 'none', border: '0.5px solid rgba(255,255,255,0.15)', borderRadius: '50%', width: 32, height: 32, color: '#fff', cursor: 'pointer', fontSize: 16 }}
           >
             ‹
           </button>
 
-          <p style={{ color: '#fff', fontSize: 15, fontWeight: 500, margin: 0, textTransform: 'capitalize' }}>
-            {imeMeseca}
-          </p>
+          <p style={{ color: '#fff', fontSize: 15, fontWeight: 500, margin: 0, textTransform: 'capitalize' }}>{imeMeseca}</p>
 
           <button
             onClick={() => {
@@ -411,16 +396,7 @@ function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezerv
                 setMesec(m => m + 1)
               }
             }}
-            style={{
-              background: 'none',
-              border: '0.5px solid rgba(255,255,255,0.15)',
-              borderRadius: '50%',
-              width: 32,
-              height: 32,
-              color: '#fff',
-              cursor: 'pointer',
-              fontSize: 16,
-            }}
+            style={{ background: 'none', border: '0.5px solid rgba(255,255,255,0.15)', borderRadius: '50%', width: 32, height: 32, color: '#fff', cursor: 'pointer', fontSize: 16 }}
           >
             ›
           </button>
@@ -469,7 +445,9 @@ function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezerv
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+      <ErrorText show={showErrors && !datum} />
+
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 18 }}>
         {[
           { barva: 'rgba(119,97,169,0.4)', label: 'Prosto' },
           { barva: 'rgba(180,60,60,0.4)', label: 'Zasedeno' },
@@ -494,19 +472,10 @@ function SlikeUpload({ slike, setSlike, id }) {
       textAlign: 'center',
       background: slike.length > 0 ? 'rgba(119,97,169,0.08)' : 'rgba(255,255,255,0.03)',
     }}>
-      <input
-        type="file"
-        multiple
-        accept="image/*"
-        onChange={e => setSlike(Array.from(e.target.files))}
-        style={{ display: 'none' }}
-        id={id}
-      />
+      <input type="file" multiple accept="image/*" onChange={e => setSlike(Array.from(e.target.files))} style={{ display: 'none' }} id={id} />
       <label htmlFor={id} style={{ cursor: 'pointer' }}>
         {slike.length > 0 ? (
-          <p style={{ color: 'var(--color-primary-light)', margin: 0, fontSize: 14 }}>
-            ✓ {slike.length} slika/e naložena
-          </p>
+          <p style={{ color: 'var(--color-primary-light)', margin: 0, fontSize: 14 }}>✓ {slike.length} slika/e naložena</p>
         ) : (
           <>
             <p style={{ color: 'rgba(255,255,255,0.4)', margin: '0 0 8px', fontSize: 24 }}>📎</p>
@@ -518,7 +487,7 @@ function SlikeUpload({ slike, setSlike, id }) {
   )
 }
 
-function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe, resetTermin }) {
+function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe, resetTermin, showErrors }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
@@ -529,25 +498,32 @@ function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlik
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div>
           <label style={labelStyle}>Velikost *</label>
-          <Dropdown
-            value={velikost}
-            onChange={(v) => {
-              setVelikost(v)
-              resetTermin()
-            }}
-            placeholder="Izberi velikost"
-            opcije={VELIKOSTI}
-          />
+          <div style={{ borderRadius: 10, ...errorStyle(showErrors, !velikost) }}>
+            <Dropdown
+              value={velikost}
+              onChange={(v) => {
+                setVelikost(v)
+                resetTermin()
+              }}
+              placeholder="Izberi velikost"
+              opcije={VELIKOSTI}
+            />
+          </div>
+          <ErrorText show={showErrors && !velikost} />
         </div>
 
         <div>
           <label style={labelStyle}>Pozicija na telesu *</label>
-          <input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, roka, gleženj..." style={inputStyle} />
+          <input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, roka, gleženj..." style={{ ...inputStyle, ...errorStyle(showErrors, !pozicija) }} />
+          <ErrorText show={showErrors && !pozicija} />
         </div>
 
         <div>
           <label style={labelStyle}>Slike željenega designa *</label>
-          <SlikeUpload slike={slike} setSlike={setSlike} id="slike-tet" />
+          <div style={{ borderRadius: 10, ...errorStyle(showErrors, slike.length === 0) }}>
+            <SlikeUpload slike={slike} setSlike={setSlike} id="slike-tet" />
+          </div>
+          <ErrorText show={showErrors && slike.length === 0} />
         </div>
 
         <div>
@@ -559,7 +535,7 @@ function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlik
   )
 }
 
-function Step3Tet({ datum, setDatum, cas, setCas, velikost, rezervacije }) {
+function Step3Tet({ datum, setDatum, cas, setCas, velikost, rezervacije, showErrors }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
@@ -568,33 +544,17 @@ function Step3Tet({ datum, setDatum, cas, setCas, velikost, rezervacije }) {
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <Koledar
-          datum={datum}
-          setDatum={setDatum}
-          setCas={setCas}
-          storitev="tetoviranje"
-          velikost={velikost}
-          tipLaser={null}
-          rezervacije={rezervacije}
-        />
+        <Koledar datum={datum} setDatum={setDatum} setCas={setCas} storitev="tetoviranje" velikost={velikost} tipLaser={null} rezervacije={rezervacije} showErrors={showErrors} />
 
         {datum && (
-          <IzbiraCasa
-            cas={cas}
-            setCas={setCas}
-            storitev="tetoviranje"
-            velikost={velikost}
-            tipLaser={null}
-            datum={datum}
-            rezervacije={rezervacije}
-          />
+          <IzbiraCasa cas={cas} setCas={setCas} storitev="tetoviranje" velikost={velikost} tipLaser={null} datum={datum} rezervacije={rezervacije} showErrors={showErrors} />
         )}
       </div>
     </div>
   )
 }
 
-function Step2Odstr({ tipLaser, setTipLaser, resetTermin, setVelikost, setPozicija, setSlike }) {
+function Step2Odstr({ tipLaser, setTipLaser, resetTermin, setVelikost, setPozicija, setSlike, showErrors }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
@@ -602,7 +562,7 @@ function Step2Odstr({ tipLaser, setTipLaser, resetTermin, setVelikost, setPozici
         Vrsta <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
       </h2>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 14, borderRadius: 12, ...errorStyle(showErrors, !tipLaser) }}>
         {LASER_TIPI.map(t => (
           <div
             key={t.id}
@@ -631,28 +591,19 @@ function Step2Odstr({ tipLaser, setTipLaser, resetTermin, setVelikost, setPozici
             </div>
 
             {tipLaser === t.id && (
-              <div style={{
-                width: 20,
-                height: 20,
-                borderRadius: '50%',
-                background: 'var(--color-primary)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 11,
-                flexShrink: 0,
-              }}>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, flexShrink: 0 }}>
                 ✓
               </div>
             )}
           </div>
         ))}
       </div>
+      <ErrorText show={showErrors && !tipLaser} />
     </div>
   )
 }
 
-function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe, resetTermin }) {
+function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe, resetTermin, showErrors }) {
   const jeTetovaze = tipLaser === 'tetovaze'
   const jePege = tipLaser === 'pege'
   const jeHollywood = tipLaser === 'hollywood'
@@ -668,22 +619,26 @@ function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, sl
         {!jeHollywood && (
           <div>
             <label style={labelStyle}>Pozicija *</label>
-            <input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, obraz, roka..." style={inputStyle} />
+            <input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, obraz, roka..." style={{ ...inputStyle, ...errorStyle(showErrors, !pozicija) }} />
+            <ErrorText show={showErrors && !pozicija} />
           </div>
         )}
 
         {jeTetovaze && (
           <div>
             <label style={labelStyle}>Velikost *</label>
-            <Dropdown
-              value={velikost}
-              onChange={(v) => {
-                setVelikost(v)
-                resetTermin()
-              }}
-              placeholder="Izberi velikost"
-              opcije={VELIKOSTI}
-            />
+            <div style={{ borderRadius: 10, ...errorStyle(showErrors, !velikost) }}>
+              <Dropdown
+                value={velikost}
+                onChange={(v) => {
+                  setVelikost(v)
+                  resetTermin()
+                }}
+                placeholder="Izberi velikost"
+                opcije={VELIKOSTI}
+              />
+            </div>
+            <ErrorText show={showErrors && !velikost} />
           </div>
         )}
 
@@ -703,7 +658,7 @@ function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, sl
   )
 }
 
-function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser, rezervacije }) {
+function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser, rezervacije, showErrors }) {
   const efektivnaVelikost = tipLaser === 'hollywood' || tipLaser === 'pege' ? 'do 5cm' : velikost
 
   return (
@@ -714,33 +669,17 @@ function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser, rezervac
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <Koledar
-          datum={datum}
-          setDatum={setDatum}
-          setCas={setCas}
-          storitev="odstranjevanje"
-          velikost={efektivnaVelikost}
-          tipLaser={tipLaser}
-          rezervacije={rezervacije}
-        />
+        <Koledar datum={datum} setDatum={setDatum} setCas={setCas} storitev="odstranjevanje" velikost={efektivnaVelikost} tipLaser={tipLaser} rezervacije={rezervacije} showErrors={showErrors} />
 
         {datum && (
-          <IzbiraCasa
-            cas={cas}
-            setCas={setCas}
-            storitev="odstranjevanje"
-            velikost={efektivnaVelikost}
-            tipLaser={tipLaser}
-            datum={datum}
-            rezervacije={rezervacije}
-          />
+          <IzbiraCasa cas={cas} setCas={setCas} storitev="odstranjevanje" velikost={efektivnaVelikost} tipLaser={tipLaser} datum={datum} rezervacije={rezervacije} showErrors={showErrors} />
         )}
       </div>
     </div>
   )
 }
 
-function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, instagram, setInstagram, stepNum }) {
+function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, instagram, setInstagram, stepNum, showErrors }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak {stepNum}</p>
@@ -752,24 +691,25 @@ function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, instag
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div>
             <label style={labelStyle}>Ime *</label>
-            <input value={ime} onChange={e => setIme(e.target.value)} placeholder="Jana" style={inputStyle} />
+            <input value={ime} onChange={e => setIme(e.target.value)} placeholder="Jana" style={{ ...inputStyle, ...errorStyle(showErrors, !ime) }} />
+            <ErrorText show={showErrors && !ime} />
           </div>
 
           <div>
             <label style={labelStyle}>Priimek *</label>
-            <input value={priimek} onChange={e => setPriimek(e.target.value)} placeholder="Novak" style={inputStyle} />
+            <input value={priimek} onChange={e => setPriimek(e.target.value)} placeholder="Novak" style={{ ...inputStyle, ...errorStyle(showErrors, !priimek) }} />
+            <ErrorText show={showErrors && !priimek} />
           </div>
         </div>
 
         <div>
           <label style={labelStyle}>Email *</label>
-          <input value={email} onChange={e => setEmail(e.target.value)} placeholder="jana@email.com" type="email" style={inputStyle} />
+          <input value={email} onChange={e => setEmail(e.target.value)} placeholder="jana@email.com" type="email" style={{ ...inputStyle, ...errorStyle(showErrors, !email) }} />
+          <ErrorText show={showErrors && !email} />
         </div>
 
         <div>
-          <label style={labelStyle}>
-            Instagram <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10 }}>(neobvezno, le za lažjo komunikacijo)</span>
-          </label>
+          <label style={labelStyle}>Instagram <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10 }}>(neobvezno, le za lažjo komunikacijo)</span></label>
           <input value={instagram} onChange={e => setInstagram(e.target.value)} placeholder="@username" style={inputStyle} />
         </div>
       </div>
@@ -795,6 +735,7 @@ export default function Booking() {
   const [loading, setLoading] = useState(false)
   const [rezervacije, setRezervacije] = useState([])
   const [hoverBtn, setHoverBtn] = useState(false)
+  const [showErrors, setShowErrors] = useState(false)
 
   const resetTermin = () => {
     setDatum(null)
@@ -852,15 +793,10 @@ export default function Booking() {
     const rezervacijeZaDan = rezervacije.filter(r => r.datum === datum)
 
     const imaVelikoRezervacijo = rezervacijeZaDan.some(r =>
-      jeVelikaStoritev({
-        storitev: r.storitev,
-        velikost: r.velikost,
-        tipLaser: r.tip_laser,
-      })
+      jeVelikaStoritev({ storitev: r.storitev, velikost: r.velikost, tipLaser: r.tip_laser })
     )
 
     if (imaVelikoRezervacijo) return false
-
     if (!mala && rezervacijeZaDan.length > 0) return false
 
     if (mala) {
@@ -933,114 +869,55 @@ export default function Booking() {
 
     if (storitev === 'tetoviranje') {
       if (step === 2) {
-        return (
-          <Step2Tet
-            velikost={velikost}
-            setVelikost={setVelikost}
-            pozicija={pozicija}
-            setPozicija={setPozicija}
-            slike={slike}
-            setSlike={setSlike}
-            opombe={opombe}
-            setOpombe={setOpombe}
-            resetTermin={resetTermin}
-          />
-        )
+        return <Step2Tet velikost={velikost} setVelikost={setVelikost} pozicija={pozicija} setPozicija={setPozicija} slike={slike} setSlike={setSlike} opombe={opombe} setOpombe={setOpombe} resetTermin={resetTermin} showErrors={showErrors} />
       }
 
       if (step === 3) {
-        return (
-          <Step3Tet
-            datum={datum}
-            setDatum={setDatum}
-            cas={cas}
-            setCas={setCas}
-            velikost={velikost}
-            rezervacije={rezervacije}
-          />
-        )
+        return <Step3Tet datum={datum} setDatum={setDatum} cas={cas} setCas={setCas} velikost={velikost} rezervacije={rezervacije} showErrors={showErrors} />
       }
 
       if (step === 4) {
-        return (
-          <StepPodatki
-            ime={ime}
-            setIme={setIme}
-            priimek={priimek}
-            setPriimek={setPriimek}
-            email={email}
-            setEmail={setEmail}
-            instagram={instagram}
-            setInstagram={setInstagram}
-            stepNum={4}
-          />
-        )
+        return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} instagram={instagram} setInstagram={setInstagram} stepNum={4} showErrors={showErrors} />
       }
     }
 
     if (storitev === 'odstranjevanje') {
       if (step === 2) {
-        return (
-          <Step2Odstr
-            tipLaser={tipLaser}
-            setTipLaser={setTipLaser}
-            setVelikost={setVelikost}
-            setPozicija={setPozicija}
-            setSlike={setSlike}
-            resetTermin={resetTermin}
-          />
-        )
+        return <Step2Odstr tipLaser={tipLaser} setTipLaser={setTipLaser} setVelikost={setVelikost} setPozicija={setPozicija} setSlike={setSlike} resetTermin={resetTermin} showErrors={showErrors} />
       }
 
       if (step === 3) {
-        return (
-          <Step3Odstr
-            tipLaser={tipLaser}
-            velikost={velikost}
-            setVelikost={setVelikost}
-            pozicija={pozicija}
-            setPozicija={setPozicija}
-            slike={slike}
-            setSlike={setSlike}
-            opombe={opombe}
-            setOpombe={setOpombe}
-            resetTermin={resetTermin}
-          />
-        )
+        return <Step3Odstr tipLaser={tipLaser} velikost={velikost} setVelikost={setVelikost} pozicija={pozicija} setPozicija={setPozicija} slike={slike} setSlike={setSlike} opombe={opombe} setOpombe={setOpombe} resetTermin={resetTermin} showErrors={showErrors} />
       }
 
       if (step === 4) {
-        return (
-          <Step4Odstr
-            datum={datum}
-            setDatum={setDatum}
-            cas={cas}
-            setCas={setCas}
-            velikost={velikost}
-            tipLaser={tipLaser}
-            rezervacije={rezervacije}
-          />
-        )
+        return <Step4Odstr datum={datum} setDatum={setDatum} cas={cas} setCas={setCas} velikost={velikost} tipLaser={tipLaser} rezervacije={rezervacije} showErrors={showErrors} />
       }
 
       if (step === 5) {
-        return (
-          <StepPodatki
-            ime={ime}
-            setIme={setIme}
-            priimek={priimek}
-            setPriimek={setPriimek}
-            email={email}
-            setEmail={setEmail}
-            instagram={instagram}
-            setInstagram={setInstagram}
-            stepNum={5}
-          />
-        )
+        return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} instagram={instagram} setInstagram={setInstagram} stepNum={5} showErrors={showErrors} />
       }
     }
 
     return null
+  }
+
+  const goNext = () => {
+    if (canNext()) {
+      setShowErrors(false)
+      setStep(s => s + 1)
+    } else {
+      setShowErrors(true)
+    }
+  }
+
+  const submitWithValidation = () => {
+    if (canNext()) {
+      setShowErrors(false)
+      handleSubmit()
+    } else {
+      setShowErrors(true)
+    }
   }
 
   return (
@@ -1048,13 +925,7 @@ export default function Booking() {
       <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
         {SLIDES.map((src, i) => (
           <div key={i} style={{ position: 'absolute', inset: 0 }}>
-            <img
-              src={src}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(12px)', transform: 'scale(1.05)' }}
-            />
+            <img src={src} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(12px)', transform: 'scale(1.05)' }} />
           </div>
         ))}
 
@@ -1073,15 +944,7 @@ export default function Booking() {
 
             <StepIndicator step={step} total={skupajKorakov} />
 
-            <div style={{
-              background: 'rgba(255,255,255,0.06)',
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
-              border: '0.5px solid rgba(255,255,255,0.12)',
-              borderRadius: 20,
-              padding: '40px 36px',
-              marginBottom: 24,
-            }}>
+            <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: '40px 36px', marginBottom: 24 }}>
               {step === 1 && (
                 <div>
                   <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 1</p>
@@ -1089,7 +952,7 @@ export default function Booking() {
                     Izberi <em style={{ color: 'var(--color-primary-light)' }}>storitev</em>
                   </h2>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16, borderRadius: 12, ...errorStyle(showErrors, !storitev) }}>
                     {STORITVE.map(s => (
                       <div
                         key={s.id}
@@ -1122,24 +985,11 @@ export default function Booking() {
                           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>{s.opis}</p>
                         </div>
 
-                        {storitev === s.id && (
-                          <div style={{
-                            marginLeft: 'auto',
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            background: 'var(--color-primary)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 11,
-                          }}>
-                            ✓
-                          </div>
-                        )}
+                        {storitev === s.id && <div style={{ marginLeft: 'auto', width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
                       </div>
                     ))}
                   </div>
+                  <ErrorText show={showErrors && !storitev} />
                 </div>
               )}
 
@@ -1152,18 +1002,9 @@ export default function Booking() {
                   onClick={() => {
                     setStep(s => s - 1)
                     setCas(null)
+                    setShowErrors(false)
                   }}
-                  style={{
-                    padding: '14px 28px',
-                    borderRadius: 50,
-                    fontSize: 12,
-                    letterSpacing: 1.5,
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    background: 'transparent',
-                    border: '0.5px solid rgba(255,255,255,0.2)',
-                    color: '#fff',
-                  }}
+                  style={{ padding: '14px 28px', borderRadius: 50, fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase', cursor: 'pointer', background: 'transparent', border: '0.5px solid rgba(255,255,255,0.2)', color: '#fff' }}
                 >
                   ← Nazaj
                 </button>
@@ -1171,14 +1012,14 @@ export default function Booking() {
 
               {step < zadnjiKorak ? (
                 <button
-                  onClick={() => canNext() && setStep(s => s + 1)}
+                  onClick={goNext}
                   style={{
                     padding: '14px 32px',
                     borderRadius: 50,
                     fontSize: 12,
                     letterSpacing: 1.5,
                     textTransform: 'uppercase',
-                    cursor: canNext() ? 'pointer' : 'not-allowed',
+                    cursor: 'pointer',
                     background: canNext() ? 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))' : 'rgba(255,255,255,0.1)',
                     border: 'none',
                     color: '#fff',
@@ -1189,15 +1030,15 @@ export default function Booking() {
                 </button>
               ) : (
                 <button
-                  onClick={handleSubmit}
-                  disabled={!canNext() || loading}
+                  onClick={submitWithValidation}
+                  disabled={loading}
                   style={{
                     padding: '14px 32px',
                     borderRadius: 50,
                     fontSize: 12,
                     letterSpacing: 1.5,
                     textTransform: 'uppercase',
-                    cursor: canNext() && !loading ? 'pointer' : 'not-allowed',
+                    cursor: loading ? 'not-allowed' : 'pointer',
                     background: canNext() ? 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))' : 'rgba(255,255,255,0.1)',
                     border: 'none',
                     color: '#fff',
@@ -1210,59 +1051,43 @@ export default function Booking() {
             </div>
           </>
         ) : (
-          <div style={{
-            background: 'rgba(255,255,255,0.06)',
-            backdropFilter: 'blur(24px)',
-            border: '0.5px solid rgba(255,255,255,0.12)',
-            borderRadius: 20,
-            padding: '60px 40px',
-            textAlign: 'center',
-          }}>
+          <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: '60px 40px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 24 }}>✓</div>
 
             <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.7)', marginBottom: 20, marginTop: 30 }}>
               Tvojo rezervacijo bom pregledala v najkrajšem možnem času in te po emailu obvestila o <strong>potrditvi ali zavrnitvi</strong> termina.<br /><br />
-              V primeru potrditve boš prejel/a tudi navodila za 
-              </p>
-            
+              V primeru potrditve boš prejel/a tudi navodila za
+            </p>
+
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: '#b595e8', marginBottom: 20 }}>
               <strong>NAKAZILO <em style={{ color: 'var(--color-primary-light)' }}>AVANSA,</em></strong>
             </h2>
 
             <p style={{ fontSize: 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.7)', marginBottom: 32, marginTop: 30 }}>
-               ki je obvezen za zagotovitev termina. V primeru zavrnitve pa si lahko poiščeš kakšen drug termin, ki bi ti ustrezal.<br />
+              ki je obvezen za zagotovitev termina. V primeru zavrnitve pa si lahko poiščeš kakšen drug termin, ki bi ti ustrezal.<br />
             </p>
 
             <Link
-  to="/"
-  onMouseEnter={() => setHoverBtn(true)}
-  onMouseLeave={() => setHoverBtn(false)}
-  style={{
-    display: 'inline-block',
-    padding: '12px 28px',
-    borderRadius: 50,
-    background: hoverBtn
-      ? 'linear-gradient(135deg, #59279b, #59279b)'
-      : 'linear-gradient(135deg, #8f63ff, #7a54ab)',
-    color: '#fff',
-    textDecoration: 'none',
-    fontSize: 11,
-    letterSpacing: 2,
-    textTransform: 'uppercase',
-
-    transition: 'all 0.25s ease',
-
-    boxShadow: hoverBtn
-      ? '0 0 26px rgba(150,100,255,0.15)'
-      : '0 0 0 rgba(0,0,0,0)',
-
-    transform: hoverBtn
-      ? 'translateY(-2px) scale(1.03)'
-      : 'translateY(0) scale(1)',
-  }}
->
-  Nazaj na začetek
-</Link>
+              to="/"
+              onMouseEnter={() => setHoverBtn(true)}
+              onMouseLeave={() => setHoverBtn(false)}
+              style={{
+                display: 'inline-block',
+                padding: '12px 28px',
+                borderRadius: 50,
+                background: hoverBtn ? 'linear-gradient(135deg, #59279b, #59279b)' : 'linear-gradient(135deg, #8f63ff, #7a54ab)',
+                color: '#fff',
+                textDecoration: 'none',
+                fontSize: 11,
+                letterSpacing: 2,
+                textTransform: 'uppercase',
+                transition: 'all 0.25s ease',
+                boxShadow: hoverBtn ? '0 0 26px rgba(150,100,255,0.15)' : '0 0 0 rgba(0,0,0,0)',
+                transform: hoverBtn ? 'translateY(-2px) scale(1.03)' : 'translateY(0) scale(1)',
+              }}
+            >
+              Nazaj na začetek
+            </Link>
           </div>
         )}
       </div>
