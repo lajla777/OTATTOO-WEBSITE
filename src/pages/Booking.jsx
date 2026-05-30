@@ -251,7 +251,7 @@ function IzbiraCasa({ cas, setCas, storitev, velikost, tipLaser, datum, rezervac
             margin: '4px 0 0',
             fontStyle: 'italic',
           }}>
-            Za večje storitve je možen le en termin na dan. Za prilagoditev ure se lahko dogovoriva naknadno prego Instagrama ali Gmaila.
+            Prosim označi podan termin. Za večje storitve je možen le en termin na dan. Za prilagoditev ure se lahko dogovoriva naknadno prego Instagrama ali Gmaila.
           </p>
         )}
       </div>
