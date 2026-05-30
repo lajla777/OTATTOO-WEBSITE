@@ -149,7 +149,7 @@ useEffect(() => {
     alignItems: 'center', justifyContent: 'center', textAlign: 'center',
   }}>
     <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-light)', marginBottom: 16 }}>Storitev</p>
-    <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 80 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
+    <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 70 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
       Tetovi<em style={{ color: 'var(--color-primary-light)' }}>ranje</em>
     </h1>
   </div>
