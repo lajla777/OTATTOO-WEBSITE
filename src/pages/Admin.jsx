@@ -41,29 +41,39 @@ export default function Admin() {
     if (prijavljen) naloziPodatke()
   }, [prijavljen])
 
+
 const posodobiStatus = async (id, novStatus) => {
-  await supabase.from('rezervacije').update({ status: novStatus }).eq('id', id)
-  
-  if (novStatus === 'potrjeno') {
-    const r = rezervacije.find(rez => rez.id === id)
-    if (r) {
-      await supabase.functions.invoke('send-email', {
-        body: {
-          ime: r.ime,
-          email: r.email,
-          datum: r.datum.split('-').reverse().join('.'),
-          storitev: r.storitev,
-          tip_laser: r.tip_laser || '',
-          velikost: r.velikost || '',
-          pozicija: r.pozicija || '',
-          opombe: r.opombe || '',
-          cas: r.cas || '',
-        }
-      })
-    }
+  const r = rezervacije.find(rez => rez.id === id)
+
+  const { error } = await supabase
+    .from('rezervacije')
+    .update({ status: novStatus })
+    .eq('id', id)
+
+  if (error) {
+    alert('Napaka pri posodabljanju statusa.')
+    return
   }
-  
+
+  if (r && (novStatus === 'potrjeno' || novStatus === 'zavrnjeno')) {
+    await supabase.functions.invoke('send-email', {
+      body: {
+        ime: r.ime,
+        email: r.email,
+        datum: r.datum.split('-').reverse().join('.'),
+        storitev: r.storitev,
+        tip_laser: r.tip_laser || '',
+        velikost: r.velikost || '',
+        pozicija: r.pozicija || '',
+        opombe: r.opombe || '',
+        cas: r.cas || '',
+        status: novStatus,
+      },
+    })
+  }
+
   await naloziPodatke()
+
   if (izbranRezervacija?.id === id) {
     setIzbranRezervacija(prev => ({ ...prev, status: novStatus }))
   }

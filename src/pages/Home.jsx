@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-const HERO_IMAGES = ['/kaja1.webp', '/tatu8.webp', '/hero.webp']
+const HERO_IMAGES = ['/kaja1.webp', '/tatu8.webp', '/tatu1.webp']
 
 const GALLERY = [
   { src: '/galerija19.webp', alt: 'tetovaža 1' },

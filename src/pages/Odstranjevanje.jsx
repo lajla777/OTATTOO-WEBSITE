@@ -160,7 +160,7 @@ export default function Odstranjevanje() {
         </div>
       </div>
 
-      <ParallaxSlika src="/odstr2.webp" />
+      <ParallaxSlika src="/kaja5.webp" />
 
       {/* 2. ODSTAVEK — Pege */}
       <div className="odstavek">

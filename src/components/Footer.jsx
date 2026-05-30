@@ -149,8 +149,9 @@ useEffect(() => {
         © 2025 OTattoo · Kaja Otavnik s.p.
         </p>
             <p style={{ fontSize: 11, color: 'rgba(240,236,248,0.25)', margin: 0 }}>
-              Žalec, Slovenija
+              Vse pravice pridržane
             </p>
+            
           </div>
     </footer>
   )

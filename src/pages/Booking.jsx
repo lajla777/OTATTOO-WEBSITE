@@ -8,19 +8,34 @@ const STORITVE = [
 ]
 
 const LASER_TIPI = [
-  { id: 'tetovaze', naziv: 'Odstranjevanje tetovaž', opis: 'Varno lasersko odstranjevanje z Philaser tehnologijo' },
-  { id: 'pege', naziv: 'Odstranjevanje starostnih peg', opis: 'Učinkovito odstranjevanje pigmentacij in peg' },
   { id: 'hollywood', naziv: 'Hollywood peel', opis: 'Globinsko čiščenje in pomladitev kože' },
+  { id: 'pege', naziv: 'Odstranjevanje starostnih peg', opis: 'Učinkovito odstranjevanje pigmentacij in peg' },
+  { id: 'tetovaze', naziv: 'Odstranjevanje tetovaž', opis: 'Varno lasersko odstranjevanje z Philaser tehnologijo' },
 ]
 
 const SLIDES = ['/tatu5.webp']
 
 const inputStyle = {
-  width: '100%', padding: '14px 16px', borderRadius: 10, fontSize: 14,
-  background: 'rgba(255,255,255,0.06)', border: '0.5px solid rgba(255,255,255,0.12)',
-  color: '#fff', outline: 'none', boxSizing: 'border-box', fontFamily: "'Montserrat', sans-serif",
+  width: '100%',
+  padding: '14px 16px',
+  borderRadius: 10,
+  fontSize: 14,
+  background: 'rgba(255,255,255,0.06)',
+  border: '0.5px solid rgba(255,255,255,0.12)',
+  color: '#fff',
+  outline: 'none',
+  boxSizing: 'border-box',
+  fontFamily: "'Montserrat', sans-serif",
 }
-const labelStyle = { fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: 8 }
+
+const labelStyle = {
+  fontSize: 11,
+  letterSpacing: 2,
+  textTransform: 'uppercase',
+  color: 'rgba(255,255,255,0.4)',
+  display: 'block',
+  marginBottom: 8,
+}
 
 const VELIKOSTI = [
   { value: 'do 5cm', label: 'Do 5 cm' },
@@ -30,7 +45,23 @@ const VELIKOSTI = [
   { value: 'nad 20cm', label: 'Nad 20 cm' },
 ]
 
-const jeMajhna = (velikost) => velikost === 'do 5cm'
+const MALI_VELIKOSTI = ['do 5cm', '5-10cm']
+
+const jeMalaStoritev = ({ storitev, velikost, tipLaser }) => {
+  if (storitev === 'tetoviranje') {
+    return MALI_VELIKOSTI.includes(velikost)
+  }
+
+  if (storitev === 'odstranjevanje') {
+    if (tipLaser === 'hollywood') return true
+    if (tipLaser === 'pege') return true
+    if (tipLaser === 'tetovaze') return MALI_VELIKOSTI.includes(velikost)
+  }
+
+  return false
+}
+
+const jeVelikaStoritev = (podatki) => !jeMalaStoritev(podatki)
 
 function StepIndicator({ step, total }) {
   return (
@@ -38,16 +69,28 @@ function StepIndicator({ step, total }) {
       {Array(total).fill(null).map((_, i) => (
         <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{
-            width: 36, height: 36, borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 13, fontWeight: 500,
+            width: 36,
+            height: 36,
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 13,
+            fontWeight: 500,
             background: step >= i + 1 ? 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))' : 'rgba(255,255,255,0.08)',
             color: step >= i + 1 ? '#fff' : 'rgba(255,255,255,0.3)',
             border: step >= i + 1 ? 'none' : '0.5px solid rgba(255,255,255,0.15)',
             transition: 'all 0.3s ease',
-          }}>{i + 1}</div>
+          }}>
+            {i + 1}
+          </div>
           {i < total - 1 && (
-            <div style={{ width: 50, height: 1, background: step > i + 1 ? 'var(--color-primary)' : 'rgba(255,255,255,0.15)', transition: 'background 0.3s ease' }} />
+            <div style={{
+              width: 50,
+              height: 1,
+              background: step > i + 1 ? 'var(--color-primary)' : 'rgba(255,255,255,0.15)',
+              transition: 'background 0.3s ease',
+            }} />
           )}
         </div>
       ))}
@@ -58,36 +101,73 @@ function StepIndicator({ step, total }) {
 function Dropdown({ value, onChange, opcije, placeholder }) {
   const [open, setOpen] = useState(false)
   const [hovered, setHovered] = useState(null)
+
   return (
     <div style={{ position: 'relative' }}>
-      <div onClick={() => setOpen(o => !o)} style={{
-        width: '100%', padding: '14px 16px', borderRadius: 10, fontSize: 14,
-        background: 'rgba(255,255,255,0.06)',
-        border: open ? '0.5px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
-        color: value ? '#fff' : 'rgba(255,255,255,0.35)',
-        cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        boxSizing: 'border-box', transition: 'border 0.2s', userSelect: 'none',
-      }}>
+      <div
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: '100%',
+          padding: '14px 16px',
+          borderRadius: 10,
+          fontSize: 14,
+          background: 'rgba(255,255,255,0.06)',
+          border: open ? '0.5px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
+          color: value ? '#fff' : 'rgba(255,255,255,0.35)',
+          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          boxSizing: 'border-box',
+          transition: 'border 0.2s',
+          userSelect: 'none',
+        }}
+      >
         <span>{value ? opcije.find(o => o.value === value)?.label : placeholder}</span>
-        <span style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', opacity: 0.5, fontSize: 11 }}>▼</span>
+        <span style={{
+          transition: 'transform 0.2s',
+          transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+          opacity: 0.5,
+          fontSize: 11,
+        }}>
+          ▼
+        </span>
       </div>
+
       {open && (
         <div style={{
-          position: 'absolute', top: 'calc(100% + 8px)', left: 0, right: 0, zIndex: 100,
-          background: '#1e1830', border: '0.5px solid rgba(119,97,169,0.3)',
-          borderRadius: 10, overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+          position: 'absolute',
+          top: 'calc(100% + 8px)',
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          background: '#1e1830',
+          border: '0.5px solid rgba(119,97,169,0.3)',
+          borderRadius: 10,
+          overflow: 'hidden',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
         }}>
           {opcije.map(o => (
-            <div key={o.value}
-              onClick={() => { onChange(o.value); setOpen(false) }}
+            <div
+              key={o.value}
+              onClick={() => {
+                onChange(o.value)
+                setOpen(false)
+              }}
               onMouseEnter={() => setHovered(o.value)}
               onMouseLeave={() => setHovered(null)}
               style={{
-                padding: '12px 16px', fontSize: 14, cursor: 'pointer',
+                padding: '12px 16px',
+                fontSize: 14,
+                cursor: 'pointer',
                 color: value === o.value ? 'var(--color-primary-light)' : 'rgba(255,255,255,0.7)',
                 background: value === o.value ? 'rgba(119,97,169,0.25)' : hovered === o.value ? 'rgba(119,97,169,0.1)' : 'transparent',
-                transition: 'background 0.15s', borderBottom: '0.5px solid rgba(255,255,255,0.05)',
-              }}>{o.label}</div>
+                transition: 'background 0.15s',
+                borderBottom: '0.5px solid rgba(255,255,255,0.05)',
+              }}
+            >
+              {o.label}
+            </div>
           ))}
         </div>
       )}
@@ -95,40 +175,83 @@ function Dropdown({ value, onChange, opcije, placeholder }) {
   )
 }
 
-function IzbiraCasa({ cas, setCas, velikost }) {
-  const majhna = jeMajhna(velikost)
+function IzbiraCasa({ cas, setCas, storitev, velikost, tipLaser, datum, rezervacije }) {
+  const mala = jeMalaStoritev({ storitev, velikost, tipLaser })
+  const rezervacijeZaDan = rezervacije.filter(r => r.datum === datum)
+
+  const imaVelikoRezervacijo = rezervacijeZaDan.some(r =>
+    jeVelikaStoritev({
+      storitev: r.storitev,
+      velikost: r.velikost,
+      tipLaser: r.tip_laser,
+    })
+  )
+
+  const zasedeneUre = rezervacijeZaDan.map(r => r.cas).filter(Boolean)
+
+  const uraZasedena = (ura) => {
+    if (imaVelikoRezervacijo) return true
+    if (!mala && rezervacijeZaDan.length > 0) return true
+    return zasedeneUre.includes(ura)
+  }
+
+  const ure = mala ? ['9:00', '12:00'] : ['9:00']
+
   return (
     <div>
       <label style={labelStyle}>Ura termina *</label>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div onClick={() => setCas('9:00')} style={{
-          padding: '16px 20px', borderRadius: 12, cursor: 'pointer',
-          border: cas === '9:00' ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
-          background: cas === '9:00' ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
-        }}>
-          <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>9:00</p>
-          {cas === '9:00' && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
-        </div>
+        {ure.map(ura => {
+          const disabled = uraZasedena(ura)
 
-        {majhna && (
-          <div onClick={() => setCas('12:00')} style={{
-            padding: '16px 20px', borderRadius: 12, cursor: 'pointer',
-            border: cas === '12:00' ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
-            background: cas === '12:00' ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
+          return (
+            <div
+              key={ura}
+              onClick={() => !disabled && setCas(ura)}
+              style={{
+                padding: '16px 20px',
+                borderRadius: 12,
+                cursor: disabled ? 'not-allowed' : 'pointer',
+                opacity: disabled ? 0.35 : 1,
+                border: cas === ura ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
+                background: cas === ura ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                transition: 'all 0.2s',
+              }}
+            >
+              <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>
+                {ura} {disabled ? '— zasedeno' : ''}
+              </p>
+
+              {cas === ura && !disabled && (
+                <div style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: '50%',
+                  background: 'var(--color-primary)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 11,
+                }}>
+                  ✓
+                </div>
+              )}
+            </div>
+          )
+        })}
+
+        {!mala && (
+          <p style={{
+            fontSize: 12,
+            color: 'rgba(255,255,255,0.35)',
+            margin: '4px 0 0',
+            fontStyle: 'italic',
           }}>
-            <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: 0 }}>12:00</p>
-            {cas === '12:00' && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
-          </div>
-        )}
-
-        {!majhna && (
-          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', margin: '4px 0 0', fontStyle: 'italic' }}>
-            Če ti dopoldanska ura ne ustreza, se lahko zmeniva za drugo uro prek{' '}
-            <a href="https://instagram.com/otattoo_ink" target="_blank" rel="noreferrer" style={{ color: 'var(--color-primary-light)', textDecoration: 'none' }}>Instagrama</a>
-            {' '}ali{' '}
-            <a href="mailto:otaattoo.ink@gmail.com" style={{ color: 'var(--color-primary-light)', textDecoration: 'none' }}>emaila</a>.
+            Za večje storitve je možen le en termin na dan. Za prilagoditev ure se lahko dogovoriva naknadno prego Instagrama ali Gmaila.
           </p>
         )}
       </div>
@@ -136,26 +259,22 @@ function IzbiraCasa({ cas, setCas, velikost }) {
   )
 }
 
-function Koledar({ datum, setDatum }) {
+function Koledar({ datum, setDatum, setCas, storitev, velikost, tipLaser, rezervacije }) {
   const danes = new Date()
   const [mesec, setMesec] = useState(danes.getMonth())
   const [leto, setLeto] = useState(danes.getFullYear())
-  const [rezerviraniTermini, setRezerviraniTermini] = useState([])
-  const [zasedenTermini, setZasedenTermini] = useState([])
   const [nedosegljiviTermini, setNedosegljiviTermini] = useState([])
 
   useEffect(() => {
-    const naloziTermine = async () => {
-      const { data: rez } = await supabase.from('rezervacije').select('datum, status').in('status', ['rezervirano', 'potrjeno'])
+    const naloziNedosegljive = async () => {
       const { data: ned } = await supabase.from('nedosegljivi').select('datum')
-      if (rez) {
-        setRezerviraniTermini(rez.filter(r => r.status === 'rezervirano').map(r => r.datum))
-        setZasedenTermini(rez.filter(r => r.status === 'potrjeno').map(r => r.datum))
-      }
       if (ned) setNedosegljiviTermini(ned.map(n => n.datum))
     }
-    naloziTermine()
+
+    naloziNedosegljive()
   }, [])
+
+  const trenutnaStoritevJeMala = jeMalaStoritev({ storitev, velikost, tipLaser })
 
   const imeMeseca = new Date(leto, mesec, 1).toLocaleString('sl-SI', { month: 'long', year: 'numeric' })
   const prvaDneva = new Date(leto, mesec, 1).getDay()
@@ -165,63 +284,194 @@ function Koledar({ datum, setDatum }) {
   const getDanStatus = (dateStr) => {
     const d = new Date(dateStr)
     const danVTednu = d.getDay()
+
     if (danVTednu === 0 || danVTednu === 6) return 'ni_mozno'
     if (nedosegljiviTermini.includes(dateStr)) return 'ni_mozno'
+    if (d < new Date(danes.toDateString())) return 'preteklo'
 
     const blokiraniDatumi = []
     let pregledovanDan = new Date(danes)
+
     while (blokiraniDatumi.length < 2) {
       const dv = pregledovanDan.getDay()
-      if (dv !== 0 && dv !== 6) blokiraniDatumi.push(pregledovanDan.toISOString().split('T')[0])
-      pregledovanDan = new Date(pregledovanDan)
+      if (dv !== 0 && dv !== 6) {
+        blokiraniDatumi.push(pregledovanDan.toISOString().split('T')[0])
+      }
       pregledovanDan.setDate(pregledovanDan.getDate() + 1)
     }
 
-    if (blokiraniDatumi.includes(dateStr) && !zasedenTermini.includes(dateStr) && !rezerviraniTermini.includes(dateStr)) return 'ni_mozno'
-    if (d < new Date(danes.toDateString())) return 'preteklo'
-    if (zasedenTermini.includes(dateStr)) return 'zasedeno'
-    if (rezerviraniTermini.includes(dateStr)) return 'rezervirano'
+    if (blokiraniDatumi.includes(dateStr)) return 'ni_mozno'
+
+    const rezervacijeZaDan = rezervacije.filter(r => r.datum === dateStr)
+
+    if (rezervacijeZaDan.length === 0) return 'prosto'
+
+    const imaVelikoRezervacijo = rezervacijeZaDan.some(r =>
+      jeVelikaStoritev({
+        storitev: r.storitev,
+        velikost: r.velikost,
+        tipLaser: r.tip_laser,
+      })
+    )
+
+    if (imaVelikoRezervacijo) return 'zasedeno'
+    if (!trenutnaStoritevJeMala) return 'zasedeno'
+
+    const zasedeneUre = rezervacijeZaDan.map(r => r.cas).filter(Boolean)
+    const ima9 = zasedeneUre.includes('9:00')
+    const ima12 = zasedeneUre.includes('12:00')
+
+    if (ima9 && ima12) return 'zasedeno'
     return 'prosto'
   }
 
   const getDanStyle = (status, jeIzbran) => {
     if (jeIzbran) return { background: 'var(--color-primary)', color: '#fff', cursor: 'pointer', border: 'none' }
-    if (status === 'prosto') return { background: 'rgba(119,97,169,0.15)', color: '#fff', cursor: 'pointer', border: '0.5px solid rgba(119,97,169,0.3)' }
-    if (status === 'rezervirano') return { background: 'rgba(230,160,30,0.2)', color: 'rgba(255,200,80,0.8)', cursor: 'not-allowed' }
-    if (status === 'zasedeno') return { background: 'rgba(180,60,60,0.2)', color: 'rgba(255,100,100,0.6)', cursor: 'not-allowed', textDecoration: 'line-through' }
-    if (status === 'ni_mozno') return { background: 'rgba(255,255,255,0.03)', color: 'rgba(255,255,255,0.2)', cursor: 'not-allowed' }
-    if (status === 'preteklo') return { background: 'transparent', color: 'rgba(255,255,255,0.15)', cursor: 'not-allowed' }
+
+    if (status === 'prosto') return {
+      background: 'rgba(119,97,169,0.15)',
+      color: '#fff',
+      cursor: 'pointer',
+      border: '0.5px solid rgba(119,97,169,0.3)',
+    }
+
+    if (status === 'delno') return {
+      background: 'rgba(230,160,30,0.22)',
+      color: 'rgba(255,220,120,0.95)',
+      cursor: 'pointer',
+      border: '0.5px solid rgba(230,160,30,0.35)',
+    }
+
+    if (status === 'zasedeno') return {
+      background: 'rgba(180,60,60,0.2)',
+      color: 'rgba(255,100,100,0.6)',
+      cursor: 'not-allowed',
+      textDecoration: 'line-through',
+    }
+
+    if (status === 'ni_mozno') return {
+      background: 'rgba(255,255,255,0.03)',
+      color: 'rgba(255,255,255,0.2)',
+      cursor: 'not-allowed',
+    }
+
+    if (status === 'preteklo') return {
+      background: 'transparent',
+      color: 'rgba(255,255,255,0.15)',
+      cursor: 'not-allowed',
+    }
+
     return {}
   }
 
   return (
     <div>
-      <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 16, padding: '28px 24px', marginBottom: 20 }}>
+      <div style={{
+        background: 'rgba(255,255,255,0.05)',
+        backdropFilter: 'blur(20px)',
+        border: '0.5px solid rgba(255,255,255,0.12)',
+        borderRadius: 16,
+        padding: '28px 24px',
+        marginBottom: 20,
+      }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <button onClick={() => { if (mesec === 0) { setMesec(11); setLeto(l => l-1) } else setMesec(m => m-1) }} style={{ background: 'none', border: '0.5px solid rgba(255,255,255,0.15)', borderRadius: '50%', width: 32, height: 32, color: '#fff', cursor: 'pointer', fontSize: 16 }}>‹</button>
-          <p style={{ color: '#fff', fontSize: 15, fontWeight: 500, margin: 0, textTransform: 'capitalize' }}>{imeMeseca}</p>
-          <button onClick={() => { if (mesec === 11) { setMesec(0); setLeto(l => l+1) } else setMesec(m => m+1) }} style={{ background: 'none', border: '0.5px solid rgba(255,255,255,0.15)', borderRadius: '50%', width: 32, height: 32, color: '#fff', cursor: 'pointer', fontSize: 16 }}>›</button>
+          <button
+            onClick={() => {
+              if (mesec === 0) {
+                setMesec(11)
+                setLeto(l => l - 1)
+              } else {
+                setMesec(m => m - 1)
+              }
+            }}
+            style={{
+              background: 'none',
+              border: '0.5px solid rgba(255,255,255,0.15)',
+              borderRadius: '50%',
+              width: 32,
+              height: 32,
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: 16,
+            }}
+          >
+            ‹
+          </button>
+
+          <p style={{ color: '#fff', fontSize: 15, fontWeight: 500, margin: 0, textTransform: 'capitalize' }}>
+            {imeMeseca}
+          </p>
+
+          <button
+            onClick={() => {
+              if (mesec === 11) {
+                setMesec(0)
+                setLeto(l => l + 1)
+              } else {
+                setMesec(m => m + 1)
+              }
+            }}
+            style={{
+              background: 'none',
+              border: '0.5px solid rgba(255,255,255,0.15)',
+              borderRadius: '50%',
+              width: 32,
+              height: 32,
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: 16,
+            }}
+          >
+            ›
+          </button>
         </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4, marginBottom: 8 }}>
-          {['Po', 'To', 'Sr', 'Če', 'Pe', 'So', 'Ne'].map(d => <div key={d} style={{ textAlign: 'center', fontSize: 11, color: 'rgba(255,255,255,0.3)', padding: '4px 0' }}>{d}</div>)}
+          {['Po', 'To', 'Sr', 'Če', 'Pe', 'So', 'Ne'].map(d => (
+            <div key={d} style={{ textAlign: 'center', fontSize: 11, color: 'rgba(255,255,255,0.3)', padding: '4px 0' }}>
+              {d}
+            </div>
+          ))}
         </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4 }}>
           {Array(offset).fill(null).map((_, i) => <div key={`e${i}`} />)}
+
           {Array(dniVMesecu).fill(null).map((_, i) => {
             const dan = i + 1
-            const dateStr = `${leto}-${String(mesec+1).padStart(2,'0')}-${String(dan).padStart(2,'0')}`
+            const dateStr = `${leto}-${String(mesec + 1).padStart(2, '0')}-${String(dan).padStart(2, '0')}`
             const status = getDanStatus(dateStr)
             const jeIzbran = datum === dateStr
+            const clickable = status === 'prosto'
+
             return (
-              <div key={dan} onClick={() => status === 'prosto' && setDatum(dateStr)} style={{ textAlign: 'center', padding: '8px 4px', borderRadius: 8, fontSize: 13, transition: 'all 0.15s', ...getDanStyle(status, jeIzbran) }}>{dan}</div>
+              <div
+                key={dan}
+                onClick={() => {
+                  if (clickable) {
+                    setDatum(dateStr)
+                    setCas(null)
+                  }
+                }}
+                style={{
+                  textAlign: 'center',
+                  padding: '8px 4px',
+                  borderRadius: 8,
+                  fontSize: 13,
+                  transition: 'all 0.15s',
+                  ...getDanStyle(status, jeIzbran),
+                }}
+              >
+                {dan}
+              </div>
             )
           })}
         </div>
       </div>
+
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
         {[
           { barva: 'rgba(119,97,169,0.4)', label: 'Prosto' },
-          { barva: 'rgba(230,160,30,0.4)', label: 'Rezervirano' },
           { barva: 'rgba(180,60,60,0.4)', label: 'Zasedeno' },
           { barva: 'rgba(255,255,255,0.08)', label: 'Ni možno' },
         ].map(l => (
@@ -237,11 +487,26 @@ function Koledar({ datum, setDatum }) {
 
 function SlikeUpload({ slike, setSlike, id }) {
   return (
-    <div style={{ border: '0.5px dashed rgba(119,97,169,0.4)', borderRadius: 10, padding: '24px', textAlign: 'center', background: slike.length > 0 ? 'rgba(119,97,169,0.08)' : 'rgba(255,255,255,0.03)' }}>
-      <input type="file" multiple accept="image/*" onChange={e => setSlike(Array.from(e.target.files))} style={{ display: 'none' }} id={id} />
+    <div style={{
+      border: '0.5px dashed rgba(119,97,169,0.4)',
+      borderRadius: 10,
+      padding: '24px',
+      textAlign: 'center',
+      background: slike.length > 0 ? 'rgba(119,97,169,0.08)' : 'rgba(255,255,255,0.03)',
+    }}>
+      <input
+        type="file"
+        multiple
+        accept="image/*"
+        onChange={e => setSlike(Array.from(e.target.files))}
+        style={{ display: 'none' }}
+        id={id}
+      />
       <label htmlFor={id} style={{ cursor: 'pointer' }}>
         {slike.length > 0 ? (
-          <p style={{ color: 'var(--color-primary-light)', margin: 0, fontSize: 14 }}>✓ {slike.length} slika/e naložena</p>
+          <p style={{ color: 'var(--color-primary-light)', margin: 0, fontSize: 14 }}>
+            ✓ {slike.length} slika/e naložena
+          </p>
         ) : (
           <>
             <p style={{ color: 'rgba(255,255,255,0.4)', margin: '0 0 8px', fontSize: 24 }}>📎</p>
@@ -253,60 +518,133 @@ function SlikeUpload({ slike, setSlike, id }) {
   )
 }
 
-// TETOVIRANJE
-function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe }) {
+function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe, resetTermin }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         O tvoji <em style={{ color: 'var(--color-primary-light)' }}>tetovaži</em>
       </h2>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-        <div><label style={labelStyle}>Velikost *</label><Dropdown value={velikost} onChange={setVelikost} placeholder="Izberi velikost" opcije={VELIKOSTI} /></div>
-        <div><label style={labelStyle}>Pozicija na telesu *</label><input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, roka, gleženj..." style={inputStyle} /></div>
-        <div><label style={labelStyle}>Slike željenega designa *</label><SlikeUpload slike={slike} setSlike={setSlike} id="slike-tet" /></div>
-        <div><label style={labelStyle}>Opombe (neobvezno)</label><textarea value={opombe} onChange={e => setOpombe(e.target.value)} placeholder="Stil, barve, posebne želje..." rows={3} style={{ ...inputStyle, resize: 'vertical' }} /></div>
+        <div>
+          <label style={labelStyle}>Velikost *</label>
+          <Dropdown
+            value={velikost}
+            onChange={(v) => {
+              setVelikost(v)
+              resetTermin()
+            }}
+            placeholder="Izberi velikost"
+            opcije={VELIKOSTI}
+          />
+        </div>
+
+        <div>
+          <label style={labelStyle}>Pozicija na telesu *</label>
+          <input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, roka, gleženj..." style={inputStyle} />
+        </div>
+
+        <div>
+          <label style={labelStyle}>Slike željenega designa *</label>
+          <SlikeUpload slike={slike} setSlike={setSlike} id="slike-tet" />
+        </div>
+
+        <div>
+          <label style={labelStyle}>Opombe (neobvezno)</label>
+          <textarea value={opombe} onChange={e => setOpombe(e.target.value)} placeholder="Stil, barve, posebne želje..." rows={3} style={{ ...inputStyle, resize: 'vertical' }} />
+        </div>
       </div>
     </div>
   )
 }
 
-function Step3Tet({ datum, setDatum, cas, setCas, velikost }) {
+function Step3Tet({ datum, setDatum, cas, setCas, velikost, rezervacije }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
       </h2>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <Koledar datum={datum} setDatum={setDatum} />
-        {datum && <IzbiraCasa cas={cas} setCas={setCas} velikost={velikost} />}
+        <Koledar
+          datum={datum}
+          setDatum={setDatum}
+          setCas={setCas}
+          storitev="tetoviranje"
+          velikost={velikost}
+          tipLaser={null}
+          rezervacije={rezervacije}
+        />
+
+        {datum && (
+          <IzbiraCasa
+            cas={cas}
+            setCas={setCas}
+            storitev="tetoviranje"
+            velikost={velikost}
+            tipLaser={null}
+            datum={datum}
+            rezervacije={rezervacije}
+          />
+        )}
       </div>
     </div>
   )
 }
 
-// ODSTRANJEVANJE
-function Step2Odstr({ tipLaser, setTipLaser }) {
+function Step2Odstr({ tipLaser, setTipLaser, resetTermin, setVelikost, setPozicija, setSlike }) {
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Vrsta <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
       </h2>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
         {LASER_TIPI.map(t => (
-          <div key={t.id} onClick={() => setTipLaser(t.id)} style={{
-            padding: '20px 24px', borderRadius: 12, cursor: 'pointer',
-            border: tipLaser === t.id ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
-            background: tipLaser === t.id ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s',
-          }}>
+          <div
+            key={t.id}
+            onClick={() => {
+              setTipLaser(t.id)
+              setVelikost('')
+              setPozicija('')
+              setSlike([])
+              resetTermin()
+            }}
+            style={{
+              padding: '20px 24px',
+              borderRadius: 12,
+              cursor: 'pointer',
+              border: tipLaser === t.id ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
+              background: tipLaser === t.id ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              transition: 'all 0.2s',
+            }}
+          >
             <div>
               <p style={{ fontSize: 15, fontWeight: 500, color: '#fff', margin: '0 0 4px' }}>{t.naziv}</p>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: 0 }}>{t.opis}</p>
             </div>
-            {tipLaser === t.id && <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, flexShrink: 0 }}>✓</div>}
+
+            {tipLaser === t.id && (
+              <div style={{
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                background: 'var(--color-primary)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 11,
+                flexShrink: 0,
+              }}>
+                ✓
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -314,7 +652,7 @@ function Step2Odstr({ tipLaser, setTipLaser }) {
   )
 }
 
-function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe }) {
+function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, slike, setSlike, opombe, setOpombe, resetTermin }) {
   const jeTetovaze = tipLaser === 'tetovaze'
   const jePege = tipLaser === 'pege'
   const jeHollywood = tipLaser === 'hollywood'
@@ -325,28 +663,48 @@ function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, sl
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Podrobnosti <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
       </h2>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         {!jeHollywood && (
-          <div><label style={labelStyle}>Pozicija *</label><input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, obraz, roka..." style={inputStyle} /></div>
+          <div>
+            <label style={labelStyle}>Pozicija *</label>
+            <input value={pozicija} onChange={e => setPozicija(e.target.value)} placeholder="npr. zapestje, obraz, roka..." style={inputStyle} />
+          </div>
         )}
-        {(jeTetovaze || jePege) && (
-          <div><label style={labelStyle}>Velikost *</label><Dropdown value={velikost} onChange={setVelikost} placeholder="Izberi velikost" opcije={VELIKOSTI} /></div>
+
+        {jeTetovaze && (
+          <div>
+            <label style={labelStyle}>Velikost *</label>
+            <Dropdown
+              value={velikost}
+              onChange={(v) => {
+                setVelikost(v)
+                resetTermin()
+              }}
+              placeholder="Izberi velikost"
+              opcije={VELIKOSTI}
+            />
+          </div>
         )}
+
         {(jeTetovaze || jePege) && (
           <div>
             <label style={labelStyle}>Fotografija (neobvezno)</label>
             <SlikeUpload slike={slike} setSlike={setSlike} id="slike-odstr" />
           </div>
         )}
-        <div><label style={labelStyle}>Opombe (neobvezno)</label><textarea value={opombe} onChange={e => setOpombe(e.target.value)} placeholder="Barva, starost, posebnosti..." rows={3} style={{ ...inputStyle, resize: 'vertical' }} /></div>
+
+        <div>
+          <label style={labelStyle}>Opombe (neobvezno)</label>
+          <textarea value={opombe} onChange={e => setOpombe(e.target.value)} placeholder="Barva, starost, posebnosti..." rows={3} style={{ ...inputStyle, resize: 'vertical' }} />
+        </div>
       </div>
     </div>
   )
 }
 
-function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser }) {
-  const jeHollywood = tipLaser === 'hollywood'
-  const efektivnaVelikost = jeHollywood ? 'do 5cm' : velikost
+function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser, rezervacije }) {
+  const efektivnaVelikost = tipLaser === 'hollywood' || tipLaser === 'pege' ? 'do 5cm' : velikost
 
   return (
     <div>
@@ -354,9 +712,29 @@ function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser }) {
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
       </h2>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <Koledar datum={datum} setDatum={setDatum} />
-        {datum && <IzbiraCasa cas={cas} setCas={setCas} velikost={efektivnaVelikost} />}
+        <Koledar
+          datum={datum}
+          setDatum={setDatum}
+          setCas={setCas}
+          storitev="odstranjevanje"
+          velikost={efektivnaVelikost}
+          tipLaser={tipLaser}
+          rezervacije={rezervacije}
+        />
+
+        {datum && (
+          <IzbiraCasa
+            cas={cas}
+            setCas={setCas}
+            storitev="odstranjevanje"
+            velikost={efektivnaVelikost}
+            tipLaser={tipLaser}
+            datum={datum}
+            rezervacije={rezervacije}
+          />
+        )}
       </div>
     </div>
   )
@@ -369,14 +747,29 @@ function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, instag
       <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Tvoji <em style={{ color: 'var(--color-primary-light)' }}>podatki</em>
       </h2>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          <div><label style={labelStyle}>Ime *</label><input value={ime} onChange={e => setIme(e.target.value)} placeholder="Jana" style={inputStyle} /></div>
-          <div><label style={labelStyle}>Priimek *</label><input value={priimek} onChange={e => setPriimek(e.target.value)} placeholder="Novak" style={inputStyle} /></div>
+          <div>
+            <label style={labelStyle}>Ime *</label>
+            <input value={ime} onChange={e => setIme(e.target.value)} placeholder="Jana" style={inputStyle} />
+          </div>
+
+          <div>
+            <label style={labelStyle}>Priimek *</label>
+            <input value={priimek} onChange={e => setPriimek(e.target.value)} placeholder="Novak" style={inputStyle} />
+          </div>
         </div>
-        <div><label style={labelStyle}>Email *</label><input value={email} onChange={e => setEmail(e.target.value)} placeholder="jana@email.com" type="email" style={inputStyle} /></div>
+
         <div>
-          <label style={labelStyle}>Instagram <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10 }}>(neobvezno, le za lažjo komunikacijo)</span></label>
+          <label style={labelStyle}>Email *</label>
+          <input value={email} onChange={e => setEmail(e.target.value)} placeholder="jana@email.com" type="email" style={inputStyle} />
+        </div>
+
+        <div>
+          <label style={labelStyle}>
+            Instagram <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10 }}>(neobvezno, le za lažjo komunikacijo)</span>
+          </label>
           <input value={instagram} onChange={e => setInstagram(e.target.value)} placeholder="@username" style={inputStyle} />
         </div>
       </div>
@@ -400,55 +793,132 @@ export default function Booking() {
   const [instagram, setInstagram] = useState('')
   const [poslano, setPoslano] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [rezervacije, setRezervacije] = useState([])
+  const [hoverBtn, setHoverBtn] = useState(false)
+
+  const resetTermin = () => {
+    setDatum(null)
+    setCas(null)
+  }
+
+  const naloziRezervacije = async () => {
+    const { data } = await supabase
+      .from('rezervacije')
+      .select('datum, cas, storitev, velikost, tip_laser, status')
+      .in('status', ['rezervirano', 'potrjeno'])
+
+    if (data) setRezervacije(data)
+  }
+
+  useEffect(() => {
+    naloziRezervacije()
+  }, [])
 
   const skupajKorakov = storitev === 'odstranjevanje' ? 5 : 4
+  const zadnjiKorak = skupajKorakov
 
   const canNext = () => {
     if (step === 1) return !!storitev
+
     if (storitev === 'tetoviranje') {
       if (step === 2) return !!velikost && !!pozicija && slike.length > 0
       if (step === 3) return !!datum && !!cas
       if (step === 4) return !!ime && !!priimek && !!email
     }
+
     if (storitev === 'odstranjevanje') {
       if (step === 2) return !!tipLaser
+
       if (step === 3) {
         if (tipLaser === 'hollywood') return true
-        return !!pozicija && !!velikost
+        if (tipLaser === 'pege') return !!pozicija
+        if (tipLaser === 'tetovaze') return !!pozicija && !!velikost
       }
+
       if (step === 4) return !!datum && !!cas
       if (step === 5) return !!ime && !!priimek && !!email
     }
+
     return false
   }
 
+  const preveriCeJeTerminSeProst = () => {
+    const efektivnaVelikost =
+      storitev === 'odstranjevanje' && (tipLaser === 'hollywood' || tipLaser === 'pege')
+        ? 'do 5cm'
+        : velikost
+
+    const mala = jeMalaStoritev({ storitev, velikost: efektivnaVelikost, tipLaser })
+    const rezervacijeZaDan = rezervacije.filter(r => r.datum === datum)
+
+    const imaVelikoRezervacijo = rezervacijeZaDan.some(r =>
+      jeVelikaStoritev({
+        storitev: r.storitev,
+        velikost: r.velikost,
+        tipLaser: r.tip_laser,
+      })
+    )
+
+    if (imaVelikoRezervacijo) return false
+
+    if (!mala && rezervacijeZaDan.length > 0) return false
+
+    if (mala) {
+      const zasedeneUre = rezervacijeZaDan.map(r => r.cas).filter(Boolean)
+      return !zasedeneUre.includes(cas)
+    }
+
+    return true
+  }
+
   const handleSubmit = async () => {
-    
     if (!canNext() || loading) return
+
     setLoading(true)
+
     try {
+      await naloziRezervacije()
+
+      if (!preveriCeJeTerminSeProst()) {
+        alert('Ta termin se je medtem žal zapolnil. Prosim, izberi drug termin.')
+        setLoading(false)
+        return
+      }
+
       let slikeUrls = []
+
       for (const slika of slike) {
         const fileName = `${Date.now()}_${slika.name}`
         const { error: uploadError } = await supabase.storage.from('rezervacije-slike').upload(fileName, slika)
+
         if (!uploadError) {
           const { data: urlData } = supabase.storage.from('rezervacije-slike').getPublicUrl(fileName)
           slikeUrls.push(urlData.publicUrl)
         }
       }
+
       const { error } = await supabase.from('rezervacije').insert([{
-  storitev, datum, ime, priimek, email,
-  instagram: instagram || null,
-  status: 'rezervirano',
-  tip_laser: tipLaser || null,
-  velikost: velikost || null,
-  pozicija: pozicija || null,
-  opombe: opombe || null,
-  cas: cas || null,
-  slike_urls: slikeUrls.length > 0 ? slikeUrls : null,
-}])
-console.log('insert error:', error)
-if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
+        storitev,
+        datum,
+        ime,
+        priimek,
+        email,
+        instagram: instagram || null,
+        status: 'rezervirano',
+        tip_laser: tipLaser || null,
+        velikost: velikost || null,
+        pozicija: pozicija || null,
+        opombe: opombe || null,
+        cas: cas || null,
+        slike_urls: slikeUrls.length > 0 ? slikeUrls : null,
+      }])
+
+      if (error) {
+        console.log('insert error:', error)
+        alert('Prišlo je do napake. Poskusi znova.')
+        return
+      }
+
       setPoslano(true)
     } catch (err) {
       console.error(err)
@@ -458,22 +928,118 @@ if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
     }
   }
 
-  const storitevNaziv = STORITVE.find(s => s.id === storitev)?.naziv || ''
-  const zadnjiKorak = skupajKorakov
-
   const renderStep = () => {
     if (step === 1) return null
+
     if (storitev === 'tetoviranje') {
-      if (step === 2) return <Step2Tet velikost={velikost} setVelikost={setVelikost} pozicija={pozicija} setPozicija={setPozicija} slike={slike} setSlike={setSlike} opombe={opombe} setOpombe={setOpombe} />
-      if (step === 3) return <Step3Tet datum={datum} setDatum={setDatum} cas={cas} setCas={setCas} velikost={velikost} />
-      if (step === 4) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} instagram={instagram} setInstagram={setInstagram} stepNum={4} />
+      if (step === 2) {
+        return (
+          <Step2Tet
+            velikost={velikost}
+            setVelikost={setVelikost}
+            pozicija={pozicija}
+            setPozicija={setPozicija}
+            slike={slike}
+            setSlike={setSlike}
+            opombe={opombe}
+            setOpombe={setOpombe}
+            resetTermin={resetTermin}
+          />
+        )
+      }
+
+      if (step === 3) {
+        return (
+          <Step3Tet
+            datum={datum}
+            setDatum={setDatum}
+            cas={cas}
+            setCas={setCas}
+            velikost={velikost}
+            rezervacije={rezervacije}
+          />
+        )
+      }
+
+      if (step === 4) {
+        return (
+          <StepPodatki
+            ime={ime}
+            setIme={setIme}
+            priimek={priimek}
+            setPriimek={setPriimek}
+            email={email}
+            setEmail={setEmail}
+            instagram={instagram}
+            setInstagram={setInstagram}
+            stepNum={4}
+          />
+        )
+      }
     }
+
     if (storitev === 'odstranjevanje') {
-      if (step === 2) return <Step2Odstr tipLaser={tipLaser} setTipLaser={setTipLaser} />
-      if (step === 3) return <Step3Odstr tipLaser={tipLaser} velikost={velikost} setVelikost={setVelikost} pozicija={pozicija} setPozicija={setPozicija} slike={slike} setSlike={setSlike} opombe={opombe} setOpombe={setOpombe} />
-      if (step === 4) return <Step4Odstr datum={datum} setDatum={setDatum} cas={cas} setCas={setCas} velikost={velikost} tipLaser={tipLaser} />
-      if (step === 5) return <StepPodatki ime={ime} setIme={setIme} priimek={priimek} setPriimek={setPriimek} email={email} setEmail={setEmail} instagram={instagram} setInstagram={setInstagram} stepNum={5} />
+      if (step === 2) {
+        return (
+          <Step2Odstr
+            tipLaser={tipLaser}
+            setTipLaser={setTipLaser}
+            setVelikost={setVelikost}
+            setPozicija={setPozicija}
+            setSlike={setSlike}
+            resetTermin={resetTermin}
+          />
+        )
+      }
+
+      if (step === 3) {
+        return (
+          <Step3Odstr
+            tipLaser={tipLaser}
+            velikost={velikost}
+            setVelikost={setVelikost}
+            pozicija={pozicija}
+            setPozicija={setPozicija}
+            slike={slike}
+            setSlike={setSlike}
+            opombe={opombe}
+            setOpombe={setOpombe}
+            resetTermin={resetTermin}
+          />
+        )
+      }
+
+      if (step === 4) {
+        return (
+          <Step4Odstr
+            datum={datum}
+            setDatum={setDatum}
+            cas={cas}
+            setCas={setCas}
+            velikost={velikost}
+            tipLaser={tipLaser}
+            rezervacije={rezervacije}
+          />
+        )
+      }
+
+      if (step === 5) {
+        return (
+          <StepPodatki
+            ime={ime}
+            setIme={setIme}
+            priimek={priimek}
+            setPriimek={setPriimek}
+            email={email}
+            setEmail={setEmail}
+            instagram={instagram}
+            setInstagram={setInstagram}
+            stepNum={5}
+          />
+        )
+      }
     }
+
     return null
   }
 
@@ -482,10 +1048,16 @@ if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
       <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
         {SLIDES.map((src, i) => (
           <div key={i} style={{ position: 'absolute', inset: 0 }}>
-            <img src={src} alt="" loading="lazy"
-  decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(12px)', transform: 'scale(1.05)' }} />
+            <img
+              src={src}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(12px)', transform: 'scale(1.05)' }}
+            />
           </div>
         ))}
+
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,8,16,0.82)' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.2) 0%, transparent 70%)' }} />
       </div>
@@ -501,57 +1073,196 @@ if (error) { alert('Prišlo je do napake. Poskusi znova.'); return }
 
             <StepIndicator step={step} total={skupajKorakov} />
 
-            <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: '40px 36px', marginBottom: 24 }}>
+            <div style={{
+              background: 'rgba(255,255,255,0.06)',
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              border: '0.5px solid rgba(255,255,255,0.12)',
+              borderRadius: 20,
+              padding: '40px 36px',
+              marginBottom: 24,
+            }}>
               {step === 1 && (
                 <div>
                   <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 1</p>
                   <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
                     Izberi <em style={{ color: 'var(--color-primary-light)' }}>storitev</em>
                   </h2>
+
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                     {STORITVE.map(s => (
-                      <div key={s.id} onClick={() => setStoritev(s.id)} style={{
-                        padding: '24px 28px', borderRadius: 12,
-                        border: storitev === s.id ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
-                        background: storitev === s.id ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
-                        cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 20, transition: 'all 0.2s ease',
-                      }}>
+                      <div
+                        key={s.id}
+                        onClick={() => {
+                          setStoritev(s.id)
+                          setStep(1)
+                          setTipLaser(null)
+                          setVelikost('')
+                          setPozicija('')
+                          setSlike([])
+                          setOpombe('')
+                          resetTermin()
+                        }}
+                        style={{
+                          padding: '24px 28px',
+                          borderRadius: 12,
+                          border: storitev === s.id ? '1px solid var(--color-primary)' : '0.5px solid rgba(255,255,255,0.12)',
+                          background: storitev === s.id ? 'rgba(119,97,169,0.15)' : 'rgba(255,255,255,0.05)',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 20,
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
                         <span style={{ fontSize: 24 }}>{s.icon}</span>
+
                         <div>
                           <p style={{ fontSize: 16, fontWeight: 500, color: '#fff', margin: '0 0 4px' }}>{s.naziv}</p>
                           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>{s.opis}</p>
                         </div>
-                        {storitev === s.id && <div style={{ marginLeft: 'auto', width: 20, height: 20, borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>✓</div>}
+
+                        {storitev === s.id && (
+                          <div style={{
+                            marginLeft: 'auto',
+                            width: 20,
+                            height: 20,
+                            borderRadius: '50%',
+                            background: 'var(--color-primary)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 11,
+                          }}>
+                            ✓
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
                 </div>
               )}
+
               {step > 1 && renderStep()}
             </div>
 
             <div style={{ display: 'flex', gap: 12, justifyContent: step > 1 ? 'space-between' : 'flex-end' }}>
               {step > 1 && (
-                <button onClick={() => setStep(s => s - 1)} style={{ padding: '14px 28px', borderRadius: 50, fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase', cursor: 'pointer', background: 'transparent', border: '0.5px solid rgba(255,255,255,0.2)', color: '#fff' }}>← Nazaj</button>
+                <button
+                  onClick={() => {
+                    setStep(s => s - 1)
+                    setCas(null)
+                  }}
+                  style={{
+                    padding: '14px 28px',
+                    borderRadius: 50,
+                    fontSize: 12,
+                    letterSpacing: 1.5,
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    background: 'transparent',
+                    border: '0.5px solid rgba(255,255,255,0.2)',
+                    color: '#fff',
+                  }}
+                >
+                  ← Nazaj
+                </button>
               )}
+
               {step < zadnjiKorak ? (
-                <button onClick={() => canNext() && setStep(s => s + 1)} style={{ padding: '14px 32px', borderRadius: 50, fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase', cursor: canNext() ? 'pointer' : 'not-allowed', background: canNext() ? 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))' : 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', transition: 'all 0.2s' }}>Naprej →</button>
+                <button
+                  onClick={() => canNext() && setStep(s => s + 1)}
+                  style={{
+                    padding: '14px 32px',
+                    borderRadius: 50,
+                    fontSize: 12,
+                    letterSpacing: 1.5,
+                    textTransform: 'uppercase',
+                    cursor: canNext() ? 'pointer' : 'not-allowed',
+                    background: canNext() ? 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))' : 'rgba(255,255,255,0.1)',
+                    border: 'none',
+                    color: '#fff',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  Naprej →
+                </button>
               ) : (
-                <button onClick={handleSubmit} disabled={!canNext() || loading} style={{ padding: '14px 32px', borderRadius: 50, fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase', cursor: canNext() && !loading ? 'pointer' : 'not-allowed', background: canNext() ? 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))' : 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', transition: 'all 0.2s' }}>{loading ? 'Pošiljam...' : 'Potrdi rezervacijo ✓'}</button>
+                <button
+                  onClick={handleSubmit}
+                  disabled={!canNext() || loading}
+                  style={{
+                    padding: '14px 32px',
+                    borderRadius: 50,
+                    fontSize: 12,
+                    letterSpacing: 1.5,
+                    textTransform: 'uppercase',
+                    cursor: canNext() && !loading ? 'pointer' : 'not-allowed',
+                    background: canNext() ? 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))' : 'rgba(255,255,255,0.1)',
+                    border: 'none',
+                    color: '#fff',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {loading ? 'Pošiljam...' : 'Potrdi rezervacijo ✓'}
+                </button>
               )}
             </div>
           </>
         ) : (
-          <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: '60px 40px', textAlign: 'center' }}>
+          <div style={{
+            background: 'rgba(255,255,255,0.06)',
+            backdropFilter: 'blur(24px)',
+            border: '0.5px solid rgba(255,255,255,0.12)',
+            borderRadius: 20,
+            padding: '60px 40px',
+            textAlign: 'center',
+          }}>
             <div style={{ fontSize: 48, marginBottom: 24 }}>✓</div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', marginBottom: 16 }}>
-              Rezervacija <em style={{ color: 'var(--color-primary-light)' }}>prejeta!</em>
+
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.7)', marginBottom: 20, marginTop: 30 }}>
+              Tvojo rezervacijo bom pregledala v najkrajšem možnem času in te po emailu obvestila o <strong>potrditvi ali zavrnitvi</strong> termina.<br /><br />
+              V primeru potrditve boš prejel/a tudi navodila za 
+              </p>
+            
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: '#b595e8', marginBottom: 20 }}>
+              <strong>NAKAZILO <em style={{ color: 'var(--color-primary-light)' }}>AVANSA,</em></strong>
             </h2>
+
             <p style={{ fontSize: 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.7)', marginBottom: 32, marginTop: 30 }}>
-              Tvojo rezervacijo bom pregledala v najkrajšem možnem času in te po emailu obvestila o <strong>potrditvi ali zavrnitvi</strong> termina.<br />
-              V primeru potrditve boš prejel/a tudi navodila za <strong>NAKAZILO AVANSA</strong>, ki je obvezen za zagotovitev termina, v primeru zavrnitve pa si lahko poiščeš drugi termin, ki bi ti ustrezal.<br />
+               ki je obvezen za zagotovitev termina. V primeru zavrnitve pa si lahko poiščeš kakšen drug termin, ki bi ti ustrezal.<br />
             </p>
-            <Link to="/" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 50, background: 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))', color: '#fff', textDecoration: 'none', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Nazaj na začetek</Link>
+
+            <Link
+  to="/"
+  onMouseEnter={() => setHoverBtn(true)}
+  onMouseLeave={() => setHoverBtn(false)}
+  style={{
+    display: 'inline-block',
+    padding: '12px 28px',
+    borderRadius: 50,
+    background: hoverBtn
+      ? 'linear-gradient(135deg, #59279b, #59279b)'
+      : 'linear-gradient(135deg, #8f63ff, #7a54ab)',
+    color: '#fff',
+    textDecoration: 'none',
+    fontSize: 11,
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+
+    transition: 'all 0.25s ease',
+
+    boxShadow: hoverBtn
+      ? '0 0 26px rgba(150,100,255,0.15)'
+      : '0 0 0 rgba(0,0,0,0)',
+
+    transform: hoverBtn
+      ? 'translateY(-2px) scale(1.03)'
+      : 'translateY(0) scale(1)',
+  }}
+>
+  Nazaj na začetek
+</Link>
           </div>
         )}
       </div>

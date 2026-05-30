@@ -179,7 +179,7 @@ useEffect(() => {
       </div>
 
       {/* PARALLAX SLIKA 1 */}
-      <ParallaxSlika src="/tatu2.webp" />
+      <ParallaxSlika src="/tatu12.webp" />
       
       {/* 2. ODSTAVEK */}
       <div className="odstavek">
@@ -213,7 +213,7 @@ useEffect(() => {
       </div>
 
       {/* PARALLAX SLIKA 3 */}
-      <ParallaxSlika src="/tatu4.webp" />
+      <ParallaxSlika src="/tatu2.webp" />
 
       {/* BOOKING CTA */}
       <div className="odstavek" style={{ textAlign: 'center', padding: '60px 40px' }}>
