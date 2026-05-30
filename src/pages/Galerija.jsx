@@ -193,8 +193,17 @@ export default function Galerija() {
               <img
                 src={slika.src}
                 alt={slika.alt}
-                loading="lazy"
-  decoding="async"
+                loading="eager"
+                decoding="async"
+                onClick={() => setSelectedImage(slika)}
+  style={{
+    width: '100%',
+    display: 'block',
+    objectFit: 'cover',
+    borderRadius: 12,
+    minHeight: 180,
+    background: 'rgba(255,255,255,0.04)',
+  }}
               />
 
             </div>
