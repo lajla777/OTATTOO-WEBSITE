@@ -17,7 +17,7 @@ export default function Admin() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [loading, setLoading] = useState(false)
 
-  const ADMIN_GESLO = 'kaja1234'
+  const ADMIN_GESLO = import.meta.env.VITE_ADMIN_GESLO
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
