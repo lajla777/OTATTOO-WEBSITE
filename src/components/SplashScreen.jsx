@@ -32,7 +32,7 @@ export default function SplashScreen({ onDone }) {
         }}
       />
       <p style={{
-        fontFamily: "'Cormorant Garamond', serif",
+        fontFamily: "'Google Sans', serif",
         fontSize: 13, letterSpacing: 6, textTransform: 'uppercase',
         color: 'rgba(168,85,247,0.6)',
         opacity: phase === 'in' ? 0 : 1,

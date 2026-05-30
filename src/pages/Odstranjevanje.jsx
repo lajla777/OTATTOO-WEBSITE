@@ -61,7 +61,7 @@ export default function Odstranjevanje() {
   }, [])
 
   return (
-    <div style={{ fontFamily: "'Montserrat', sans-serif", color: '#ffffff', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Google Sans', sans-serif", color: '#ffffff', minHeight: '100vh' }}>
 
       <style>{`
         .odstavek {
@@ -126,7 +126,7 @@ export default function Odstranjevanje() {
           padding: '0 20px',
         }}>
           <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-light)', marginBottom: 16 }}>Storitev</p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 80 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
+          <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 80 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
             Laser <em style={{ color: 'var(--color-primary-light)' }}>tretma</em>
           </h1>
         </div>
@@ -136,10 +136,10 @@ export default function Odstranjevanje() {
       <div className="odstavek">
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
-            Odstranjevanje tetovaž –<br /><em style={{ color: 'var(--color-primary-light)' }}>za nov začetek</em>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
+            Odstranjevanje tetovaž <br />–<em style={{ color: 'var(--color-primary-light)' }}>za nov začetek</em>
           </h2>
-          <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
+          <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
             Si želiš začeti znova? Laser učinkovito razgrajuje pigment in postopoma izbriše neželene tatuje.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
@@ -150,11 +150,11 @@ export default function Odstranjevanje() {
             ].map((t, i) => (
               <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <span style={{ color: 'var(--color-primary)', fontSize: 16, flexShrink: 0, marginTop: 2 }}>✦</span>
-                <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
+                <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: isMobile ? 14 : 15, color: 'var(--color-primary-light)', fontStyle: 'italic' }}>
+          <p style={{ fontSize: isMobile ? 16 : 18, color: 'var(--color-primary-light)', fontStyle: 'italic' }}>
             Čas je, da zapreš staro poglavje.
           </p>
         </div>
@@ -166,10 +166,10 @@ export default function Odstranjevanje() {
       <div className="odstavek">
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
-            Odstranjevanje starostnih peg –<br /><em style={{ color: 'var(--color-primary-light)' }}>za popoln ten</em>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
+            Odstranjevanje starostnih peg <br />– <em style={{ color: 'var(--color-primary-light)' }}>za popoln ten</em>
           </h2>
-          <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
+          <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
             Temne lise, neenakomeren ten in znaki staranja? Obstaja rešitev!
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
@@ -180,11 +180,11 @@ export default function Odstranjevanje() {
             ].map((t, i) => (
               <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <span style={{ color: 'var(--color-primary)', fontSize: 16, flexShrink: 0, marginTop: 2 }}>✦</span>
-                <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
+                <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: isMobile ? 14 : 15, color: 'var(--color-primary-light)', fontStyle: 'italic' }}>
+          <p style={{ fontSize: isMobile ? 16 : 18, color: 'var(--color-primary-light)', fontStyle: 'italic' }}>
             Naj tvoja koža ponovno zasije.
           </p>
         </div>
@@ -197,10 +197,10 @@ export default function Odstranjevanje() {
       <div className="odstavek">
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 50%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
-            Hollywood Peel –<br /><em style={{ color: 'var(--color-primary-light)' }}>takojšen glow efekt</em>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
+            Hollywood Peel <br />–<em style={{ color: 'var(--color-primary-light)' }}>takojšen glow efekt</em>
           </h2>
-          <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
+          <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
             Tretma, ki ga obožujejo zvezdnice, zdaj na voljo tudi tebi.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
@@ -211,11 +211,11 @@ export default function Odstranjevanje() {
             ].map((t, i) => (
               <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <span style={{ color: 'var(--color-primary)', fontSize: 16, flexShrink: 0, marginTop: 2 }}>✦</span>
-                <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
+                <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: isMobile ? 14 : 15, color: 'var(--color-primary-light)', fontStyle: 'italic' }}>
+          <p style={{ fontSize: isMobile ? 16 : 18, color: 'var(--color-primary-light)', fontStyle: 'italic' }}>
             Popolna izbira pred dogodki ali za svež videz vsak dan.
           </p>
         </div>
@@ -227,7 +227,7 @@ export default function Odstranjevanje() {
       <div className="odstavek">
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 24px', color: '#fff' }}>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 24px', color: '#fff' }}>
             Zakaj stranke <em style={{ color: 'var(--color-primary-light)' }}>izbirajo nas?</em>
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -239,7 +239,7 @@ export default function Odstranjevanje() {
             ].map((t, i) => (
               <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <span style={{ color: 'var(--color-primary)', fontSize: 16, flexShrink: 0, marginTop: 2 }}>✦</span>
-                <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
+                <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
               </div>
             ))}
           </div>

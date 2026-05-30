@@ -25,7 +25,7 @@ const inputStyle = {
   color: '#fff',
   outline: 'none',
   boxSizing: 'border-box',
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "'Google Sans', sans-serif",
 }
 
 const labelStyle = {
@@ -491,7 +491,7 @@ function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlik
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
+      <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         O tvoji <em style={{ color: 'var(--color-primary-light)' }}>tetovaži</em>
       </h2>
 
@@ -539,7 +539,7 @@ function Step3Tet({ datum, setDatum, cas, setCas, velikost, rezervacije, showErr
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
+      <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
       </h2>
 
@@ -558,7 +558,7 @@ function Step2Odstr({ tipLaser, setTipLaser, resetTermin, setVelikost, setPozici
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
+      <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Vrsta <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
       </h2>
 
@@ -611,7 +611,7 @@ function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, sl
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
+      <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Podrobnosti <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
       </h2>
 
@@ -664,7 +664,7 @@ function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser, rezervac
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 4</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
+      <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
       </h2>
 
@@ -683,7 +683,7 @@ function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, instag
   return (
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak {stepNum}</p>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
+      <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
         Tvoji <em style={{ color: 'var(--color-primary-light)' }}>podatki</em>
       </h2>
 
@@ -921,7 +921,7 @@ export default function Booking() {
   }
 
   return (
-    <div style={{ fontFamily: "'Montserrat', sans-serif", color: '#ffffff', minHeight: '100vh', position: 'relative' }}>
+    <div style={{ fontFamily: "'Google Sans', sans-serif", color: '#ffffff', minHeight: '100vh', position: 'relative' }}>
       <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
         {SLIDES.map((src, i) => (
           <div key={i} style={{ position: 'absolute', inset: 0 }}>
@@ -937,7 +937,7 @@ export default function Booking() {
         {!poslano ? (
           <>
             <div style={{ textAlign: 'center', marginBottom: 48 }}>
-              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 64, fontWeight: 300, margin: 0, color: '#fff' }}>
+              <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: 64, fontWeight: 300, margin: 0, color: '#fff' }}>
                 Boo<em style={{ color: 'var(--color-primary-light)' }}>king</em>
               </h1>
             </div>
@@ -948,7 +948,7 @@ export default function Booking() {
               {step === 1 && (
                 <div>
                   <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 1</p>
-                  <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
+                  <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
                     Izberi <em style={{ color: 'var(--color-primary-light)' }}>storitev</em>
                   </h2>
 
@@ -1054,16 +1054,16 @@ export default function Booking() {
           <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: '60px 40px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 24 }}>✓</div>
 
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.7)', marginBottom: 20, marginTop: 30 }}>
+            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'rgba(255,255,255,0.7)', marginBottom: 20, marginTop: 30 }}>
               Tvojo rezervacijo bom pregledala v najkrajšem možnem času in te po emailu obvestila o <strong>potrditvi ali zavrnitvi</strong> termina.<br /><br />
               V primeru potrditve boš prejel/a tudi navodila za
             </p>
 
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: '#b595e8', marginBottom: 20 }}>
+            <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 32, fontWeight: 300, color: '#b595e8', marginBottom: 20 }}>
               <strong>NAKAZILO <em style={{ color: 'var(--color-primary-light)' }}>AVANSA,</em></strong>
             </h2>
 
-            <p style={{ fontSize: 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.7)', marginBottom: 32, marginTop: 30 }}>
+            <p style={{ fontSize: 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.7)', marginBottom: 32, marginTop: 30 }}>
               ki je obvezen za zagotovitev termina. V primeru zavrnitve pa si lahko poiščeš kakšen drug termin, ki bi ti ustrezal.<br />
             </p>
 

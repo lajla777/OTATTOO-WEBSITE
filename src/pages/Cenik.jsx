@@ -48,7 +48,7 @@ export default function Cenik() {
 
   return (
     <div style={{
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "'Google Sans', sans-serif",
   color: '#ffffff',
   minHeight: '100vh',
   position: 'relative',
@@ -82,7 +82,7 @@ export default function Cenik() {
         <div style={{ textAlign: 'center', marginBottom: 60 }}>
           
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Google Sans', serif",
             fontSize: isMobile ? 52 : 72, fontWeight: 300, lineHeight: 1,
             margin: 0, color: '#ffffff',
           }}>
@@ -109,7 +109,7 @@ export default function Cenik() {
               <div style={{ marginBottom: 28, paddingBottom: 20, borderBottom: '0.5px solid rgba(255,255,255,0.1)' }}>
                 <span style={{ fontSize: 20, marginBottom: 8, display: 'block' }}>{kat.icon}</span>
                 <h2 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "'Google Sans', serif",
                   fontSize: 28, fontWeight: 300, margin: 0, color: '#ffffff',
                 }}>
                   {kat.kategorija}

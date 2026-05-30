@@ -70,7 +70,7 @@ useEffect(() => {
 }, [])
 
   return (
-    <div style={{ fontFamily: "'Montserrat', sans-serif", color: '#ffffff', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Google Sans', sans-serif", color: '#ffffff', minHeight: '100vh' }}>
 
       <style>{`
         .parallax-img {
@@ -149,7 +149,7 @@ useEffect(() => {
     alignItems: 'center', justifyContent: 'center', textAlign: 'center',
   }}>
     <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-light)', marginBottom: 16 }}>Storitev</p>
-    <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 80 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
+    <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 80 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
       Tetovi<em style={{ color: 'var(--color-primary-light)' }}>ranje</em>
     </h1>
   </div>
@@ -159,11 +159,10 @@ useEffect(() => {
       <div className="odstavek">
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>01</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
             Zakaj izbrati <em style={{ color: 'var(--color-primary-light)' }}>nas?</em>
           </h2>
-          <div style={{ fontSize: isMobile ? 14 : 15, display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div style={{ fontSize: isMobile ? 16 : 18, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
               'Certificirana tattoo & PMU artistka z izkušnjami',
               'Vedno dobro vzdušje — sproščeno, osebno, brez pritiska',
@@ -171,7 +170,7 @@ useEffect(() => {
             ].map((t, i) => (
               <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <span style={{ color: 'var(--color-primary)', fontSize: 16, flexShrink: 0, marginTop: 3 }}>✦</span>
-                <p style={{ fontSize: isMobile ? 14 : 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
+                <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', margin: 0 }}>{t}</p>
               </div>
             ))}
           </div>
@@ -185,11 +184,10 @@ useEffect(() => {
       <div className="odstavek">
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>02</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
             Moj <em style={{ color: 'var(--color-primary-light)' }}>stil</em>
           </h2>
-          <p style={{ fontSize: isMobile? 14 : 15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+          <p style={{ fontSize: isMobile? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
             Najraje ustvarjam v čistem, natančnem slogu, kot sta fine line in stipple shading, kjer lahko res pride do izraza subtilnost linij in senčenja. Kljub temu sem odprta tudi za druge stile in se rada prilagodim željam vsake posamezne stranke.
           </p>
         </div>
@@ -202,8 +200,7 @@ useEffect(() => {
       <div className="odstavek">
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>03</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
             Tvoja ideja, <em style={{ color: 'var(--color-primary-light)' }}>moja izvedba</em>
           </h2>
           <p style={{ fontSize: isMobile? 14:15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>

@@ -39,7 +39,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Google Sans:wght@300;400;500&display=swap" rel="stylesheet" />
       <AppInner />
     </BrowserRouter>
   )

@@ -62,7 +62,7 @@ export default function Galerija() {
   return (
 
     <div style={{
-      fontFamily: "'Montserrat', sans-serif",
+      fontFamily: "'Google Sans', sans-serif",
       background: '#120f1e',
       color: '#ffffff',
       minHeight: '100vh',
@@ -96,7 +96,7 @@ export default function Galerija() {
         </p>
 
         <h1 style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "'Google Sans', serif",
           fontSize: 72,
           fontWeight: 300,
           lineHeight: 1,

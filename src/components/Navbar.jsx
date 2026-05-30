@@ -44,7 +44,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link to="/" style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "'Google Sans', serif",
           fontSize: 16, fontWeight: 400, letterSpacing: 4,
           color: '#f0ecf8', textDecoration: 'none',
           paddingRight: 12,

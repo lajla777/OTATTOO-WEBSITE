@@ -163,7 +163,7 @@ export default function Home() {
   }, [])
 
   const odstavekStyle = {
-    padding: isMobile ? '25px 20px' : '100px 40px',
+    padding: isMobile ? '40px 20px' : '50px 40px',
     overflow: 'hidden',
     position: 'relative',
   }
@@ -171,7 +171,7 @@ export default function Home() {
   return (
     <div
       style={{
-        fontFamily: "'Montserrat', sans-serif",
+        fontFamily: "'Google Sans', sans-serif",
         background: 'var(--color-bg)',
         color: '#ffffff',
         minHeight: '100vh',
@@ -392,7 +392,7 @@ decoding="async"
     <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12 }}>
       Tattoo Studio
     </p>
-    <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 56 : 94, fontWeight: 400, lineHeight: 1.04, margin: '0 0 28px', color: '#ffffff', textShadow: '0 20px 60px rgba(0,0,0,0.7)' }}>
+    <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 56 : 94, fontWeight: 400, lineHeight: 1.04, letterSpacing: 9, margin: '0 0 28px', color: '#ffffff', textShadow: '0 20px 60px rgba(0,0,0,0.7)' }}>
       OTATTOO
     </h1>
     <div style={{ width: isMobile ? 120 : 180, height: 1, background: 'var(--color-primary)', margin: '0 auto', transformOrigin: 'center', animation: 'pulseLine 2.4s ease-in-out infinite', opacity: 0.8 }} />
@@ -463,19 +463,16 @@ decoding="async"
           >
             <Reveal>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
-                  O meni
-                </p>
-                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 40 : 56, fontWeight: 300, lineHeight: 1.05, margin: '0 0 24px', color: '#ffffff' }}>
-                  Sem Kaja <em style={{ color: 'var(--color-primary-light)' }}>Otavnik</em>
+                <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.05, margin: '0 0 24px', color: '#ffffff' }}>
+                  O <em style={{ color: 'var(--color-primary-light)' }}>meni</em>
                 </h2>
-                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                  Moja pot se je začela iz ljubezni do umetnosti in želje, da ljudem pomagam izraziti sebe na unikaten in trajen način.
+                <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                  Sem Kaja Otavnik. Moja pot se je začela iz ljubezni do umetnosti in želje, da ljudem pomagam izraziti sebe na unikaten in trajen način.
                 </p>
               </div>
             </Reveal>
 
-            <SlikaNaura src="/kaja3.webp" alt="Kaja Otavnik" isMobile={isMobile} />
+            <SlikaNaura src="/kaja1.webp" alt="Kaja Otavnik" isMobile={isMobile} />
           </div>
         </div>
 
@@ -486,13 +483,10 @@ decoding="async"
           <div style={{ position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row-reverse', gap: isMobile ? 34 : 70, alignItems: 'center' }}>
             <Reveal>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
-                  Moje področje
-                </p>
-                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
+                <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
                   Tattoo &<br /><em style={{ color: 'var(--color-primary-light)' }}>odstranjevanje</em>
                 </h3>
-                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
                   Sčasoma sem svoje znanje razširila tudi na področje odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
                 </p>
               </div>
@@ -509,14 +503,11 @@ decoding="async"
           <div style={{ position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 34 : 70, alignItems: 'center' }}>
             <Reveal>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
-                  Moj pristop
-                </p>
-                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
+                <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
                   Varnost &<br /><em style={{ color: 'var(--color-primary-light)' }}>osebni pristop</em>
                 </h3>
-                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                  Pri svojem delu dajem velik poudarek na varnost, higieno in individualen pristop. Vsaki stranki se posvetim osebno – od prve ideje do končnega rezultata. Pomembno mi je, da se pri meni počutiš sproščeno, slišano in v varnih rokah.
+                <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                  Pri svojem delu dajem velik poudarek na varnost, higieno in individualen pristop. Vsaki stranki se posvetim osebno - od prve ideje do končnega rezultata. Pomembno mi je, da se pri meni počutiš sproščeno, slišano in v varnih rokah.
                 </p>
               </div>
             </Reveal>
@@ -532,14 +523,11 @@ decoding="async"
           <div style={{ position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row-reverse', gap: isMobile ? 34 : 70, alignItems: 'center' }}>
             <Reveal>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 16 }}>
-                  Izobraževanje
-                </p>
-                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
+                <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
                   Stalno<br /><em style={{ color: 'var(--color-primary-light)' }}>napredovanje</em>
                 </h3>
-                <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
-                  Redno se izobražujem in sledim najnovejšim tehnikam, da lahko zagotavljam kakovostne in estetsko dovršene rezultate – bodisi gre za tetovažo, PMU ali lasersko odstranjevanje.
+                <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+                  Redno se izobražujem in sledim najnovejšim tehnikam, da lahko zagotavljam kakovostne in estetsko dovršene rezultate - bodisi gre za tetovažo ali lasersko odstranjevanje.
                 </p>
               </div>
             </Reveal>
@@ -554,14 +542,12 @@ decoding="async"
 
           <Reveal>
             <div style={{ position: 'relative', zIndex: 1, maxWidth: 760, margin: '0 auto' }}>
-              <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 20 }}>
-                Stopi v stik
-              </p>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 30 : 48, fontWeight: 300, lineHeight: 1.35, margin: '0 0 20px', color: '#ffffff' }}>
-                Če razmišljaš o novi tetovaži, popravku, permanentnem make-upu ali odstranitvi stare tetovaže,{' '}
+              
+              <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 30 : 48, fontWeight: 300, lineHeight: 1.35, margin: '0 0 20px', color: '#ffffff' }}>
+                Če razmišljaš o novi tetovaži, popravku ali odstranitvi stare tetovaže,{' '}
                 <em style={{ color: 'var(--color-primary-light)' }}>te vabim, da stopiš v stik z mano.</em>
               </h3>
-              <p style={{ fontSize: isMobile ? 14 : 16, lineHeight: 1.8, color: 'rgba(255,255,255,0.55)', marginBottom: 36 }}>
+              <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.8, color: 'rgba(255,255,255,0.55)', marginBottom: 36 }}>
                 Skupaj bomo našli rešitev, ki bo najbolj ustrezala tebi.
               </p>
 

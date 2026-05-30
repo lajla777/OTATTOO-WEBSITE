@@ -17,7 +17,7 @@ useEffect(() => {
       WebkitBackdropFilter: 'blur(20px)',
       borderTop: '0.5px solid rgba(168,85,247,0.15)',
       padding: '60px 20px 32px',
-      fontFamily: "'Montserrat', sans-serif",
+      fontFamily: "'Google Sans', sans-serif",
       color: '#f0ecf8',
       position: 'relative',
       zIndex: 10,
@@ -33,7 +33,7 @@ useEffect(() => {
         {/* Stolpec 1 — logo + opis */}
         <div>
           <div style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Google Sans', serif",
             fontSize: 20, letterSpacing: 5, marginBottom: 16, color: '#f0ecf8',
           }}>
             OTATTOO
@@ -84,10 +84,10 @@ useEffect(() => {
 
         {/* Stolpec 2 — navigacija */}
         <div>
-          <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(168,85,247,0.5)', marginBottom: 20 }}>
+          <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(168,85,247,0.5)', marginBottom: 20 }}>
             Navigacija
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {[
               { label: 'O meni', path: '/' },
               { label: 'Tetoviranje', path: '/tetoviranje' },
@@ -108,7 +108,7 @@ useEffect(() => {
 
         {/* Stolpec 3 — kontakt */}
         <div>
-          <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(168,85,247,0.5)', marginBottom: 20 }}>
+          <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(168,85,247,0.5)', marginBottom: 20 }}>
             Kontakt
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -123,11 +123,11 @@ useEffect(() => {
                   {item.label}
                 </p>
                 {item.href ? (
-                  <a href={item.href} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: 'rgba(240,236,248,0.6)', margin: 0, textDecoration: 'none' }}>
+                  <a href={item.href} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: 'rgba(240,236,248,0.5)', margin: 0, textDecoration: 'none' }}>
                     {item.value}
                   </a>
                 ) : (
-                  <p style={{ fontSize: 12, color: 'rgba(240,236,248,0.6)', margin: 0 }}>
+                  <p style={{ fontSize: 12, color: 'rgba(240,236,248,0.5)', margin: 0 }}>
                     {item.value}
                   </p>
                 )}

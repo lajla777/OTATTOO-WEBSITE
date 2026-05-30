@@ -200,15 +200,15 @@ const posodobiStatus = async (id, novStatus) => {
 
   if (!prijavljen) {
     return (
-      <div style={{ fontFamily: "'Montserrat', sans-serif", background: '#0a0810', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div style={{ fontFamily: "'Google Sans', sans-serif", background: '#0a0810', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
         <div style={{ ...cardStyle, padding: '48px 32px', width: '100%', maxWidth: 340, textAlign: 'center' }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, fontWeight: 300, color: '#fff', marginBottom: 32 }}>
+          <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 36, fontWeight: 300, color: '#fff', marginBottom: 32 }}>
             Admin <em style={{ color: 'var(--color-primary-light)' }}>panel</em>
           </h2>
           <input type="password" placeholder="Geslo" value={geslo}
             onChange={e => setGeslo(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && geslo === ADMIN_GESLO && setPrijavljen(true)}
-            style={{ width: '100%', padding: '14px 16px', borderRadius: 10, fontSize: 14, background: 'rgba(255,255,255,0.06)', border: '0.5px solid rgba(255,255,255,0.12)', color: '#fff', outline: 'none', boxSizing: 'border-box', fontFamily: "'Montserrat', sans-serif", marginBottom: 16 }}
+            style={{ width: '100%', padding: '14px 16px', borderRadius: 10, fontSize: 14, background: 'rgba(255,255,255,0.06)', border: '0.5px solid rgba(255,255,255,0.12)', color: '#fff', outline: 'none', boxSizing: 'border-box', fontFamily: "'Google Sans', sans-serif", marginBottom: 16 }}
           />
           <button onClick={() => geslo === ADMIN_GESLO && setPrijavljen(true)}
             style={{ width: '100%', padding: 14, borderRadius: 50, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', cursor: 'pointer', background: 'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))', border: 'none', color: '#fff' }}>
@@ -221,12 +221,12 @@ const posodobiStatus = async (id, novStatus) => {
   }
 
   return (
-    <div style={{ fontFamily: "'Montserrat', sans-serif", background: '#0a0810', minHeight: '100vh', color: '#fff', padding: isMobile ? '90px 12px 60px' : '100px 24px 60px' }}>
+    <div style={{ fontFamily: "'Google Sans', sans-serif", background: '#0a0810', minHeight: '100vh', color: '#fff', padding: isMobile ? '90px 12px 60px' : '100px 24px 60px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 32 : 44, fontWeight: 300, margin: 0 }}>
+          <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 44, fontWeight: 300, margin: 0 }}>
             Admin <em style={{ color: 'var(--color-primary-light)' }}>panel</em>
           </h1>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -306,13 +306,13 @@ const posodobiStatus = async (id, novStatus) => {
                 <p style={{ color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 60, fontSize: 13 }}>Klikni na datum za podrobnosti</p>
               ) : (
                 <div>
-                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 300, margin: '0 0 16px', color: '#fff', textTransform: 'capitalize' }}>
+                  <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: 22, fontWeight: 300, margin: '0 0 16px', color: '#fff', textTransform: 'capitalize' }}>
                     {new Date(izbranDatum + 'T12:00:00').toLocaleDateString('sl-SI', { weekday: 'long', day: 'numeric', month: 'long' })}
                   </h3>
 
                   {getDanStatus(izbranDatum) !== 'vikend' && (
                     <button onClick={() => toggleNedosegljiv(izbranDatum)} style={{
-                      width: '100%', padding: '10px', borderRadius: 10, fontSize: 11,
+                      width: '100%', padding: '10px', borderRadius: 10, fontSize: 12,
                       letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', marginBottom: 16,
                       background: nedosegljivi.includes(izbranDatum) ? 'rgba(60,180,100,0.15)' : 'rgba(180,60,60,0.15)',
                       border: nedosegljivi.includes(izbranDatum) ? '0.5px solid rgba(60,180,100,0.4)' : '0.5px solid rgba(180,60,60,0.4)',
@@ -347,12 +347,12 @@ const posodobiStatus = async (id, novStatus) => {
                           {izbranRezervacija?.id === r.id && (
                             <div style={{ marginTop: 16, paddingTop: 16, borderTop: '0.5px solid rgba(255,255,255,0.1)' }}>
                               <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 12 }}>
-                                {r.cas && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>🕐 {r.cas}</p>}
-                                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📧 {r.email}</p>
-                                {r.instagram && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📸 {r.instagram}</p>}
-                                {r.velikost && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📐 {r.velikost}</p>}
-                                {r.pozicija && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📍 {r.pozicija}</p>}
-                                {r.opombe && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: 0, fontStyle: 'italic' }}>"{r.opombe}"</p>}
+                                {r.cas && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>🕐 {r.cas}</p>}
+                                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📧 {r.email}</p>
+                                {r.instagram && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📸 {r.instagram}</p>}
+                                {r.velikost && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📐 {r.velikost}</p>}
+                                {r.pozicija && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>📍 {r.pozicija}</p>}
+                                {r.opombe && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0, fontStyle: 'italic' }}>"{r.opombe}"</p>}
                               </div>
                               <SlikeGalerija urls={r.slike_urls} />
                               <div style={{ marginTop: 12 }}>
@@ -415,9 +415,10 @@ const posodobiStatus = async (id, novStatus) => {
                     </div>
                     <div style={{ padding: '10px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, marginBottom: 12 }}>
                       <p style={{ fontSize: 13, color: 'var(--color-primary-light)', margin: '0 0 4px', textTransform: 'capitalize' }}>{r.storitev}{r.tip_laser ? ` · ${r.tip_laser}` : ''}</p>
-                      <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', margin: '0 0 2px' }}>📅 {r.datum}</p>
-                      {r.velikost && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '0 0 2px' }}>📐 {r.velikost}</p>}
-                      {r.pozicija && <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '0 0 2px' }}>📍 {r.pozicija}</p>}
+                      <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', margin: '0 0 2px' }}>📅 {r.datum}</p>
+                                {r.cas && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>🕐 {r.cas}</p>}
+                      {r.velikost && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: '0 0 2px' }}>📐 {r.velikost}</p>}
+                      {r.pozicija && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: '0 0 2px' }}>📍 {r.pozicija}</p>}
                       {r.opombe && <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '4px 0 0', fontStyle: 'italic' }}>"{r.opombe}"</p>}
                       <SlikeGalerija urls={r.slike_urls} />
                     </div>
