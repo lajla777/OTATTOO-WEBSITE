@@ -137,6 +137,11 @@ export default function Galerija() {
             transition:all .28s ease;
             background:#171222;
             position: relative;
+            .masonry-card {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+}
           }
 
           .masonry-card::after {
