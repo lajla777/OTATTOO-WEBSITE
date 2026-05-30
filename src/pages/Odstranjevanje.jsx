@@ -126,7 +126,7 @@ export default function Odstranjevanje() {
           padding: '0 20px',
         }}>
           <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-light)', marginBottom: 16 }}>Storitev</p>
-          <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 80 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
+          <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 70 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
             Laser <em style={{ color: 'var(--color-primary-light)' }}>tretma</em>
           </h1>
         </div>
