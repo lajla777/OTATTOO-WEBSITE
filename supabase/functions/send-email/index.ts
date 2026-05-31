@@ -215,7 +215,7 @@ OTattoo Studio · Vrečerjeva ulica 1, Žalec
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'OTattoo Studio <onboarding@resend.dev>',
+        from: 'OTattoo Studio <booking@send.otattoo-studio.com>',
         to: email,
         subject,
         html,
