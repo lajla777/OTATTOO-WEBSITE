@@ -86,7 +86,7 @@ export default function Cenik() {
             fontSize: isMobile ? 52 : 72, fontWeight: 300, lineHeight: 1,
             margin: 0, color: '#ffffff',
           }}>
-            Cenik<em style={{ color: 'var(--color-primary-light)' }}> storitev</em>
+            Cenik storitev
           </h1>
         </div>
 

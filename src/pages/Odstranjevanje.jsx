@@ -127,7 +127,7 @@ export default function Odstranjevanje() {
         }}>
           <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-light)', marginBottom: 16 }}>Storitev</p>
           <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 70 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
-            Laser <em style={{ color: 'var(--color-primary-light)' }}>tretma</em>
+            Laser tretma
           </h1>
         </div>
       </section>
@@ -137,7 +137,7 @@ export default function Odstranjevanje() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
-            Odstranjevanje tetovaž <br />–<em style={{ color: 'var(--color-primary-light)' }}>za nov začetek</em>
+            Odstranjevanje tetovaž <br />– za nov začetek
           </h2>
           <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
             Si želiš začeti znova? Laser učinkovito razgrajuje pigment in postopoma izbriše neželene tatuje.
@@ -167,7 +167,7 @@ export default function Odstranjevanje() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
-            Odstranjevanje starostnih peg <br />– <em style={{ color: 'var(--color-primary-light)' }}>za popoln ten</em>
+            Odstranjevanje starostnih peg <br />– za popoln ten
           </h2>
           <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
             Temne lise, neenakomeren ten in znaki staranja? Obstaja rešitev!
@@ -198,7 +198,7 @@ export default function Odstranjevanje() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 50%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 16px', color: '#fff' }}>
-            Hollywood Peel <br />–<em style={{ color: 'var(--color-primary-light)' }}>takojšen glow efekt</em>
+            Hollywood Peel <br />– takojšen glow efekt
           </h2>
           <p style={{ fontSize: isMobile ? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', marginBottom: 24 }}>
             Tretma, ki ga obožujejo zvezdnice, zdaj na voljo tudi tebi.
@@ -228,7 +228,7 @@ export default function Odstranjevanje() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 24px', color: '#fff' }}>
-            Zakaj stranke <em style={{ color: 'var(--color-primary-light)' }}>izbirajo nas?</em>
+            Zakaj stranke izbirajo nas?
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {[

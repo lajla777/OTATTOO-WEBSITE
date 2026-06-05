@@ -150,7 +150,7 @@ useEffect(() => {
   }}>
     <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-light)', marginBottom: 16 }}>Storitev</p>
     <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 70 : 88, fontWeight: 400, lineHeight: 1, margin: 0, color: '#ffffff' }}>
-      Tetovi<em style={{ color: 'var(--color-primary-light)' }}>ranje</em>
+      Tetoviranje
     </h1>
   </div>
 </section>
@@ -160,7 +160,7 @@ useEffect(() => {
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
-            Zakaj izbrati <em style={{ color: 'var(--color-primary-light)' }}>nas?</em>
+            Zakaj izbrati nas?
           </h2>
           <div style={{ fontSize: isMobile ? 16 : 18, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
@@ -185,7 +185,7 @@ useEffect(() => {
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
-            Moj <em style={{ color: 'var(--color-primary-light)' }}>stil</em>
+            Moj stil
           </h2>
           <p style={{ fontSize: isMobile? 16 : 18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
             Najraje ustvarjam v čistem, natančnem slogu, kot sta fine line in stipple shading, kjer lahko res pride do izraza subtilnost linij in senčenja. Kljub temu sem odprta tudi za druge stile in se rada prilagodim željam vsake posamezne stranke.
@@ -201,9 +201,9 @@ useEffect(() => {
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(119,97,169,0.27) 0%, transparent 70%)', pointerEvents: 'none' }} />
   <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, lineHeight: 1.1, margin: '0 0 32px', color: '#fff' }}>
-            Tvoja ideja, <em style={{ color: 'var(--color-primary-light)' }}>moja izvedba</em>
+            Tvoja ideja, moja izvedba
           </h2>
-          <p style={{ fontSize: isMobile? 14:15, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
+          <p style={{ fontSize: isMobile? 16:18, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
             Vsako idejo poslušam z občutkom in jo vzamem resno. Skupaj jo razvijemo v dizajn, ki ni samo vizualno lep, ampak tudi oseben in premišljen. Pomembno mi je, da se v procesu počutiš sproščeno in da na koncu dobiš nekaj, kar res odraža tebe.
           </p>
         </div>

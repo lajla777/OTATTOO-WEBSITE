@@ -376,19 +376,6 @@ decoding="async"
   }}
 >
   <Reveal>
-    <img
-      src="/logoBlack.png"
-      alt="OTattoo logo"
-      style={{
-        width: isMobile ? 350 : 450,
-        height: isMobile ? 350 : 450,
-        objectFit: 'contain',
-        marginBottom: 5,
-        marginTop: isMobile? 0 : 50,
-        filter: 'brightness(0) invert(1) drop-shadow(0 18px 30px rgba(0,0,0,0.45))',
-        opacity: 0.92,
-      }}
-    />
     <p style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12 }}>
       Tattoo Studio
     </p>
@@ -464,7 +451,7 @@ decoding="async"
             <Reveal>
               <div style={{ flex: 1 }}>
                 <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.05, margin: '0 0 24px', color: '#ffffff' }}>
-                  O <em style={{ color: 'var(--color-primary-light)' }}>meni</em>
+                  O meni
                 </h2>
                 <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
                   Sem Kaja Otavnik. Moja pot se je začela iz ljubezni do umetnosti in želje, da ljudem pomagam izraziti sebe na unikaten in trajen način.
@@ -484,7 +471,7 @@ decoding="async"
             <Reveal>
               <div style={{ flex: 1 }}>
                 <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
-                  Tattoo &<br /><em style={{ color: 'var(--color-primary-light)' }}>odstranjevanje</em>
+                  Tattoo &<br />odstranjevanje
                 </h3>
                 <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
                   Sčasoma sem svoje znanje razširila tudi na področje odstranjevanja tetovaž, saj verjamem, da ima vsak pravico do spremembe in novega začetka.
@@ -504,7 +491,7 @@ decoding="async"
             <Reveal>
               <div style={{ flex: 1 }}>
                 <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
-                  Varnost &<br /><em style={{ color: 'var(--color-primary-light)' }}>osebni pristop</em>
+                  Varnost &<br />osebni pristop
                 </h3>
                 <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
                   Pri svojem delu dajem velik poudarek na varnost, higieno in individualen pristop. Vsaki stranki se posvetim osebno - od prve ideje do končnega rezultata. Pomembno mi je, da se pri meni počutiš sproščeno, slišano in v varnih rokah.
@@ -524,7 +511,7 @@ decoding="async"
             <Reveal>
               <div style={{ flex: 1 }}>
                 <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 34 : 44, fontWeight: 300, lineHeight: 1.08, margin: '0 0 20px', color: '#ffffff' }}>
-                  Stalno<br /><em style={{ color: 'var(--color-primary-light)' }}>napredovanje</em>
+                  Stalno<br />napredovanje
                 </h3>
                 <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.9, color: 'rgba(255,255,255,0.65)', margin: 0 }}>
                   Redno se izobražujem in sledim najnovejšim tehnikam, da lahko zagotavljam kakovostne in estetsko dovršene rezultate - bodisi gre za tetovažo ali lasersko odstranjevanje.
@@ -545,7 +532,7 @@ decoding="async"
               
               <h3 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 30 : 48, fontWeight: 300, lineHeight: 1.35, margin: '0 0 20px', color: '#ffffff' }}>
                 Če razmišljaš o novi tetovaži, popravku ali odstranitvi stare tetovaže,{' '}
-                <em style={{ color: 'var(--color-primary-light)' }}>te vabim, da stopiš v stik z mano.</em>
+                te vabim, da stopiš v stik z mano.
               </h3>
               <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.8, color: 'rgba(255,255,255,0.55)', marginBottom: 36 }}>
                 Skupaj bomo našli rešitev, ki bo najbolj ustrezala tebi.

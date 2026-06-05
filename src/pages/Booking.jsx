@@ -492,7 +492,7 @@ function Step2Tet({ velikost, setVelikost, pozicija, setPozicija, slike, setSlik
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
       <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        O tvoji <em style={{ color: 'var(--color-primary-light)' }}>tetovaži</em>
+        O tvoji tetovaži
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -540,7 +540,7 @@ function Step3Tet({ datum, setDatum, cas, setCas, velikost, rezervacije, showErr
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
       <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
+        Izberi termin
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -559,7 +559,7 @@ function Step2Odstr({ tipLaser, setTipLaser, resetTermin, setVelikost, setPozici
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 2</p>
       <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        Vrsta <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
+        Vrsta tretmaja
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14, borderRadius: 12, ...errorStyle(showErrors, !tipLaser) }}>
@@ -612,7 +612,7 @@ function Step3Odstr({ tipLaser, velikost, setVelikost, pozicija, setPozicija, sl
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 3</p>
       <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        Podrobnosti <em style={{ color: 'var(--color-primary-light)' }}>tretmaja</em>
+        Podrobnosti tretmaja
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -665,7 +665,7 @@ function Step4Odstr({ datum, setDatum, cas, setCas, velikost, tipLaser, rezervac
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 4</p>
       <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        Izberi <em style={{ color: 'var(--color-primary-light)' }}>termin</em>
+        Izberi termin
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -684,7 +684,7 @@ function StepPodatki({ ime, setIme, priimek, setPriimek, email, setEmail, instag
     <div>
       <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak {stepNum}</p>
       <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-        Tvoji <em style={{ color: 'var(--color-primary-light)' }}>podatki</em>
+        Tvoji podatki
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -938,7 +938,7 @@ export default function Booking() {
           <>
             <div style={{ textAlign: 'center', marginBottom: 48 }}>
               <h1 style={{ fontFamily: "'Google Sans', serif", fontSize: 64, fontWeight: 300, margin: 0, color: '#fff' }}>
-                Boo<em style={{ color: 'var(--color-primary-light)' }}>king</em>
+                Booking
               </h1>
             </div>
 
@@ -949,7 +949,7 @@ export default function Booking() {
                 <div>
                   <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--color-primary-50)', marginBottom: 12, textAlign: 'center' }}>Korak 1</p>
                   <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: 42, fontWeight: 300, color: '#fff', textAlign: 'center', marginBottom: 40 }}>
-                    Izberi <em style={{ color: 'var(--color-primary-light)' }}>storitev</em>
+                    Izberi storitev
                   </h2>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 16, borderRadius: 12, ...errorStyle(showErrors, !storitev) }}>

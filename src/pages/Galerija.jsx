@@ -103,7 +103,7 @@ export default function Galerija() {
           margin: 0,
           color: '#ffffff',
         }}>
-          Gale<em style={{ color: 'var(--color-primary-light)' }}>rija</em>
+          Galerija
         </h1>
 
       </section>
