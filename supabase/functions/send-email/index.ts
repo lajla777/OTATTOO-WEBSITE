@@ -2,6 +2,16 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')!
 
+const AVANS: Record<string, number> = {
+  tetoviranje: 50,
+  odstranjevanje: 20,
+}
+
+const URA_LABELI: Record<string, string> = {
+  dopoldne: 'Dopoldne',
+  popoldne: 'Popoldne',
+}
+
 serve(async (req) => {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -14,28 +24,28 @@ serve(async (req) => {
 
   try {
     const {
-  ime,
-  email,
-  datum,
-  storitev,
-  tip_laser,
-  velikost,
-  pozicija,
-  opombe,
-  cas,
-  status,
-} = await req.json()
+      ime,
+      email,
+      datum,
+      storitev,
+      tip_laser,
+      velikost,
+      pozicija,
+      opombe,
+      cas,
+      status,
+    } = await req.json()
 
-const isRejected = status === 'zavrnjeno'
-console.log('STATUS:', status)
-console.log('IS REJECTED:', isRejected)
+    const casLabel = cas ? (URA_LABELI[cas] || cas) : ''
+    const avansZnesek = AVANS[storitev] ?? ''
+    const isRejected = status === 'zavrnjeno'
 
-const subject = isRejected
-  ? 'Termin žal ni možen'
-  : 'Termin potrjen :)'
+    const subject = isRejected
+      ? 'Termin žal ni možen'
+      : 'Termin potrjen :)'
 
-const html = isRejected
-  ? `
+    const html = isRejected
+      ? `
 <!DOCTYPE html>
 <html>
 <body style="font-family: Georgia, serif; background: #f9f6ff; padding: 40px 0; margin: 0;">
@@ -65,7 +75,7 @@ Najlepša hvala za tvoje povpraševanje ❤️
 <p style="font-size:15px; color:#555; line-height:1.7; margin:0 0 16px;">
 Žal mi je, ampak termin
 <strong style="color:#2d1f4e;">
-${datum}${cas ? ` ob ${cas}` : ''}
+${datum}${casLabel ? ` – ${casLabel}` : ''}
 </strong>
 trenutno ni možen.
 </p>
@@ -126,14 +136,14 @@ ${datum}
 </td>
 </tr>
 
-${cas ? `
+${casLabel ? `
 <tr>
 <td style="padding:6px 0; color:#888; font-size:13px;">
-Ura
+Termin
 </td>
 
 <td style="padding:6px 0; color:#2d1f4e; font-size:13px; font-weight:600;">
-${cas}
+${casLabel}
 </td>
 </tr>
 ` : ''}
@@ -153,7 +163,7 @@ OTattoo Studio · Vrečerjeva ulica 1, Žalec
 </body>
 </html>
 `
-  : `
+      : `
       <!DOCTYPE html>
       <html>
       <body style="font-family: Georgia, serif; background: #f9f6ff; padding: 40px 0; margin: 0;">
@@ -167,7 +177,7 @@ OTattoo Studio · Vrečerjeva ulica 1, Žalec
           <div style="padding: 36px 20px;">
             <p style="font-size: 16px; color: #2d1f4e; margin: 0 0 24px;">Hej, <strong>${ime}</strong>!</p>
             <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 16px;">
-              Zaradi zavarovanja termina te prosim, da v roku <strong>48 ur</strong> poravnaš <strong style="color: #2d1f4e;">avans v višini 50€</strong>, saj si tako zagotoviš termin. Če tvojega nakazila ne bom prejela, se bo tvoj termin žal preklical, mesto pa se bo sprostilo za nekoga drugega.
+              Zaradi zavarovanja termina te prosim, da v roku <strong>48 ur</strong> poravnaš <strong style="color: #2d1f4e;">avans v višini ${avansZnesek}€</strong>, saj si tako zagotoviš termin. Če tvojega nakazila ne bom prejela, se bo tvoj termin žal preklical, mesto pa se bo sprostilo za nekoga drugega.
             </p>
             <p style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">✿ V <strong>zadevo/sporočilo</strong> nakazila <strong>obvezno</strong> napiši (lahko copy-paste):</p>
             <p style="font-size: 15px; color: #2d1f4e; margin: 0 0 20px; font-weight: 500; border: 2px solid #b89fe0; border-radius: 8px; padding: 12px 16px;">
@@ -193,7 +203,7 @@ OTattoo Studio · Vrečerjeva ulica 1, Žalec
             <table style="width: 100%; border-collapse: collapse;">
               <tr><td style="padding: 6px 0; color: #888; font-size: 13px; width: 40%;">Storitev</td><td style="padding: 6px 0; color: #2d1f4e; font-size: 13px; font-weight: 600;">${storitev}</td></tr>
               <tr><td style="padding: 6px 0; color: #888; font-size: 13px;">Datum</td><td style="padding: 6px 0; color: #2d1f4e; font-size: 13px; font-weight: 600;">${datum}</td></tr>
-              ${cas ? `<tr><td style="padding: 6px 0; color: #888; font-size: 13px;">Ura</td><td style="padding: 6px 0; color: #2d1f4e; font-size: 13px; font-weight: 600;">${cas}</td></tr>` : ''}
+              ${casLabel ? `<tr><td style="padding: 6px 0; color: #888; font-size: 13px;">Termin</td><td style="padding: 6px 0; color: #2d1f4e; font-size: 13px; font-weight: 600;">${casLabel}</td></tr>` : ''}
               ${tip_laser ? `<tr><td style="padding: 6px 0; color: #888; font-size: 13px;">Tip tretmaja</td><td style="padding: 6px 0; color: #2d1f4e; font-size: 13px; font-weight: 600;">${tip_laser}</td></tr>` : ''}
               ${velikost ? `<tr><td style="padding: 6px 0; color: #888; font-size: 13px;">Velikost</td><td style="padding: 6px 0; color: #2d1f4e; font-size: 13px; font-weight: 600;">${velikost}</td></tr>` : ''}
               ${pozicija ? `<tr><td style="padding: 6px 0; color: #888; font-size: 13px;">Pozicija</td><td style="padding: 6px 0; color: #2d1f4e; font-size: 13px; font-weight: 600;">${pozicija}</td></tr>` : ''}

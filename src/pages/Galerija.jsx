@@ -23,6 +23,9 @@ const SLIKE = [
   { src: '/galerija18.webp', alt: 'tetovaža 20' },
   { src: '/galerija2.webp', alt: 'tetovaža 3' },
   { src: '/galerija16.webp', alt: 'tetovaža 3' },
+  { src: '/galerija30.webp', alt: 'tetovaža 3' },
+  { src: '/galerija29.webp', alt: 'tetovaža 3' },
+  { src: '/galerija28.webp', alt: 'tetovaža 3' },
 ]
 
 const breakpoints = {

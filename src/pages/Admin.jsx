@@ -8,6 +8,7 @@ export default function Admin() {
   const [prijavljen, setPrijavljen] = useState(false)
   const [rezervacije, setRezervacije] = useState([])
   const [nedosegljivi, setNedosegljivi] = useState([])
+  const [soglasja, setSoglasja] = useState([])
   const [izbranDatum, setIzbranDatum] = useState(null)
   const [mesec, setMesec] = useState(new Date().getMonth())
   const [leto, setLeto] = useState(new Date().getFullYear())
@@ -35,6 +36,16 @@ export default function Admin() {
     return r.status
   }
 
+  // --- Nedosegljivost: cel dan (termin === null) ali samo dopoldne/popoldne ---
+  const jeCelDanBlokiran = (dateStr) =>
+    nedosegljivi.some(n => n.datum === dateStr && n.termin === null)
+
+  const jeTerminBlokiran = (dateStr, termin) =>
+    jeCelDanBlokiran(dateStr) || nedosegljivi.some(n => n.datum === dateStr && n.termin === termin)
+
+  const obaTerminaBlokirana = (dateStr) =>
+    jeTerminBlokiran(dateStr, 'dopoldne') && jeTerminBlokiran(dateStr, 'popoldne')
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
     window.addEventListener('resize', handleResize)
@@ -51,13 +62,15 @@ export default function Admin() {
 
     const { data: ned } = await supabase
       .from('nedosegljivi')
+      .select('datum, termin')
+
+    const { data: sog } = await supabase
+      .from('soglasja')
       .select('*')
 
     if (rez) setRezervacije(rez)
-
-    if (ned) {
-      setNedosegljivi(ned.map(n => n.datum))
-    }
+    if (ned) setNedosegljivi(ned)
+    if (sog) setSoglasja(sog)
 
     setLoading(false)
   }
@@ -199,20 +212,32 @@ export default function Admin() {
     if (izbranRezervacija?.id === id) setIzbranRezervacija(null)
   }
 
-  const toggleNedosegljiv = async (dateStr) => {
-    if (nedosegljivi.includes(dateStr)) {
-      await supabase
-        .from('nedosegljivi')
-        .delete()
-        .eq('datum', dateStr)
+  // termin: null = cel dan, 'dopoldne' ali 'popoldne' = samo pol dneva
+  const toggleNedosegljiv = async (dateStr, termin = null) => {
+    const obstaja = nedosegljivi.some(n => n.datum === dateStr && n.termin === termin)
 
-      setNedosegljivi(prev => prev.filter(d => d !== dateStr))
+    if (obstaja) {
+      let query = supabase.from('nedosegljivi').delete().eq('datum', dateStr)
+      query = termin === null ? query.is('termin', null) : query.eq('termin', termin)
+      const { error } = await query
+
+      if (error) {
+        console.error('Napaka pri brisanju nedosegljivosti:', error)
+        alert('Napaka pri shranjevanju: ' + error.message)
+        return
+      }
+
+      setNedosegljivi(prev => prev.filter(n => !(n.datum === dateStr && n.termin === termin)))
     } else {
-      await supabase
-        .from('nedosegljivi')
-        .insert([{ datum: dateStr }])
+      const { error } = await supabase.from('nedosegljivi').insert([{ datum: dateStr, termin }])
 
-      setNedosegljivi(prev => [...prev, dateStr])
+      if (error) {
+        console.error('Napaka pri dodajanju nedosegljivosti:', error)
+        alert('Napaka pri shranjevanju: ' + error.message)
+        return
+      }
+
+      setNedosegljivi(prev => [...prev, { datum: dateStr, termin }])
     }
   }
 
@@ -221,13 +246,16 @@ export default function Admin() {
     const dan = d.getDay()
 
     if (dan === 0 || dan === 6) return 'vikend'
-    if (nedosegljivi.includes(dateStr)) return 'ni_mozno'
+    if (jeCelDanBlokiran(dateStr) || obaTerminaBlokirana(dateStr)) return 'ni_mozno'
 
     const aktivna = rezervacije.find(r => r.datum === dateStr && r.status !== 'zavrnjeno')
 
-    if (!aktivna) return 'prosto'
-    if (aktivna.status === 'potrjeno') return 'zasedeno'
-    if (aktivna.status === 'rezervirano') return 'rezervirano'
+    if (aktivna) {
+      if (aktivna.status === 'potrjeno') return 'zasedeno'
+      if (aktivna.status === 'rezervirano') return 'rezervirano'
+    }
+
+    if (jeTerminBlokiran(dateStr, 'dopoldne') || jeTerminBlokiran(dateStr, 'popoldne')) return 'delno'
 
     return 'prosto'
   }
@@ -273,6 +301,14 @@ export default function Admin() {
         ...base,
         background: 'rgba(60,180,100,0.2)',
         color: 'rgba(100,220,140,0.9)',
+      }
+    }
+
+    if (status === 'delno') {
+      return {
+        ...base,
+        background: 'rgba(174, 94, 170, 0.4)',
+        color: 'rgba(215, 119, 224, 0.9)',
       }
     }
 
@@ -362,6 +398,10 @@ export default function Admin() {
   }
 
   const vCakanju = rezervacije.filter(r => r.status === 'rezervirano').length
+
+  const soglasjaAbecedno = [...soglasja].sort((a, b) =>
+    a.ime.localeCompare(b.ime, 'sl') || a.priimek.localeCompare(b.priimek, 'sl')
+  )
 
   const cardStyle = {
     background: 'rgba(13,10,20,0.88)',
@@ -759,6 +799,7 @@ const GumbiStatus = ({ r, size = 'small' }) => {
           {[
             { key: 'koledar', label: '📅 Koledar' },
             { key: 'rezervacije', label: '📋 Rezervacije' },
+            { key: 'soglasja', label: '📝 Soglasja' },
           ].map(t => (
             <button
               key={t.key}
@@ -915,6 +956,7 @@ const GumbiStatus = ({ r, size = 'small' }) => {
                   { barva: 'rgba(119,97,169,0.4)', label: 'Prosto' },
                   { barva: 'rgba(230,160,30,0.4)', label: 'Rezervirano' },
                   { barva: 'rgba(60,180,100,0.4)', label: 'Zasedeno' },
+                  { barva: 'rgba(226, 88, 220, 0.4)', label: 'Delno nedosegljivo' },
                   { barva: 'rgba(180,60,60,0.4)', label: 'Ni možno' },
                 ].map(l => (
                   <div key={l.label} style={{
@@ -968,35 +1010,95 @@ const GumbiStatus = ({ r, size = 'small' }) => {
                   </h3>
 
                   {getDanStatus(izbranDatum) !== 'vikend' && (
-                    <button
-                      onClick={() => toggleNedosegljiv(izbranDatum)}
-                      style={{
-                        width: '100%',
-                        padding: '10px',
-                        borderRadius: 10,
-                        fontSize: 12,
-                        letterSpacing: 1,
-                        textTransform: 'uppercase',
-                        cursor: 'pointer',
-                        marginBottom: 16,
-                        background:
-                          nedosegljivi.includes(izbranDatum)
-                            ? 'rgba(60,180,100,0.15)'
-                            : 'rgba(180,60,60,0.15)',
-                        border:
-                          nedosegljivi.includes(izbranDatum)
-                            ? '0.5px solid rgba(60,180,100,0.4)'
-                            : '0.5px solid rgba(180,60,60,0.4)',
-                        color:
-                          nedosegljivi.includes(izbranDatum)
-                            ? 'rgba(100,220,140,0.9)'
-                            : 'rgba(255,100,100,0.9)',
-                      }}
-                    >
-                      {nedosegljivi.includes(izbranDatum)
-                        ? '✓ Označi kot dosegljivo'
-                        : '✕ Označi kot nedosegljivo'}
-                    </button>
+                    <>
+                      <button
+                        onClick={() => toggleNedosegljiv(izbranDatum, null)}
+                        style={{
+                          width: '100%',
+                          padding: '10px',
+                          borderRadius: 10,
+                          fontSize: 12,
+                          letterSpacing: 1,
+                          textTransform: 'uppercase',
+                          cursor: 'pointer',
+                          marginBottom: 10,
+                          background:
+                            jeCelDanBlokiran(izbranDatum)
+                              ? 'rgba(60,180,100,0.15)'
+                              : 'rgba(180,60,60,0.15)',
+                          border:
+                            jeCelDanBlokiran(izbranDatum)
+                              ? '0.5px solid rgba(60,180,100,0.4)'
+                              : '0.5px solid rgba(180,60,60,0.4)',
+                          color:
+                            jeCelDanBlokiran(izbranDatum)
+                              ? 'rgba(100,220,140,0.9)'
+                              : 'rgba(255,100,100,0.9)',
+                        }}
+                      >
+                        {jeCelDanBlokiran(izbranDatum)
+                          ? '✓ Označi cel dan kot dosegljiv'
+                          : '✕ Označi cel dan kot nedosegljiv'}
+                      </button>
+
+                      {!jeCelDanBlokiran(izbranDatum) && (
+                        <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+                          <button
+                            onClick={() => toggleNedosegljiv(izbranDatum, 'dopoldne')}
+                            style={{
+                              flex: 1,
+                              padding: '10px',
+                              borderRadius: 10,
+                              fontSize: 11,
+                              letterSpacing: 0.5,
+                              textTransform: 'uppercase',
+                              cursor: 'pointer',
+                              background:
+                                jeTerminBlokiran(izbranDatum, 'dopoldne')
+                                  ? 'rgba(60,180,100,0.15)'
+                                  : 'rgba(180,60,60,0.15)',
+                              border:
+                                jeTerminBlokiran(izbranDatum, 'dopoldne')
+                                  ? '0.5px solid rgba(60,180,100,0.4)'
+                                  : '0.5px solid rgba(180,60,60,0.4)',
+                              color:
+                                jeTerminBlokiran(izbranDatum, 'dopoldne')
+                                  ? 'rgba(100,220,140,0.9)'
+                                  : 'rgba(255,100,100,0.9)',
+                            }}
+                          >
+                            {jeTerminBlokiran(izbranDatum, 'dopoldne') ? '✓ Dopoldne prosto' : '✕ Dopoldne zaprto'}
+                          </button>
+
+                          <button
+                            onClick={() => toggleNedosegljiv(izbranDatum, 'popoldne')}
+                            style={{
+                              flex: 1,
+                              padding: '10px',
+                              borderRadius: 10,
+                              fontSize: 11,
+                              letterSpacing: 0.5,
+                              textTransform: 'uppercase',
+                              cursor: 'pointer',
+                              background:
+                                jeTerminBlokiran(izbranDatum, 'popoldne')
+                                  ? 'rgba(60,180,100,0.15)'
+                                  : 'rgba(180,60,60,0.15)',
+                              border:
+                                jeTerminBlokiran(izbranDatum, 'popoldne')
+                                  ? '0.5px solid rgba(60,180,100,0.4)'
+                                  : '0.5px solid rgba(180,60,60,0.4)',
+                              color:
+                                jeTerminBlokiran(izbranDatum, 'popoldne')
+                                  ? 'rgba(100,220,140,0.9)'
+                                  : 'rgba(255,100,100,0.9)',
+                            }}
+                          >
+                            {jeTerminBlokiran(izbranDatum, 'popoldne') ? '✓ Popoldne prosto' : '✕ Popoldne zaprto'}
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {rezervacijeNaDatum.length === 0 ? (
@@ -1226,6 +1328,76 @@ const GumbiStatus = ({ r, size = 'small' }) => {
                     </div>
 
                     <GumbiStatus r={r} size="large" />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {pogled === 'soglasja' && (
+          <div>
+            {loading ? (
+              <p style={{
+                color: 'rgba(255,255,255,0.4)',
+                textAlign: 'center',
+                padding: 40,
+              }}>
+                Nalagam...
+              </p>
+            ) : soglasjaAbecedno.length === 0 ? (
+              <p style={{
+                color: 'rgba(255,255,255,0.4)',
+                textAlign: 'center',
+                padding: 40,
+              }}>
+                Ni oddanih soglasij
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {soglasjaAbecedno.map(s => (
+                  <div
+                    key={s.id}
+                    style={{
+                      ...cardStyle,
+                      padding: 20,
+                      border: '0.5px solid rgba(60,180,100,0.4)',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                      gap: 12,
+                    }}
+                  >
+                    <div>
+                      <p style={{
+                        fontSize: 15,
+                        fontWeight: 500,
+                        color: '#fff',
+                        margin: '0 0 4px',
+                      }}>
+                        {s.ime} {s.priimek}
+                      </p>
+
+                      <p style={{
+                        fontSize: 12,
+                        color: 'rgba(255,255,255,0.45)',
+                        margin: 0,
+                      }}>
+                        📅 {formatDatum(s.datum)} &nbsp;·&nbsp; 📞 {s.telefon}
+                      </p>
+                    </div>
+
+                    <span style={{
+                      fontSize: 10,
+                      padding: '4px 12px',
+                      borderRadius: 50,
+                      background: 'rgba(60,180,100,0.2)',
+                      color: 'rgba(100,220,140,0.9)',
+                      whiteSpace: 'nowrap',
+                    }}>
+                      ✓ izpolnjeno {s.podpisano_ob ? new Date(s.podpisano_ob).toLocaleDateString('sl-SI') : ''}
+                    </span>
                   </div>
                 ))}
               </div>

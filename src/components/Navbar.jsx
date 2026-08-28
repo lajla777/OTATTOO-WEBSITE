@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: 'Laser tretma', path: '/odstranjevanje' },
   { label: 'Galerija', path: '/galerija' },
   { label: 'Cenik', path: '/cenik' },
+  { label: 'Soglasje', path: '/soglasje' },
 ]
 
 export default function Navbar() {

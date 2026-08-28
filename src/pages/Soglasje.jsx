@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { supabase } from '../supabaseClient'
 
 const inputStyle = {
   width: '100%',
@@ -37,7 +38,7 @@ const ErrorText = ({ show }) =>
     </p>
   ) : null
 
-const SLIDES = ['/tatu5.webp']
+const SLIDES = ['/galerija30.webp']
 
 // TODO: uredi/dodaj dejanske točke soglasja — vsaka je obvezna (stranka jo mora obkljukati, da lahko odda)
 const TOCKE = [
@@ -49,7 +50,7 @@ const TOCKE = [
   'Zavedam se, da tattoo studio Otattoo ne odgovarja za pomen izbranega motiva, prav tako ne odgovarja za napačno črkovanje napisov, ki izhajajo iz poslanih idej, flashov ali fotografij drugih tetovaž.',
   'Razumem, da so možna odstopanja v barvi in motivu izbranega dizajna in dejanske tetovaže na mojem telesu. Razumem tudi, da tetovaža s časom zbledi in izgubi ostrino zaradi nezavarovanega izpostavljanja soncu in naravnega postopka razpršitve pigmenta v koži.',
   'Vem, da je tetovaža permanentna sprememba mojega videza in je lahko odstranjena le z laserskim ali zdravstvenim posegom. Vem tudi, da kljub odstranitvi moja koža na tem mestu nikoli ne bo takšna, kot je bila pred tetoviranjem.',
-  'Odrekam se vsem avtorskim pravicam fotografij mene in moje tetovaže in soglašam z njihovo reprodukcijo tako v fizični kot digitalni obliki. Fotografija se lahko uporablja v promocijske namene podjetja. Če se s tem ne strinjam, sem o tem pravočasno obvestil/a tetoverja.        ----------*Zavedamo se pomena varovanja tvojih osebnih podatkov in spoštujemo tvojo zasebnost, zato z vsako posredovano informacijo ravnamo skrbno. Osebne podatke zbiramo, uporabljamo in obdelujemo v skladu z Zakonom o varstvu osebnih podatkov (ZVOP-1-UPB1, Ur. I. RS, 3t. 94/2007) in Splošno uredbo o varstvu podatkov (GDPR).',
+  'Odrekam se vsem avtorskim pravicam fotografij mene in moje tetovaže in soglašam z njihovo reprodukcijo tako v fizični kot digitalni obliki. Fotografija se lahko uporablja v promocijske namene podjetja. Če se s tem ne strinjam, sem o tem pravočasno obvestil/a tetoverja. *Zavedamo se pomena varovanja tvojih osebnih podatkov in spoštujemo tvojo zasebnost, zato z vsako posredovano informacijo ravnamo skrbno. Osebne podatke zbiramo, uporabljamo in obdelujemo v skladu z Zakonom o varstvu osebnih podatkov (ZVOP-1-UPB1, Ur. I. RS, 3t. 94/2007) in Splošno uredbo o varstvu podatkov (GDPR).',
   'Seznanjen/a sem z dejstvom, da Tattoo studio Otattoo ne upošteva reklamacij za storitve. Hkrati vem, da ne odgovarja za morebitno nastalo škodo na oblačilih.',
   'Morebitne spore bom reševal/a po mirni poti. V kolikor to ni mogoče, je Tattoo studio Otattoo v primeru tožbe oproščen stroškov odvetnikov stranke in drugih stroškov pravnih postopkov, ki jih morebiti sprožim proti tattoo studiu ali tetoverju. Strinjam se, da bo pravne postopke reševalo pristojno sodišče v Žalcu.',
   'Potrjujem, da sem polnoleten/na, za kar sem si priskrbel/a ustrezno identifikacijo in da sem popolnoma priseben/na in zmožen/na podpisati splošne pogoje.',
@@ -60,18 +61,27 @@ const TOCKE = [
 export default function Soglasje() {
   const [ime, setIme] = useState('')
   const [priimek, setPriimek] = useState('')
-  const [datum, setDatum] = useState('')
+  const danes = new Date()
+  const danasnjiDatum =
+    `${danes.getFullYear()}-${String(danes.getMonth() + 1).padStart(2, '0')}-${String(danes.getDate()).padStart(2, '0')}`
+  const [datum] = useState(danasnjiDatum)
   const [telefon, setTelefon] = useState('')
   const [obkljukano, setObkljukano] = useState(Array(TOCKE.length).fill(false))
   const [showErrors, setShowErrors] = useState(false)
   const [oddano, setOddano] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  const formatDatum = (d) => {
+  const [y, m, dd] = d.split('-')
+  return `${dd}.${m}.${y}`
+}
 
   const toggleTocka = (i) => {
     setObkljukano(prev => prev.map((v, idx) => (idx === i ? !v : v)))
@@ -81,17 +91,30 @@ export default function Soglasje() {
 
   const canSubmit = () => !!ime && !!priimek && !!datum && !!telefon && vseObvezneObkljukane
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!canSubmit()) {
       setShowErrors(true)
       return
     }
 
     setShowErrors(false)
+    setLoading(true)
 
-    // TODO: tukaj shrani soglasje (npr. insert v Supabase tabelo `soglasja`)
-    // { ime, priimek, datum, telefon, tocke: TOCKE, obkljukano, podpisano_ob: new Date().toISOString() }
+    const { error } = await supabase.from('soglasja').insert([{
+      ime,
+      priimek,
+      datum,
+      telefon,
+      tocke: TOCKE,
+    }])
 
+    setLoading(false)
+
+    if (error) {
+      console.error(error)
+      alert('Prišlo je do napake pri shranjevanju. Poskusi znova.')
+      return
+    }
     setOddano(true)
   }
 
@@ -143,8 +166,7 @@ export default function Soglasje() {
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
                   <div>
                     <label style={labelStyle}>Datum *</label>
-                    <input type="date" value={datum} onChange={e => setDatum(e.target.value)} style={{ ...inputStyle, ...errorStyle(showErrors, !datum) }} />
-                    <ErrorText show={showErrors && !datum} />
+                    <input value={formatDatum(datum)} readOnly disabled style={{ ...inputStyle, color: 'rgba(255,255,255,0.55)', cursor: 'default' }} />
                   </div>
 
                   <div>
@@ -231,7 +253,7 @@ export default function Soglasje() {
             </div>
           </>
         ) : (
-          <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: isMobile ? '44px 24px' : '60px 40px', textAlign: 'center' }}>
+          <div style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', border: '0.5px solid rgba(255,255,255,0.12)', borderRadius: 20, padding: isMobile ? '44px 24px' : '60px 40px', textAlign: 'center', marginTop: 120 }}>
             <div style={{ fontSize: 48, marginBottom: 24 }}>✓</div>
             <h2 style={{ fontFamily: "'Google Sans', serif", fontSize: isMobile ? 26 : 32, fontWeight: 300, color: '#fff', margin: '0 0 16px' }}>
               Soglasje <em style={{ color: '#b89fe0' }}>oddano</em>

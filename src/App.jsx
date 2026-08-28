@@ -11,6 +11,7 @@ import Cenik from './pages/Cenik'
 import Booking from './pages/Booking'
 import Galerija from './pages/Galerija'
 import Admin from './pages/Admin'
+import Soglasje from './pages/Soglasje'
 
 function AppInner() {
   const location = useLocation()
@@ -27,6 +28,7 @@ function AppInner() {
             <Route path="/booking" element={<Booking />} />
             <Route path="/galerija" element={<Galerija />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/soglasje" element={<Soglasje />} />
           </Routes>
       </AnimatePresence>
       <Footer />

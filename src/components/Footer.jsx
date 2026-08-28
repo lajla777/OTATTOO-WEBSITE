@@ -94,6 +94,7 @@ useEffect(() => {
               { label: 'Laser tretma', path: '/odstranjevanje' },
               { label: 'Galerija', path: '/galerija' },
               { label: 'Cenik', path: '/cenik' },
+              { label: 'Soglasje', path: '/soglasje' },
               { label: 'Booking', path: '/booking' },
             ].map(link => (
               <Link key={link.path} to={link.path} style={{
